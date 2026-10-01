@@ -1,16 +1,9 @@
 
-using System.Text.Json;
 using System.IO;
+using System.Text.Json;
+using System.Text.Json.Nodes;
+
 public class DataHandler {
-
-    public int MinPlayers{get; set;}
-    public int MaxPlayers{get; set;}
-
-    public DataHandler(int max, int min)
-    {
-        MaxPlayers = max;
-        MinPlayers = min;
-    }
 
     public void CreateJSON() {
         Console.WriteLine("Testing");
@@ -19,6 +12,20 @@ public class DataHandler {
             Console.WriteLine("Creating");
             File.Create(path);
         }
+    }
+
+    public void UpdateList() {
+        string path = "C:\\Users\\SPAC-B-9\\Desktop\\Projekter\\Todo-app\\Todo Lists\\todo.json";
+        Random r = new Random();
+        int rInt = r.Next(17, 100);
+        var testobj = new Class1()
+        {
+            created = DateTime.Parse("2019-08-01"),
+            value = rInt
+        };
+        var options = new JsonSerializerOptions { WriteIndented = true };
+        string jsonString = JsonSerializer.Serialize(testobj, options);
+        File.WriteAllText(path, jsonString);
     }
 
 

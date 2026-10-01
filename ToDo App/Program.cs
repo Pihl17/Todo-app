@@ -11,8 +11,9 @@ namespace ToDo_App
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            DataHandler TestHandler = new DataHandler(1, 2);
+            DataHandler TestHandler = new DataHandler();
             TestHandler.CreateJSON();
+            TestHandler.UpdateList();
             Application.Run(new Form1());
         }
     }
