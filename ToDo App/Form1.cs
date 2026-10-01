@@ -6,5 +6,11 @@ namespace ToDo_App
         {
             InitializeComponent();
         }
+
+        private void createToDoButton_Click(object sender, EventArgs e)
+        {
+            ToDoNoteUserControl toDoNote = new ToDoNoteUserControl();
+            toDoListLayoutPanel.Controls.Add(toDoNote);
+        }
     }
 }
