@@ -1,8 +1,8 @@
 namespace ToDo_App
 {
-    public partial class Form1 : Form
+    public partial class ToDoForm : Form
     {
-        public Form1()
+        public ToDoForm()
         {
             InitializeComponent();
         }
