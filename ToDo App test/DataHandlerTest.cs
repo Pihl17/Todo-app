@@ -14,7 +14,7 @@ namespace ToDo_App_test
         [Test]
         public void LoadTest()
         {
-            string path = "C:\\Users\\SPAC-B-9\\Desktop\\Projekter\\Todo-app\\ToDo App test\\Test List\\todo.json";
+            string path = ".\\todo.json";
             Assert.False(File.Exists(path));
             DataHandler TestHandler = new DataHandler();
             List<ToDo> Testlist = TestHandler.LoadList(path);
@@ -24,7 +24,7 @@ namespace ToDo_App_test
         [Test]
         public void UpdateTest()
         {
-            string path = "C:\\Users\\SPAC-B-9\\Desktop\\Projekter\\Todo-app\\ToDo App test\\Test List\\todo.json";
+            string path = ".\\todo.json";
             DataHandler TestHandler = new DataHandler();
             List<ToDo> Testlist = TestHandler.LoadList(path);
             ToDo toDo = new ToDo();
