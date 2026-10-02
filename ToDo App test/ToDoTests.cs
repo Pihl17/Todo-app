@@ -41,13 +41,15 @@ namespace ToDo_App_test
             Assert.That(toDo.Priority, Is.EqualTo(validPriority));
         }
 
-        [TestCase(-1)]
-        [TestCase(11)]
-        public void Priority_OutsideRange_Throw(int invalidPriority)
+        [TestCase(-1, 0)]
+        [TestCase(11, 10)]
+        public void Priority_OutsideRange_ClampsToRange(int invalidPriority, int expectedPriority)
         {
             ToDo toDo = new ToDo();
 
-            Assert.Throws<ArgumentOutOfRangeException>(() => toDo.Priority = invalidPriority);
+            toDo.Priority = invalidPriority;
+
+            Assert.That(toDo.Priority, Is.EqualTo(expectedPriority));
         }
     }
 }
