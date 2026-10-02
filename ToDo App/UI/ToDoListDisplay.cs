@@ -13,6 +13,12 @@ public partial class ToDoListDisplay : UserControl
     public ToDoListDisplay()
     {
         InitializeComponent();
+        RefreshList();
+    }
+
+    public void RefreshList()
+    {
+
     }
 
     public ToDoListDisplay(params ToDoDisplay[] todos)

@@ -7,6 +7,24 @@ public class ToDoListDisplayTest
 {
 
     [Test]
+    public void RefreshList_GetsToDoListAndAddsToList()
+    {
+        Assert.Fail();
+    }
+
+    [Test]
+    public void RefreshList_ListAlreadyExists_AddsMissingToDosToList()
+    {
+        Assert.Fail();
+    }
+
+    [Test]
+    public void RefreshList_ListAlreadyExists_RemovesToDosFromList()
+    {
+        Assert.Fail();
+    }
+
+    [Test]
     public void AddToList_ToDoDisplayBecomesChildControl()
     {
         ToDoListDisplay list = new ToDoListDisplay();
