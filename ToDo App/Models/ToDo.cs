@@ -15,6 +15,7 @@ namespace ToDo_App.Models
 
         private int priority;
 
+        public Guid Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public DateTime? CreationDate { get; set; }
@@ -41,6 +42,7 @@ namespace ToDo_App.Models
         /// </summary>
         public ToDo()
         {
+            Id = Guid.NewGuid();
             Title = string.Empty;
             Description = string.Empty;
             CreationDate = DateTime.Now;
