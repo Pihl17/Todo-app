@@ -13,6 +13,8 @@ namespace ToDo_App
             ApplicationConfiguration.Initialize();
             DataHandler TestHandler = new DataHandler();
             TestHandler.CreateJSON();
+            TestHandler.AddToList();
+            TestHandler.AddToList();
             TestHandler.UpdateList();
             Application.Run(new Form1());
         }
