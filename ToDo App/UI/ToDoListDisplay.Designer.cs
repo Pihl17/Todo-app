@@ -56,5 +56,5 @@ partial class ToDoListDisplay
 
     #endregion
 
-    private FlowLayoutPanel listContainer;
+    public FlowLayoutPanel listContainer;
 }

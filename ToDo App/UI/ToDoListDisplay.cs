@@ -15,6 +15,20 @@ public partial class ToDoListDisplay : UserControl
         InitializeComponent();
     }
 
+    public ToDoListDisplay(params ToDoDisplay[] todos)
+    {
+        InitializeComponent();
+        foreach (ToDoDisplay todo in todos)
+        {
+            listContainer.Controls.Add(todo);
+        }
+    }
+
+    public ControlCollection GetToDos()
+    {
+        return listContainer.Controls;
+    }
+
     public void AddToList(ToDoDisplay todo)
     {
         listContainer.Controls.Add(todo);
@@ -22,6 +36,9 @@ public partial class ToDoListDisplay : UserControl
 
     public void RemoveFromList(ToDoDisplay todo)
     {
-        throw new NotImplementedException();
+        if (listContainer.Contains(todo))
+        {
+            listContainer.Controls.Remove(todo);
+        }
     }
 }
