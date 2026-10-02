@@ -8,9 +8,9 @@ using System.Windows.Forms;
 
 namespace ToDo_App.UI;
 
-public partial class ToDoNoteUserControl : UserControl
+public partial class ToDoDisplay : UserControl
 {
-    public ToDoNoteUserControl()
+    public ToDoDisplay()
     {
         InitializeComponent();
     }

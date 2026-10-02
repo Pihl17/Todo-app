@@ -1,6 +1,6 @@
 ﻿namespace ToDo_App.UI;
 
-partial class ToDoNoteUserControl
+partial class ToDoDisplay
 {
     /// <summary> 
     /// Required designer variable.
