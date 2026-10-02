@@ -25,4 +25,8 @@
     <Using Include="NUnit.Framework" />
   </ItemGroup>
 
+	<ItemGroup>
+		<ProjectReference Include="..\ToDo App\ToDo App.csproj" />
+	</ItemGroup>
+
 </Project>
