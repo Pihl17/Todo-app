@@ -15,7 +15,7 @@ public partial class MainForm : Form
     public void AddToDoToListControl()
     {
         ToDoDisplay toDoNote = new ToDoDisplay();
-        toDoListLayoutPanel.Controls.Add(toDoNote);
+        toDoList.AddToList(toDoNote);
     }
 
     public void GetToDoList()

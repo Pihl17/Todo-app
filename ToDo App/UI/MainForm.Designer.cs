@@ -28,11 +28,10 @@ partial class MainForm
     /// </summary>
     private void InitializeComponent()
     {
-        saveFileDialog1 = new SaveFileDialog();
         tableLayoutPanel1 = new TableLayoutPanel();
-        toDoListLayoutPanel = new FlowLayoutPanel();
         flowLayoutPanel1 = new FlowLayoutPanel();
         createToDoButton = new Button();
+        toDoList = new ToDoListDisplay();
         tableLayoutPanel1.SuspendLayout();
         flowLayoutPanel1.SuspendLayout();
         SuspendLayout();
@@ -42,53 +41,58 @@ partial class MainForm
         tableLayoutPanel1.ColumnCount = 2;
         tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle());
         tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
-        tableLayoutPanel1.Controls.Add(toDoListLayoutPanel, 1, 0);
         tableLayoutPanel1.Controls.Add(flowLayoutPanel1, 0, 0);
+        tableLayoutPanel1.Controls.Add(toDoList, 1, 0);
         tableLayoutPanel1.Dock = DockStyle.Fill;
         tableLayoutPanel1.Location = new Point(0, 0);
+        tableLayoutPanel1.Margin = new Padding(4, 5, 4, 5);
         tableLayoutPanel1.Name = "tableLayoutPanel1";
         tableLayoutPanel1.RowCount = 1;
         tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-        tableLayoutPanel1.Size = new Size(800, 450);
+        tableLayoutPanel1.Size = new Size(1143, 750);
         tableLayoutPanel1.TabIndex = 0;
-        // 
-        // toDoListLayoutPanel
-        // 
-        toDoListLayoutPanel.AutoScroll = true;
-        toDoListLayoutPanel.Dock = DockStyle.Fill;
-        toDoListLayoutPanel.Location = new Point(116, 3);
-        toDoListLayoutPanel.Name = "toDoListLayoutPanel";
-        toDoListLayoutPanel.Size = new Size(681, 444);
-        toDoListLayoutPanel.TabIndex = 1;
         // 
         // flowLayoutPanel1
         // 
         flowLayoutPanel1.AutoSize = true;
         flowLayoutPanel1.Controls.Add(createToDoButton);
         flowLayoutPanel1.Dock = DockStyle.Left;
-        flowLayoutPanel1.Location = new Point(3, 3);
+        flowLayoutPanel1.Location = new Point(4, 5);
+        flowLayoutPanel1.Margin = new Padding(4, 5, 4, 5);
         flowLayoutPanel1.Name = "flowLayoutPanel1";
-        flowLayoutPanel1.Size = new Size(107, 444);
+        flowLayoutPanel1.Size = new Size(219, 740);
         flowLayoutPanel1.TabIndex = 2;
         // 
         // createToDoButton
         // 
         createToDoButton.AutoSize = true;
-        createToDoButton.Location = new Point(3, 3);
+        createToDoButton.Location = new Point(4, 5);
+        createToDoButton.Margin = new Padding(4, 5, 4, 5);
         createToDoButton.Name = "createToDoButton";
-        createToDoButton.Size = new Size(101, 25);
+        createToDoButton.Size = new Size(211, 58);
         createToDoButton.TabIndex = 0;
         createToDoButton.Text = "New ToDo Note";
         createToDoButton.UseVisualStyleBackColor = true;
         createToDoButton.Click += createToDoButton_Click;
         // 
-        // ToDoForm
+        // toDoList
         // 
-        AutoScaleDimensions = new SizeF(7F, 15F);
+        toDoList.AutoSize = true;
+        toDoList.Dock = DockStyle.Fill;
+        toDoList.Location = new Point(230, 3);
+        toDoList.MinimumSize = new Size(400, 300);
+        toDoList.Name = "toDoList";
+        toDoList.Size = new Size(910, 744);
+        toDoList.TabIndex = 3;
+        // 
+        // MainForm
+        // 
+        AutoScaleDimensions = new SizeF(10F, 25F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(800, 450);
+        ClientSize = new Size(1143, 750);
         Controls.Add(tableLayoutPanel1);
-        Name = "ToDoForm";
+        Margin = new Padding(4, 5, 4, 5);
+        Name = "MainForm";
         Text = "ToDo App";
         tableLayoutPanel1.ResumeLayout(false);
         tableLayoutPanel1.PerformLayout();
@@ -98,10 +102,8 @@ partial class MainForm
     }
 
     #endregion
-
-    private SaveFileDialog saveFileDialog1;
     private TableLayoutPanel tableLayoutPanel1;
     private Button createToDoButton;
-    private FlowLayoutPanel toDoListLayoutPanel;
     private FlowLayoutPanel flowLayoutPanel1;
+    private ToDoListDisplay toDoList;
 }
