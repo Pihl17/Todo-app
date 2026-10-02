@@ -102,7 +102,7 @@ namespace ToDo_App_test
         {
             Assert.AreEqual(3, toDos.Count);
             Assert.AreEqual("Delete this", toDos[2].Title);
-            toDoHandler.Delete(toDos, 2);
+            toDoHandler.Delete(toDos, toDos[2].Id);
             Assert.AreEqual(2, toDos.Count);
             foreach (var toDo in toDos)
             {

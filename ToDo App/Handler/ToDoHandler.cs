@@ -81,9 +81,13 @@ public class ToDoHandler
     /// </summary>
     /// <param name="todos">The list of ToDo items.</param>
     /// <param name="index">The index of the ToDo item to delete.</param>
-    public void Delete(List<ToDo> todos, int index)
+    public void Delete(List<ToDo> todos, Guid id)
     {
-        todos.RemoveAt(index);
+        var toDoToRemove = todos.FirstOrDefault(t => t.Id == id);
+        if (toDoToRemove != null)
+        {
+            todos.Remove(toDoToRemove);
+        }
     }
     /// <summary>
     /// Marks a ToDo item as done.
