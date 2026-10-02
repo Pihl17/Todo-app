@@ -23,7 +23,7 @@ namespace ToDo_App_test
         {
             ToDo toDo = new ToDo();
 
-            toDo.MarkAsDone();
+            toDo.MarkProgress(ToDoStatus.Done);
 
             Assert.That(toDo.Status, Is.EqualTo(ToDoStatus.Done));
             Assert.That(toDo.CompletionDate, Is.Not.Null);
@@ -50,6 +50,23 @@ namespace ToDo_App_test
             toDo.Priority = invalidPriority;
 
             Assert.That(toDo.Priority, Is.EqualTo(expectedPriority));
+        }
+
+        [Test]
+        public void Constructor_SetsIdThatIsNotEmpty()
+        {
+            ToDo toDo = new ToDo();
+
+            Assert.That(toDo.Id, Is.Not.EqualTo(Guid.Empty));
+        }
+
+        [Test]
+        public void Constructor_TwoDos_HaveDifferentIds()
+        {
+            ToDo first = new ToDo();
+            ToDo second = new ToDo();
+
+            Assert.That(first.Id, Is.Not.EqualTo(second.Id));
         }
     }
 }

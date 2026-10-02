@@ -15,12 +15,13 @@ namespace ToDo_App.Models
 
         private int priority;
 
+        public Guid Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public DateTime? CreationDate { get; set; }
         public DateTime? CompletionDate { get; set; }
         public DateTime? Deadline { get; set; }
-        public ToDoStatus Status { get; set; }
+        public ToDoStatus Status { private set; get; }
         public RepeatInterval Repeat { get; set; }
         public List<ChecklistItem> Checklist { get; set; }
 
@@ -41,6 +42,7 @@ namespace ToDo_App.Models
         /// </summary>
         public ToDo()
         {
+            Id = Guid.NewGuid();
             Title = string.Empty;
             Description = string.Empty;
             CreationDate = DateTime.Now;
@@ -50,12 +52,13 @@ namespace ToDo_App.Models
         }
 
         /// <summary>
-        /// Marks the ToDo as done and sets the completion date to now.
+        /// Marks the ToDo as in progress and sets the completion date to now.
         /// </summary>
-        public void MarkAsDone()
+        public void MarkProgress(ToDoStatus status)
         {
-            Status = ToDoStatus.Done;
-            CompletionDate = DateTime.Now;
+            Status = status;
+            if (status == ToDoStatus.Done)
+                CompletionDate = DateTime.Now;
         }
     }
 }
