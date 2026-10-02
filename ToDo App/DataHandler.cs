@@ -1,11 +1,5 @@
-
-using System.IO;
 using System.Text.Json;
-using System.Text.Json.Nodes;
-using static System.Windows.Forms.Design.AxImporter;
 public class DataHandler {
-
-
     public List<Class1> LoadList(string path) {
         List<Class1> Testlist;
         if(File.Exists(path)){
