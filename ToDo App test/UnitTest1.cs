@@ -11,8 +11,10 @@ namespace ToDo_App_test
 
         [Test]
         public void GenerateTest(){
+            string path = "C:\\Users\\SPAC-B-9\\Desktop\\Projekter\\Todo-app\\ToDo App test\\Test List\\todo.json";
+            Assert.False(File.Exists(path));
             DataHandler TestHandler = new DataHandler();
-            List<Class1> test1 = TestHandler.LoadList();
+            List<Class1> test1 = TestHandler.LoadList(path);
             Assert.AreEqual(0, test1.Count);
 
             for (int i = 0; i < 2; i++){
@@ -26,11 +28,13 @@ namespace ToDo_App_test
                 test1.Add(testobj);
             }
            
-            TestHandler.UpdateList(test1);
-            Assert.True(File.Exists("C:\\Users\\SPAC-B-9\\Desktop\\Projekter\\Todo-app\\Todo Lists\\todo.json"));
-            List<Class1> test2 = TestHandler.LoadList();
+            TestHandler.UpdateList(test1,path);
+            Assert.True(File.Exists(path));
+            List<Class1> test2 = TestHandler.LoadList(path);
             Assert.AreEqual(2, test2.Count);
 
+            File.Delete(path);
+            Assert.False(File.Exists(path));
         }
     }
 }

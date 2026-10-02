@@ -5,9 +5,8 @@ using System.Text.Json.Nodes;
 using static System.Windows.Forms.Design.AxImporter;
 public class DataHandler {
 
-    public string path = "C:\\Users\\SPAC-B-9\\Desktop\\Projekter\\Todo-app\\Todo Lists\\todo.json";
 
-    public List<Class1> LoadList() {
+    public List<Class1> LoadList(string path) {
         List<Class1> Testlist;
         if(File.Exists(path)){
             var jsondata = File.ReadAllText(path);
@@ -18,7 +17,7 @@ public class DataHandler {
         return Testlist;
     }
 
-    public void UpdateList(List<Class1> list) {
+    public void UpdateList(List<Class1> list, string path) {
         var options = new JsonSerializerOptions { WriteIndented = true };
         string jsonString = JsonSerializer.Serialize(list, options);
         File.WriteAllText(path, jsonString);
