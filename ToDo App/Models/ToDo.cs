@@ -32,13 +32,7 @@ namespace ToDo_App.Models
             get { return priority; }
             set
             {
-                if (value < MIN_PRIORITY || value > MAX_PRIORITY)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(value),
-                        "priority must be between 0 and 10.");
-                }
-                priority = value;
-
+                priority = Math.Clamp(value, MIN_PRIORITY, MAX_PRIORITY);
             }
         }
 
