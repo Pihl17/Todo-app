@@ -11,11 +11,16 @@ public class DataHandler {
     public void LoadList() {
         var jsondata = File.ReadAllText(path);
         List<Class1> Testlist = JsonSerializer.Deserialize<List<Class1>>(jsondata);
-        list = Testlist;
+        if(Testlist is not null) {
+            list = Testlist;
+        } else {
+            // run error
+        }
+
+
     }
 
     public void CreateJSON() {
-        Console.WriteLine("Testing");
         if (!File.Exists(path)) {
             List<Class1> emptyList = new List<Class1>();
             var options = new JsonSerializerOptions { WriteIndented = true };
