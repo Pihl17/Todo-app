@@ -10,7 +10,7 @@ public class DataHandler {
 
     public void LoadList() {
         var jsondata = File.ReadAllText(path);
-        List<Class1> Testlist = JsonSerializer.Deserialize<List<Class1>>(jsondata) ?? new List<Class1>();
+        List<Class1> Testlist = JsonSerializer.Deserialize<List<Class1>>(jsondata);
         list = Testlist;
     }
 
