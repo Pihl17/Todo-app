@@ -15,12 +15,12 @@ public partial class ToDoListDisplay : UserControl
         InitializeComponent();
     }
 
-    public void AddToList(UserControl control)
+    public void AddToList(ToDoDisplay todo)
     {
-        listContainer.Controls.Add(control);
+        listContainer.Controls.Add(todo);
     }
 
-    public void RemoveFromList(UserControl control)
+    public void RemoveFromList(ToDoDisplay todo)
     {
         throw new NotImplementedException();
     }
