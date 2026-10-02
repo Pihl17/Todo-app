@@ -1,4 +1,6 @@
-﻿using System.Formats.Tar;
+﻿using NUnit.Framework.Internal;
+using System.Formats.Tar;
+using ToDo_App.Models;
 
 namespace ToDo_App_test
 {
@@ -10,29 +12,27 @@ namespace ToDo_App_test
         }
 
         [Test]
-        public void GenerateTest(){
+        public void LoadTest()
+        {
             string path = "C:\\Users\\SPAC-B-9\\Desktop\\Projekter\\Todo-app\\ToDo App test\\Test List\\todo.json";
             Assert.False(File.Exists(path));
             DataHandler TestHandler = new DataHandler();
-            List<Class1> test1 = TestHandler.LoadList(path);
-            Assert.AreEqual(0, test1.Count);
+            List<ToDo> Testlist = TestHandler.LoadList(path);
+            Assert.AreEqual(0, Testlist.Count);
+        }
 
-            for (int i = 0; i < 2; i++){
-                Random r = new Random();
-                int rInt = r.Next(0, 100);
-                var testobj = new Class1()
-                {
-                    created = DateTime.Now,
-                    value = rInt
-                };
-                test1.Add(testobj);
-            }
-           
-            TestHandler.UpdateList(test1,path);
+        [Test]
+        public void UpdateTest()
+        {
+            string path = "C:\\Users\\SPAC-B-9\\Desktop\\Projekter\\Todo-app\\ToDo App test\\Test List\\todo.json";
+            DataHandler TestHandler = new DataHandler();
+            List<ToDo> Testlist = TestHandler.LoadList(path);
+            ToDo toDo = new ToDo();
+            Testlist.Add(toDo);
+            TestHandler.UpdateList(Testlist, path);
             Assert.True(File.Exists(path));
-            List<Class1> test2 = TestHandler.LoadList(path);
-            Assert.AreEqual(2, test2.Count);
-
+            List<ToDo> UpdatedTestlist = TestHandler.LoadList(path);
+            Assert.AreEqual(1, UpdatedTestlist.Count);
             File.Delete(path);
             Assert.False(File.Exists(path));
         }
