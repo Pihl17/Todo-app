@@ -6,13 +6,12 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace ToDo_App
+namespace ToDo_App.UI;
+
+public partial class ToDoNoteUserControl : UserControl
 {
-    public partial class ToDoNoteUserControl : UserControl
+    public ToDoNoteUserControl()
     {
-        public ToDoNoteUserControl()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }
