@@ -4,9 +4,9 @@ public class DataHandler {
     public List<ToDo> LoadList(string path) {
         if(File.Exists(path)){
             var jsondata = File.ReadAllText(path);
-            return JsonSerializer.Deserialize<List<ToDo>>(jsondata) ?? new List<ToDo>();
+            return JsonSerializer.Deserialize<List<ToDo>>(jsondata) ?? [];
         } else {
-            return new List<ToDo>();
+            return [];
         }
     }
 
