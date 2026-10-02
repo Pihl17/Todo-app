@@ -23,7 +23,7 @@ namespace ToDo_App_test
         {
             ToDo toDo = new ToDo();
 
-            toDo.MarkAsDone();
+            toDo.MarkProgress(ToDoStatus.Done);
 
             Assert.That(toDo.Status, Is.EqualTo(ToDoStatus.Done));
             Assert.That(toDo.CompletionDate, Is.Not.Null);

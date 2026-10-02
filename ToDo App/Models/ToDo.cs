@@ -20,7 +20,7 @@ namespace ToDo_App.Models
         public DateTime? CreationDate { get; set; }
         public DateTime? CompletionDate { get; set; }
         public DateTime? Deadline { get; set; }
-        public ToDoStatus Status { get; set; }
+        public ToDoStatus Status { private set; get; }
         public RepeatInterval Repeat { get; set; }
         public List<ChecklistItem> Checklist { get; set; }
 
@@ -56,12 +56,13 @@ namespace ToDo_App.Models
         }
 
         /// <summary>
-        /// Marks the ToDo as done and sets the completion date to now.
+        /// Marks the ToDo as in progress and sets the completion date to now.
         /// </summary>
-        public void MarkAsDone()
+        public void MarkProgress(ToDoStatus status)
         {
-            Status = ToDoStatus.Done;
-            CompletionDate = DateTime.Now;
+            Status = status;
+            if (status == ToDoStatus.Done)
+                CompletionDate = DateTime.Now;
         }
     }
 }

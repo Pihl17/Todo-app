@@ -1,60 +1,57 @@
 ﻿using System;
 using System.Xml.Linq;
+using ToDo_App.Models;
+
 
 public class ToDoHandler
 {
-
-    public ToDo Edit(ToDo toDo, string newName, string newDescription, DateTime newDeadLine)
+    public ToDo Create(string name, List<ChecklistItem> checklist = null, string desc = "", DateTime? choosenDeadLine = null, RepeatInterval repeat = RepeatInterval.None)
     {
+        var toDo = new ToDo();
+        toDo.Title = name;
+        toDo.Description = desc;
+        toDo.Deadline = choosenDeadLine;
+        toDo.Repeat = repeat;
+        if (checklist != null)
+        {
+            toDo.Checklist = checklist;
+        }
 
-        toDo.taskName = newName;
-        toDo.description = newDescription;
-        toDo.deadLine = newDeadLine;
         return toDo;
     }
-
-    public ToDo Create(string name, string desc, DateTime choosenDeadLine)
+    public void EditName(ToDo toDo, string name)
     {
-        var toDo = new ToDo(name, desc, choosenDeadLine);
-
-        return toDo;
+        toDo.Title = name;
+    }
+    public void EditDescription(ToDo toDo, string desc)
+    {
+        toDo.Description = desc;
+    }
+    public void EditDeadline(ToDo toDo, DateTime? choosenDeadLine)
+    {
+        toDo.Deadline = choosenDeadLine;
+    }
+    public void EditRepeat(ToDo toDo, RepeatInterval repeat)
+    {
+        toDo.Repeat = repeat;
+    }
+    public void EditChecklist(ToDo toDo, List<ChecklistItem> checklist)
+    {
+        toDo.Checklist = checklist;
     }
 
     public void Delete(List<ToDo> todos, int index)
     {
-        //Har vi brug for dette?
         todos.RemoveAt(index);
-
-        //Nok kun hvis vi også gemmer?
-        //Save(todos) ?
     }
 
     public void FinishTask(ToDo toDo)
     {
-        toDo.toDoFinished = true;
+        toDo.MarkProgress(ToDoStatus.Done);
     }
-
-
-}
-
-public class ToDo
-{
-    //Userdefined variables
-    public string taskName {  get; set; }
-    public string description { get; set; }
-    public DateTime? deadLine { get; set; }
-    public bool toDoFinished { get; set; } = false;
-
-    //Systemdefined variables
-    public DateTime creationDate { get; set; } = DateTime.Now;
-    public DateTime? finishDate { get; set; } = null;
-
-
-    public ToDo (string name, string desc, DateTime choosenDeadLine){
-        taskName = name;
-        description = desc;
-        deadLine = choosenDeadLine;
-        
+    public void MarkInProgress(ToDo toDo)
+    {
+        toDo.MarkProgress(ToDoStatus.InProgress);
     }
 
 
