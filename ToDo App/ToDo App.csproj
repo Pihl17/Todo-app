@@ -13,4 +13,8 @@
     <PackageReference Include="NUnit" Version="5.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Files\" />
+  </ItemGroup>
+
 </Project>
