@@ -11,7 +11,9 @@ namespace ToDo_App.UI;
 
 public partial class ToDoDisplay : UserControl
 {
-    
+
+    public Guid ToDoId { private set; get; }
+
     public ToDoDisplay()
     {
         InitializeComponent();
@@ -19,8 +21,23 @@ public partial class ToDoDisplay : UserControl
 
     public ToDoDisplay(ToDo todo)
     {
+        InitializeComponent();
+        ToDoId = todo.Id;
         toDoTitle.Text = todo.Title;
-        toDoDescription.Text = todo.Description; 
+        toDoDescription.Text = todo.Description;
+    }
+
+    /// <summary>
+    /// Checks equality of the todo ID of two ToDoDisplays.
+    /// </summary>
+    /// <param name="obj">Object to compare to</param>
+    /// <returns>boolean indicating true if both objects are ToDoDisplays and share the same ID</returns>
+    public override bool Equals(object? obj)
+    {
+        ToDoDisplay? display = obj as ToDoDisplay;
+        if (display == null)
+            return false;
+        return display.ToDoId == ToDoId;
     }
 
 }

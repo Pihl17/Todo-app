@@ -35,7 +35,7 @@ public class ToDoListDisplayTest
         list.RefreshList();
 
         mock.Verify(x => x.GetToDoList(), Times.AtLeastOnce());
-        Assert.That(list.GetToDos(), Is.EqualTo(returnedToDos).AsCollection);
+        Assert.That(list.GetToDos(), Is.EqualTo(expectedControls));
     }
 
     [Test]
@@ -91,7 +91,7 @@ public class ToDoListDisplayTest
     [Test]
     public void RemoveFromList_RemovesOnlyGivenOneToDo()
     {
-        ToDoDisplay todo = new ToDoDisplay();
+        ToDoDisplay todo = new ToDoDisplay(testToDos[0]);
         ToDoListDisplay list = new ToDoListDisplay(new ToDoDisplay(), todo, new ToDoDisplay());
 
         list.RemoveFromList(todo);
@@ -103,9 +103,9 @@ public class ToDoListDisplayTest
     [Test]
     public void RemoveFromList_ToDoNotInList_ListRemainsUnchanged()
     {
-        ToDoDisplay todo1 = new ToDoDisplay();
-        ToDoDisplay todo2 = new ToDoDisplay();
-        ToDoDisplay nonexistingToDo = new ToDoDisplay();
+        ToDoDisplay todo1 = new ToDoDisplay(testToDos[0]);
+        ToDoDisplay todo2 = new ToDoDisplay(testToDos[1]);
+        ToDoDisplay nonexistingToDo = new ToDoDisplay(testToDos[2]);
         ToDoListDisplay list = new ToDoListDisplay(todo1, todo2);
         var initialList = list.GetToDos();
 
