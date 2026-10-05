@@ -27,13 +27,18 @@ namespace ToDo_App_test
         [Test]
         public void UpdateTest(){
             TestHandler.Path = "../../../Test List/test.json";
+
             List<ToDo> Testlist = TestHandler.LoadList();
             ToDo toDo = new ToDo();
             Testlist.Add(toDo);
+
             TestHandler.UpdateList(Testlist);
+
             Assert.True(File.Exists(TestHandler.Path));
+
             List<ToDo> UpdatedTestlist = TestHandler.LoadList();
             Assert.AreEqual(1, UpdatedTestlist.Count);
+
             File.Delete(TestHandler.Path);
             Assert.False(File.Exists(TestHandler.Path));
         }
