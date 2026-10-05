@@ -37,19 +37,21 @@ partial class ToDoListDisplay
         listContainer.AutoSize = true;
         listContainer.Dock = DockStyle.Fill;
         listContainer.Location = new Point(0, 0);
+        listContainer.Margin = new Padding(2);
         listContainer.Name = "listContainer";
-        listContainer.Size = new Size(400, 300);
+        listContainer.Size = new Size(574, 180);
         listContainer.TabIndex = 0;
         // 
         // ToDoListDisplay
         // 
-        AutoScaleDimensions = new SizeF(10F, 25F);
+        AutoScaleDimensions = new SizeF(7F, 15F);
         AutoScaleMode = AutoScaleMode.Font;
         AutoSize = true;
         Controls.Add(listContainer);
-        MinimumSize = new Size(400, 300);
+        Margin = new Padding(2);
+        MinimumSize = new Size(280, 180);
         Name = "ToDoListDisplay";
-        Size = new Size(400, 300);
+        Size = new Size(574, 180);
         ResumeLayout(false);
         PerformLayout();
     }
