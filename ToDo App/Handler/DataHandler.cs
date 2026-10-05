@@ -15,11 +15,17 @@ public class DataHandler {
             Path = JsonSerializer.Deserialize<string>(jsondata);
         } else {
             string setDeafult = "../../../Files/todoes.json";
-            var options = new JsonSerializerOptions { WriteIndented = true };
-            string jsonString = JsonSerializer.Serialize(setDeafult, options);
+            string jsonString = JsonSerializer.Serialize(setDeafult);
             File.WriteAllText(UserPreferences, jsonString);
             Path = "../../../Files/todoes.json";
         }
+    }
+
+    public void SelectSavePath(string newpath)
+    {
+        string jsonString = JsonSerializer.Serialize(newpath);
+        File.WriteAllText(UserPreferences, jsonString);
+        GetPath();
     }
 
     public List<ToDo> LoadList() {
@@ -35,9 +41,5 @@ public class DataHandler {
         var options = new JsonSerializerOptions { WriteIndented = true };
         string jsonString = JsonSerializer.Serialize(list, options);
         File.WriteAllText(Path, jsonString);
-    }
-
-    public void SelectSavePath(string newpath) {
-
     }
 }
