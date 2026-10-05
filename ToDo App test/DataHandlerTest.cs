@@ -6,27 +6,27 @@ namespace ToDo_App_test
 {
     public class Tests
     {
+        private DataHandler TestHandler;
+
         [SetUp]
         public void Setup()
         {
+            TestHandler = new DataHandler();
+            TestHandler.UserPreferences = "../../../Test List/UserPreferences.json";
+            TestHandler.Path = "../../../Test List/test.json";
         }
 
         [Test]
         public void LoadTest()
         {
-            string path = "../../../Test List/lsit.json";
+            string path = "../../../Test List/test.json";
             Assert.False(File.Exists(path));
-            DataHandler TestHandler = new DataHandler();
-            TestHandler.UserPreferences = "../../../Test List/UserPreferences.json";
             List<ToDo> Testlist = TestHandler.LoadList();
             Assert.AreEqual(0, Testlist.Count);
         }
 
         [Test]
         public void UpdateTest(){
-            DataHandler TestHandler = new DataHandler();
-            TestHandler.UserPreferences = "../../../Test List/UserPreferences.json";
-            TestHandler.Path = "../../../Test List/test.json";
             List<ToDo> Testlist = TestHandler.LoadList();
             ToDo toDo = new ToDo();
             Testlist.Add(toDo);
@@ -40,8 +40,6 @@ namespace ToDo_App_test
 
         [Test]
         public void GetPathTest() {
-            DataHandler TestHandler = new DataHandler();
-            TestHandler.UserPreferences = "../../../Test List/UserPreferences.json";
             TestHandler.GetPath();
             Assert.AreEqual("../../../Files/todoes.json", TestHandler.Path);
 
@@ -55,8 +53,6 @@ namespace ToDo_App_test
         [Test]
         public void PathTest()
         {
-            DataHandler TestHandler = new DataHandler();
-            TestHandler.UserPreferences = "../../../Test List/UserPreferences.json";
             TestHandler.GetPath();
             Assert.AreEqual("../../../Files/todoes.json", TestHandler.Path);
 
