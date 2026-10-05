@@ -29,7 +29,7 @@ public class DataHandler {
     public List<ToDo> LoadList() {
         if(File.Exists(Path)){
             var jsondata = File.ReadAllText(Path);
-            return JsonSerializer.Deserialize<List<ToDo>>(jsondata) ?? [];
+            return JsonSerializer.Deserialize<List<ToDo>>(jsondata);
         } else {
             return [];
         }
