@@ -12,7 +12,7 @@ public class ToDoListDisplayTest
     ToDo[] testToDos = new ToDo[5];
 
     [SetUp]
-    public void SetUp()
+    public void Setup()
     {
         for (int i = 0; i < testToDos.Length; i++)
         {
