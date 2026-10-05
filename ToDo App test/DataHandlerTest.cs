@@ -13,7 +13,6 @@ namespace ToDo_App_test
         {
             TestHandler = new DataHandler();
             TestHandler.UserPreferences = "../../../Test List/UserPreferences.json";
-            TestHandler.Path = "../../../Test List/test.json";
         }
 
         [Test]
@@ -27,6 +26,7 @@ namespace ToDo_App_test
 
         [Test]
         public void UpdateTest(){
+            TestHandler.Path = "../../../Test List/test.json";
             List<ToDo> Testlist = TestHandler.LoadList();
             ToDo toDo = new ToDo();
             Testlist.Add(toDo);

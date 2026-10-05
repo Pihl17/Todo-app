@@ -4,7 +4,7 @@ using ToDo_App.Models;
 using System.Diagnostics;
 public class DataHandler {
 
-    public string Path { get; set; }
+    public string Path { get; set; } = "../../../Files/todoes.json";
     public string UserPreferences { get; set; } = "../../../Files/UserPreferences.json";
 
     public void GetPath()
@@ -14,10 +14,8 @@ public class DataHandler {
             var jsondata = File.ReadAllText(UserPreferences);
             Path = JsonSerializer.Deserialize<string>(jsondata);
         } else {
-            string setDeafult = "../../../Files/todoes.json";
-            string jsonString = JsonSerializer.Serialize(setDeafult);
+            string jsonString = JsonSerializer.Serialize(Path);
             File.WriteAllText(UserPreferences, jsonString);
-            Path = "../../../Files/todoes.json";
         }
     }
 
