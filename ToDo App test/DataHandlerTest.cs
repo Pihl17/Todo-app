@@ -19,7 +19,6 @@ namespace ToDo_App_test
             DataHandler TestHandler = new DataHandler();
             TestHandler.UserPreferences = "../../../Test List/UserPreferences.json";
             List<ToDo> Testlist = TestHandler.LoadList();
-            TestHandler.Path = path;
             Assert.AreEqual(0, Testlist.Count);
         }
 
