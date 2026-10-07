@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 using ToDo_App.Handler;
 using ToDo_App.Models;
 
 namespace ToDo_App_test.Handler
 {
-    internal class RepeatHandlerTest
+    internal class StatusHandlerTest
     {
         private ToDoHandler toDoHandler;
         private List<ToDo> toDos;
@@ -45,6 +46,31 @@ namespace ToDo_App_test.Handler
             doneRepeatablesCount = toDos.Count(toDo => toDo.Repeat != RepeatInterval.None && toDo.Status == ToDoStatus.Done);
             Assert.AreEqual(0, doneRepeatablesCount);
         }
+
+        [TestCase(RepeatInterval.Daily, "2026-10-10")]
+        [TestCase(RepeatInterval.Weekly, "2026-10-16")]
+        [TestCase(RepeatInterval.Monthly, "2026-11-9")]
+        [TestCase(RepeatInterval.Yearly, "2027-10-9")]
+        [TestCase(RepeatInterval.Weekdays, "2026-10-12")]
+        public void UpdateAllRepeatablesTestCases(RepeatInterval repeat, string newDeadline)
+        {
+            var testNewDeadline = DateTime.Parse(newDeadline);
+            var toDo = new ToDo
+            {
+                Title = "Test",
+                Description = "Test",
+                Deadline = new DateTime(2026, 10, 9),
+                Repeat = repeat
+            };
+            toDo.MarkProgress(ToDoStatus.Done);
+            var toDos = new List<ToDo> { toDo };
+
+            statusHandler.UpdateAllRepeatables(toDos);
+            Assert.AreEqual(ToDoStatus.NotDone, toDo.Status);
+            Assert.AreEqual(testNewDeadline, toDo.Deadline);
+
+        }
+
         [Test]
         public void RemoveAllDoneTest()
         {
