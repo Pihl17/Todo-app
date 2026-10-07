@@ -1,3 +1,5 @@
+using ToDo_App.UI;
+
 namespace ToDo_App
 {
     internal static class Program
@@ -11,7 +13,7 @@ namespace ToDo_App
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+            Application.Run(new MainForm());
         }
     }
 }
