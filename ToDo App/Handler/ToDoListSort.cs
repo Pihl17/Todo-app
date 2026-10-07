@@ -9,7 +9,7 @@ namespace ToDo_App.Handler
     {
         /// <summary>
         /// Sorts a list of ToDos by their importance based on both the priority and deadline.
-        /// Higher priority ToDos will be placed before lower priority ones, and among ToDos with the same priority, those with earlier deadlines will come first.
+        /// ToDos will be prioritized by deadline, with those with earlier deadlines coming first, and those that share deadline will then be sorted by priority.
         /// </summary>
         /// <param name="toDos">The list of ToDos to sort.</param>
         public List<ToDo> SortList(List<ToDo> toDos)
