@@ -20,7 +20,7 @@ public partial class MainForm : Form
         if (folder.ShowDialog() == DialogResult.OK)
         {
             DataHandler datahandler = new DataHandler();
-            datahandler.SelectSavePath(folder.SelectedPath);
+            datahandler.SelectSavePath($"{folder.SelectedPath}\\todoes.json");
         }
 
     }
