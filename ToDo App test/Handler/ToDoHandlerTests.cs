@@ -1,6 +1,6 @@
 ﻿using ToDo_App.Models;
 
-namespace ToDo_App_test
+namespace ToDo_App_test.Handler
 {
     public class ToDoHandlerTests
     {
@@ -12,7 +12,7 @@ namespace ToDo_App_test
         {
             toDoHandler = new ToDoHandler();
             toDos = new List<ToDo>();
-            toDos.Add(toDoHandler.Create("Test1", new List<ChecklistItem>(), "Task 1", new DateTime(2026, 1, 1), RepeatInterval.Daily));
+            toDos.Add(toDoHandler.Create("Test1", new List<ChecklistItem>(), 4, "Task 1", new DateTime(2026, 1, 1), RepeatInterval.Daily));
             toDos.Add(toDoHandler.Create("Test2", desc: "Task 2", choosenDeadLine: new DateTime(2026, 2, 1), repeat: RepeatInterval.Weekly));
             toDos.Add(toDoHandler.Create("Delete this", new List<ChecklistItem>(), desc: "Task 3", choosenDeadLine: new DateTime(2026, 3, 1), repeat:  RepeatInterval.None));
 
@@ -23,7 +23,7 @@ namespace ToDo_App_test
         [Test]
         public void CreateTest()
         {
-            toDos.Add(toDoHandler.Create("Test ToDo", new List<ChecklistItem>(), "Test Description", new DateTime(2026, 1, 1), RepeatInterval.Daily));
+            toDos.Add(toDoHandler.Create("Test ToDo", new List<ChecklistItem>(), 7, "Test Description", new DateTime(2026, 1, 1), RepeatInterval.Daily));
             
             Assert.AreEqual(4, toDos.Count);
             Assert.AreEqual("Test ToDo", toDos[3].Title);
@@ -108,6 +108,20 @@ namespace ToDo_App_test
             {
                 Assert.AreNotEqual("Delete this", toDo.Title);
             }
+        }
+
+        public void CheckPriorityTest()
+        {
+            Assert.AreEqual(4, toDos[0].Priority);
+        }
+
+        [TestCase(5, 5)]
+        [TestCase(10, 15)]
+        [TestCase(0, -5)]
+        public void EditPriorityTest(int testPriority, int newPriority)
+        {
+            toDoHandler.EditPriority(toDos[1], newPriority);
+            Assert.AreEqual(testPriority, toDos[1].Priority);
         }
     }
 }
