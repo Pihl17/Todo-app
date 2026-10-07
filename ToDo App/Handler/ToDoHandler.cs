@@ -14,7 +14,7 @@ public class ToDoHandler
     /// <param name="choosenDeadLine">The chosen deadline for the ToDo item.</param>
     /// <param name="repeat">The repeat interval for the ToDo item.</param>
     /// <returns>The created ToDo item.</returns>
-    public ToDo Create(string name, List<ChecklistItem> checklist = null, string desc = "", DateTime? choosenDeadLine = null, RepeatInterval repeat = RepeatInterval.None)
+    public ToDo Create(string name, List<ChecklistItem> checklist = null, int priority = 0, string desc = "", DateTime? choosenDeadLine = null, RepeatInterval repeat = RepeatInterval.None)
     {
         var toDo = new ToDo();
         toDo.Title = name;
@@ -25,6 +25,7 @@ public class ToDoHandler
         {
             toDo.Checklist = checklist;
         }
+        toDo.Priority = priority;
 
         return toDo;
     }
@@ -65,6 +66,15 @@ public class ToDoHandler
     {
         toDo.Repeat = repeat;
     }
+    /// <summary>
+    /// Sets the priority of a ToDo item. The priority is automatically clamped between 0 and 10, where 10 is the highest priority.
+    /// </summary>
+    /// <param name="toDo"></param>
+    /// <param name="priority"></param>
+    public void EditPriority(ToDo toDo, int priority)
+    {
+        toDo.Priority = priority;
+    }
 
     /// <summary>
     /// Edits the checklist of a ToDo item. 
@@ -101,6 +111,5 @@ public class ToDoHandler
     {
         toDo.MarkProgress(ToDoStatus.InProgress);
     }
-
 
 }
