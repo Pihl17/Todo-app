@@ -120,6 +120,12 @@ namespace ToDo_App.Calender
             }
         }
 
+        /// <summary>
+        /// Adds a given number of weekdays to a start date, skipping weekends.
+        /// </summary>
+        /// <param name="start"></param>
+        /// <param name="count"></param>
+        /// <returns></returns>
         private DateTime AddWeekdays(DateTime start, int count)
         {
             DateTime date = start;
@@ -134,5 +140,37 @@ namespace ToDo_App.Calender
             }
             return date;
         }
+
+
+        /// <summary>
+        /// Returns a list of CalendarDay objects for the given month and year, each containing the date and the ToDos that have a deadline or repeat on that date.
+        /// </summary>
+        /// <param name="year"></param>
+        /// <param name="month"></param>
+        /// <returns></returns>
+        public List<CalendarDay> GetToDosInGivenMonth(int year, int month)
+        {
+            var days = new List<CalendarDay>();
+            for (int day = 1; day <= DateTime.DaysInMonth(year, month); day++)
+            {
+                var date = new DateTime(year, month, day);
+                var toDosOfTheDay = GetToDosOnDate(date);
+                {
+                    days.Add(new CalendarDay { Date = date, ToDosOfTheDay = toDosOfTheDay });
+
+                }
+            }
+
+            return days;
+        }
     }
+}
+
+/// <summary>
+/// Represents a day in the calendar with its associated ToDos.
+/// </summary>
+public class CalendarDay
+{
+    public List<ToDo> ToDosOfTheDay { get; set; }
+    public DateTime Date { get; set; }
 }

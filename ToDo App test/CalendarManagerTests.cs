@@ -44,6 +44,16 @@ namespace ToDo_App_test
         }
 
         [Test]
+        public void GetDeadlineDates_NullDeadline_ReturnsEmpty()
+        {
+            CalendarManager calendar = CreateCalendar(CreateToDo(null, RepeatInterval.None));
+
+            List<DateTime> dates = calendar.GetDeadlineDates(OCTOBER_START, OCTOBER_END);
+
+            Assert.That(dates, Is.EqualTo(DatesOf()));
+        }
+
+        [Test]
         public void GetDeadlineDates_EmptyList_ReturnsEmpty()
         {
             CalendarManager calendar = CreateCalendar();
@@ -222,6 +232,58 @@ namespace ToDo_App_test
             List<ToDo> result = calendar.GetToDosOnDate(new DateTime(2026, 10, 13));
 
             Assert.That(result, Is.Empty);
+        }
+        [Test]
+        public void GetToDosInGivenMonthTest_CheckNonRepeatingToDos()
+        {
+            ToDo toDo1 = CreateToDo(new DateTime(2026, 10, 5), RepeatInterval.None);
+            ToDo toDo2 = CreateToDo(new DateTime(2026, 10, 10), RepeatInterval.None);
+            ToDo toDo3 = CreateToDo(new DateTime(2026, 11, 1), RepeatInterval.None);
+
+            CalendarManager calendar = CreateCalendar(toDo1, toDo2, toDo3);
+
+            List<CalendarDay> result = calendar.GetToDosInGivenMonth(2026, 10);
+
+            Assert.That(result, Has.Count.EqualTo(31));
+
+            int actualCount = result.Sum(day => day.ToDosOfTheDay.Count);
+
+            Assert.That(actualCount, Is.EqualTo(2));
+        }
+        [TestCase(RepeatInterval.Daily, 28)]
+        [TestCase(RepeatInterval.Weekly, 4)]
+        [TestCase(RepeatInterval.Monthly, 1)]
+        [TestCase(RepeatInterval.Yearly, 1)]
+        [TestCase(RepeatInterval.Weekdays, 20)]
+        public void GetToDosInGivenMonthTest_CheckRepeatingToDos(RepeatInterval repeatInterval, int expectedCount)
+        {
+            ToDo toDo = CreateToDo(new DateTime(2025, 2, 1), repeatInterval);
+
+            CalendarManager calendar = CreateCalendar(toDo);
+
+            List<CalendarDay> result = calendar.GetToDosInGivenMonth(2026, 2);
+
+            Assert.That(result, Has.Count.EqualTo(28));
+
+            int actualCount = result.Sum(day => day.ToDosOfTheDay.Count);
+
+            Assert.That(actualCount, Is.EqualTo(expectedCount));
+        }
+        // This test checks that a yearly repeating ToDo does not appear in the results for a month that is not the same as its original deadline year.
+        [TestCase(RepeatInterval.Yearly, 0)]
+        public void GetToDosInGivenMonthTest_CheckRepeatingYearly_NoResult(RepeatInterval repeatInterval, int expectedCount)
+        {
+            ToDo toDo = CreateToDo(new DateTime(2025, 2, 1), repeatInterval);
+
+            CalendarManager calendar = CreateCalendar(toDo);
+
+            List<CalendarDay> result = calendar.GetToDosInGivenMonth(2026, 3);
+
+            Assert.That(result, Has.Count.EqualTo(31));
+
+            int actualCount = result.Sum(day => day.ToDosOfTheDay.Count);
+
+            Assert.That(actualCount, Is.EqualTo(expectedCount));
         }
     }
 }
