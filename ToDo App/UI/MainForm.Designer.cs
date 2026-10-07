@@ -38,6 +38,7 @@ partial class MainForm
         toolStripSeparator1 = new ToolStripSeparator();
         todosToolStripDropDown = new ToolStripDropDownButton();
         createNewTodoToolStripMenuItem = new ToolStripMenuItem();
+        SelectSavePath = new ToolStripButton();
         toolStripContainer.ContentPanel.SuspendLayout();
         toolStripContainer.TopToolStripPanel.SuspendLayout();
         toolStripContainer.SuspendLayout();
@@ -104,10 +105,10 @@ partial class MainForm
         topToolStrip.Dock = DockStyle.None;
         topToolStrip.GripStyle = ToolStripGripStyle.Hidden;
         topToolStrip.ImageScalingSize = new Size(24, 24);
-        topToolStrip.Items.AddRange(new ToolStripItem[] { createNewToDotoolStripButton, toolStripSeparator1, todosToolStripDropDown });
+        topToolStrip.Items.AddRange(new ToolStripItem[] { createNewToDotoolStripButton, toolStripSeparator1, todosToolStripDropDown, SelectSavePath });
         topToolStrip.Location = new Point(4, 0);
         topToolStrip.Name = "topToolStrip";
-        topToolStrip.Size = new Size(168, 34);
+        topToolStrip.Size = new Size(311, 34);
         topToolStrip.TabIndex = 0;
         // 
         // createNewToDotoolStripButton
@@ -139,6 +140,16 @@ partial class MainForm
         createNewTodoToolStripMenuItem.Name = "createNewTodoToolStripMenuItem";
         createNewTodoToolStripMenuItem.Size = new Size(246, 34);
         createNewTodoToolStripMenuItem.Text = "Create new Todo";
+        // 
+        // SelectSavePath
+        // 
+        SelectSavePath.DisplayStyle = ToolStripItemDisplayStyle.Text;
+        SelectSavePath.Image = (Image)resources.GetObject("SelectSavePath.Image");
+        SelectSavePath.ImageTransparentColor = Color.Magenta;
+        SelectSavePath.Name = "SelectSavePath";
+        SelectSavePath.Size = new Size(143, 29);
+        SelectSavePath.Text = "Select save path";
+        SelectSavePath.Click += SelectSavePath_Click;
         // 
         // MainForm
         // 
@@ -172,4 +183,5 @@ partial class MainForm
     private TabPage listTabPage;
     private ToolStripButton createNewToDotoolStripButton;
     private ToolStripSeparator toolStripSeparator1;
+    private ToolStripButton SelectSavePath;
 }
