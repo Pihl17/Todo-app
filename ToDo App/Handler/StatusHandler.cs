@@ -56,7 +56,7 @@ namespace ToDo_App.Handler
 
         public void RemoveAllDone(List<ToDo> toDos, DateTime date)
         {
-            toDos.RemoveAll(toDo => toDo.Status == ToDoStatus.Done && toDo.CompletionDate <= date && toDo.Repeat == RepeatInterval.None);
+            toDos.RemoveAll(toDo => toDo.Status == ToDoStatus.Done && toDo.Deadline <= date && toDo.Repeat == RepeatInterval.None);
         }
     }
 }
