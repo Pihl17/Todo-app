@@ -18,10 +18,9 @@ public class ToDoDisplayTest
         }
     }
 
-    [Test]
-    [TestCase(true, 0, 0, TestName = "{m}: Same two todos")]
-    [TestCase(false, 0, 1, TestName = "{m}: Two different todos")]
-    [TestCase(false, 0, -1, TestName = "{m}: compared with null")]
+    [TestCase(true, 0, 0)]
+    [TestCase(false, 0, 1)]
+    [TestCase(false, 0, -1)]
     public void Equals_Returns(bool expected, int firstIndex, int secondIndex)
     {
         ToDoDisplay display1 = new ToDoDisplay(testToDos[firstIndex]);
