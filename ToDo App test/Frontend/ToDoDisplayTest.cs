@@ -8,7 +8,7 @@ public class ToDoDisplayTest
 
     ToDo[] testToDos = new ToDo[2];
 
-    [SetUp]
+    [OneTimeSetUp]
     public void Setup()
     {
         for (int i = 0; i < testToDos.Length; i++)
@@ -19,9 +19,9 @@ public class ToDoDisplayTest
     }
 
     [Test]
-    [TestCase(true, 0, 0, TestName = "Same two todos")]
-    [TestCase(false, 0, 1, TestName = "Two different todos")]
-    [TestCase(false, 0, -1, TestName = "compared with null")]
+    [TestCase(true, 0, 0, TestName = "{m}: Same two todos")]
+    [TestCase(false, 0, 1, TestName = "{m}: Two different todos")]
+    [TestCase(false, 0, -1, TestName = "{m}: compared with null")]
     public void Equals_Returns(bool expected, int firstIndex, int secondIndex)
     {
         ToDoDisplay display1 = new ToDoDisplay(testToDos[firstIndex]);

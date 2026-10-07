@@ -14,11 +14,19 @@ public partial class ToDoDisplay : UserControl
 
     public Guid ToDoId { private set; get; }
 
+    /// <summary>
+    /// Constructs a ToDoDisplay without any ToDo attatched.
+    /// It will have a default Title and Description set and the ID set as the default for Guids.
+    /// </summary>
     public ToDoDisplay()
     {
         InitializeComponent();
     }
 
+    /// <summary>
+    /// Construsts a ToDoDisplay with a given ToDo, setting the Title, Description and ID to the ToDo's.
+    /// </summary>
+    /// <param name="todo">The ToDo that the display will describe.</param>
     public ToDoDisplay(ToDo todo)
     {
         InitializeComponent();
