@@ -4,37 +4,56 @@ using ToDo_App.Models;
 
 namespace ToDo_App_test
 {
-    public class Tests
+    public class DataHandlerTests
     {
-        [SetUp]
+        private DataHandler TestHandler;
+
+        //setup Testhandler
+        [OneTimeSetUp]
         public void Setup()
         {
+            TestHandler = new DataHandler();
+            TestHandler.UserPreferences = "../../../Test List/UserPreferences.json";
+            TestHandler.Path = "../../../Test List/todoes.json";
         }
 
         [Test]
-        public void LoadTest()
-        {
-            string path = ".\\todo.json";
-            Assert.False(File.Exists(path));
-            DataHandler TestHandler = new DataHandler();
-            List<ToDo> Testlist = TestHandler.LoadList(path);
-            Assert.AreEqual(0, Testlist.Count);
-        }
+        public void Load_And_Update_List_Test(){
+            Assert.False(File.Exists(TestHandler.Path));
 
-        [Test]
-        public void UpdateTest()
-        {
-            string path = ".\\todo.json";
-            DataHandler TestHandler = new DataHandler();
-            List<ToDo> Testlist = TestHandler.LoadList(path);
+            List<ToDo> Testlist = TestHandler.LoadList();
             ToDo toDo = new ToDo();
             Testlist.Add(toDo);
-            TestHandler.UpdateList(Testlist, path);
-            Assert.True(File.Exists(path));
-            List<ToDo> UpdatedTestlist = TestHandler.LoadList(path);
+
+            TestHandler.UpdateList(Testlist);
+
+            Assert.True(File.Exists(TestHandler.Path));
+
+            List<ToDo> UpdatedTestlist = TestHandler.LoadList();
             Assert.AreEqual(1, UpdatedTestlist.Count);
-            File.Delete(path);
-            Assert.False(File.Exists(path));
+        }
+
+        [Test]
+        public void Get_And_Set_Path_Test()
+        {
+            TestHandler.GetPath();
+            Assert.AreEqual("../../../Test List/todoes.json", TestHandler.Path);
+
+            TestHandler.SelectSavePath("Test");
+            Assert.AreEqual("Test", TestHandler.Path);
+
+            TestHandler.SelectSavePath("../../../Test List/todoes.json");
+
+            TestHandler.GetPath();
+            Assert.AreEqual("../../../Test List/UserPreferences.json", TestHandler.UserPreferences);
+            Assert.AreEqual("../../../Test List/todoes.json", TestHandler.Path);
+        }
+
+        //cleanup after test
+        [OneTimeTearDown]
+        public void Cleanup() {
+            File.Delete(TestHandler.UserPreferences);
+            File.Delete(TestHandler.Path);
         }
     }
 }
