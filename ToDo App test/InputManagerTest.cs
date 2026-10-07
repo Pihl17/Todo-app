@@ -33,7 +33,10 @@ public class InputManagerTest
     [Test]
     public void CreateNewToDo_CreatesNewEmptyToDoAndAddsItToTheList()
     {
-        Assert.Fail();
+        int expected = inputManager.ToDos.Count + 1;
+        inputManager.CreateNewToDo();
+
+        Assert.AreEqual(expected, inputManager.ToDos.Count);
     }
 
     [Test]

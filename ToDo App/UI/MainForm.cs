@@ -1,4 +1,5 @@
 using ToDo_App.Input;
+using ToDo_App.Models;
 
 namespace ToDo_App.UI;
 
@@ -6,6 +7,7 @@ public partial class MainForm : Form
 {
 
     private IInputHandling inputHandler;
+    public ToDoListDisplay ToDoList { get { return toDoList; } }
 
     public MainForm(IInputHandling inputHandler)
     {
@@ -15,4 +17,9 @@ public partial class MainForm : Form
         toDoList.RefreshList();
     }
 
+    public void createNewToDotoolStripButton_Click(object sender, EventArgs e)
+    {
+        ToDo createdToDo = inputHandler.CreateNewToDo();
+        toDoList.AddToList(new ToDoDisplay(createdToDo));
+    }
 }

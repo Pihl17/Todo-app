@@ -40,7 +40,9 @@ public class InputManager : IInputHandling
 
     public ToDo CreateNewToDo()
     {
-        throw new NotImplementedException();
+        ToDo createdToDo = toDoHandler.Create("Insert title");
+        ToDos.Add(createdToDo);
+        return createdToDo;
     }
 
     public void DeleteToDo(ToDo todo)
