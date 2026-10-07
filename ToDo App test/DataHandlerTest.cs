@@ -13,14 +13,8 @@ namespace ToDo_App_test
         [OneTimeSetUp]
         public void Setup()
         {
-            if (!Directory.Exists("../../../Test Folder One"))
-            {
-                Directory.CreateDirectory("../../../Test Folder One");
-            }
-            if (!Directory.Exists("../../../Test Folder Two"))
-            {
-                Directory.CreateDirectory("../../../Test Folder Two");
-            }
+            Directory.CreateDirectory("../../../Test Folder One");
+            Directory.CreateDirectory("../../../Test Folder Two");
             TestHandler = new DataHandler();
             TestHandler.UserPreferences = "../../../Test Folder One/UserPreferences.json";
             TestHandler.Path = "../../../Test Folder One/todoes.json";
@@ -50,7 +44,7 @@ namespace ToDo_App_test
 
             TestHandler.SelectSavePath("../../../Test Folder Two/todoes.json");
             Assert.AreEqual("../../../Test Folder Two/todoes.json", TestHandler.Path);
-            Assert.True(File.Exists("../../../Test Folder two/todoes.json"));
+            Assert.True(File.Exists("../../../Test Folder Two/todoes.json"));
 
             TestHandler.SelectSavePath("../../../Test Folder One/todoes.json");
 
