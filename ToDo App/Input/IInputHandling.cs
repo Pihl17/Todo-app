@@ -12,5 +12,25 @@ public interface IInputHandling
     /// </summary>
     /// <returns>List of the user's current ToDos</returns>
     List<ToDo> GetToDoList();
+    
+    /// <summary>
+    /// Creates a new todo and adds it to the list.
+    /// </summary>
+    /// <returns>The newly created todo</returns>
+    ToDo CreateNewToDo();
+
+    /// <summary>
+    /// Deletes a todo from the list.
+    /// </summary>
+    /// <param name="todo">The todo to delete</param>
+    void DeleteToDo(ToDo todo);
+
+    /// <summary>
+    /// Sets new filepath for the system to save the todo list to.
+    /// </summary>
+    /// <param name="path">The new filepath for the save file</param>
+    void SetNewSavePath(string path);
+
+
 
 }
