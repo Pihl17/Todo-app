@@ -1,3 +1,4 @@
+using ToDo_App.Input;
 using ToDo_App.UI;
 
 namespace ToDo_App
@@ -13,7 +14,8 @@ namespace ToDo_App
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new MainForm());
+            InputManager inputManager = new InputManager();
+            Application.Run(new MainForm(inputManager));
         }
     }
 }
