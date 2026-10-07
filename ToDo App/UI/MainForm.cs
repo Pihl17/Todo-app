@@ -12,7 +12,7 @@ public partial class MainForm : Form
         this.inputHandler = inputHandler;
         InitializeComponent();
         toDoList.inputHandler = inputHandler;
-        //toDoList.RefreshList(); Uncomment when the Inputmanager is ready
+        toDoList.RefreshList();
     }
 
 }
