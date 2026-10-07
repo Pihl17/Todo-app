@@ -16,7 +16,7 @@ public class InputManager : IInputHandling
     DataHandler dataHandler;
     ToDoListSort listSorter;
 
-    private List<ToDo> toDos = new List<ToDo>();
+    public List<ToDo> ToDos { get; private set; } = new List<ToDo>();
     
     /// <summary>
     /// Constructs the InputManager with all the needed dependencies.
@@ -28,14 +28,14 @@ public class InputManager : IInputHandling
     {
         this.toDoHandler = toDoHandler;
         this.dataHandler = dataHandler;
-        toDos = this.dataHandler.LoadList();
+        ToDos = this.dataHandler.LoadList();
         listSorter = toDoListSort;
     }
 
     public List<ToDo> GetToDoList()
     {
-        toDos = listSorter.SortList(toDos);
-        return toDos;
+        ToDos = listSorter.SortList(ToDos);
+        return ToDos;
     }
 
     public ToDo CreateNewToDo()
