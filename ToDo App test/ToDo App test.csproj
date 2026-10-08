@@ -30,8 +30,4 @@
 		<ProjectReference Include="..\ToDo App\ToDo App.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Test List\" />
-	</ItemGroup>
-
 </Project>
