@@ -1,0 +1,56 @@
+<svg viewBox="213 233 1046 370" xmlns="http://www.w3.org/2000/svg">
+<defs><filter id="shadow" x="-10%" y="-10%">
+  <feGaussianBlur in="SourceGraphic" stdDeviation="1" />
+</filter></defs><g transform="translate(0.5,0.5)" stroke-width="0.75">
+<text x="264" y="383" font-size="11.75px" font-family="Arial, Helvetica, sans-serif" font-weight="normal" font-style="normal" text-anchor="middle">User</text>
+<path d="M 264 336 Q 272 336 272 328 Q 272 320 264 320 Q 256 320 256 328 Q 256 336 264 336 L 264 356 M 252 342 L 276 342 M 250 371 L 264 356 L 279 371" stroke="black" fill="none"/>
+<ellipse rx="76" ry="20" cx="898" cy="262" stroke="none" fill="lightgray" style="filter:url(#shadow);"/>
+<ellipse rx="76" ry="20" cx="896" cy="260" stroke="black" fill="white"/>
+<text x="896" y="265" font-size="11.75px" font-family="Arial, Helvetica, sans-serif" font-weight="normal" font-style="normal" text-anchor="middle">Set Properties on ToDo</text>
+<ellipse rx="74" ry="20" cx="636" cy="332" stroke="none" fill="lightgray" style="filter:url(#shadow);"/>
+<ellipse rx="74" ry="20" cx="634" cy="330" stroke="black" fill="white"/>
+<text x="634" y="335" font-size="11.75px" font-family="Arial, Helvetica, sans-serif" font-weight="normal" font-style="normal" text-anchor="middle">Create new ToDo note</text>
+<ellipse rx="64" ry="20" cx="636" cy="492" stroke="none" fill="lightgray" style="filter:url(#shadow);"/>
+<ellipse rx="64" ry="20" cx="634" cy="490" stroke="black" fill="white"/>
+<text x="634" y="495" font-size="11.75px" font-family="Arial, Helvetica, sans-serif" font-weight="normal" font-style="normal" text-anchor="middle">Open a ToDo note</text>
+<ellipse rx="78" ry="20" cx="840" cy="422" stroke="none" fill="lightgray" style="filter:url(#shadow);"/>
+<ellipse rx="78" ry="20" cx="838" cy="420" stroke="black" fill="white"/>
+<text x="838" y="425" font-size="11.75px" font-family="Arial, Helvetica, sans-serif" font-weight="normal" font-style="normal" text-anchor="middle">Edit Properties on ToDo</text>
+<ellipse rx="62" ry="20" cx="834" cy="492" stroke="none" fill="lightgray" style="filter:url(#shadow);"/>
+<ellipse rx="62" ry="20" cx="832" cy="490" stroke="black" fill="white"/>
+<text x="832" y="495" font-size="11.75px" font-family="Arial, Helvetica, sans-serif" font-weight="normal" font-style="normal" text-anchor="middle">Mark as complete</text>
+<ellipse rx="55" ry="20" cx="827" cy="562" stroke="none" fill="lightgray" style="filter:url(#shadow);"/>
+<ellipse rx="55" ry="20" cx="825" cy="560" stroke="black" fill="white"/>
+<text x="825" y="565" font-size="11.75px" font-family="Arial, Helvetica, sans-serif" font-weight="normal" font-style="normal" text-anchor="middle">Delete ToDo</text>
+<text x="1216" y="523" font-size="11.75px" font-family="Arial, Helvetica, sans-serif" font-weight="normal" font-style="normal" text-anchor="middle">Database/File</text>
+<path d="M 1216 476 Q 1224 476 1224 468 Q 1224 460 1216 460 Q 1208 460 1208 468 Q 1208 476 1216 476 L 1216 496 M 1204 482 L 1228 482 M 1202 511 L 1216 496 L 1231 511" stroke="black" fill="none"/>
+<ellipse rx="55" ry="20" cx="1027" cy="482" stroke="none" fill="lightgray" style="filter:url(#shadow);"/>
+<ellipse rx="55" ry="20" cx="1025" cy="480" stroke="black" fill="white"/>
+<text x="1025" y="485" font-size="11.75px" font-family="Arial, Helvetica, sans-serif" font-weight="normal" font-style="normal" text-anchor="middle">Save ToDo</text>
+<ellipse rx="64" ry="20" cx="446" cy="422" stroke="none" fill="lightgray" style="filter:url(#shadow);"/>
+<ellipse rx="64" ry="20" cx="444" cy="420" stroke="black" fill="white"/>
+<text x="444" y="425" font-size="11.75px" font-family="Arial, Helvetica, sans-serif" font-weight="normal" font-style="normal" text-anchor="middle">Open list of ToDos</text>
+<ellipse rx="55" ry="20" cx="447" cy="512" stroke="none" fill="lightgray" style="filter:url(#shadow);"/>
+<ellipse rx="55" ry="20" cx="445" cy="510" stroke="black" fill="white"/>
+<text x="445" y="515" font-size="11.75px" font-family="Arial, Helvetica, sans-serif" font-weight="normal" font-style="normal" text-anchor="middle">Load list</text>
+<text x="256" y="593" font-size="11.75px" font-family="Arial, Helvetica, sans-serif" font-weight="normal" font-style="normal" text-anchor="middle">Database/File</text>
+<path d="M 256 546 Q 264 546 264 538 Q 264 530 256 530 Q 248 530 248 538 Q 248 546 256 546 L 256 566 M 244 552 L 268 552 M 242 581 L 256 566 L 271 581" stroke="black" fill="none"/>
+<path d="M 278 358 L 384 413" stroke="black" fill="none"/>
+<path d="M 504 427 L 574 483" stroke="black" fill="none"/>
+<path d="M 695 483 L 764 427" stroke="black" fill="none"/>
+<path d="M 694 497 L 773 553" stroke="black" fill="none"/>
+<path d="M 502 412 L 567 338" stroke="black" fill="none"/>
+<path d="M 392 516 L 292 553" stroke="black" fill="none"/>
+<path d="M 705 325 L 823 265" stroke="black" fill="none" stroke-dasharray="3.0 3.0"/>
+<path d="M 823 265 L 813 264 M 818 273 L 823 265" stroke="black" fill="white"/>
+<text x="764" y="262" font-size="11.75px" font-family="Arial, Helvetica, sans-serif" font-weight="normal" font-style="normal" text-anchor="middle">«extend»</text>
+<path d="M 698 490 L 770 490" stroke="black" fill="none"/>
+<path d="M 912 426 L 973 474" stroke="black" fill="none"/>
+<path d="M 894 489 L 970 481" stroke="black" fill="none"/>
+<path d="M 1180 490 L 1080 481" stroke="black" fill="none"/>
+<path d="M 1180 483 L 705 336" stroke="black" fill="none"/>
+<path d="M 879 557 L 1180 499" stroke="black" fill="none"/>
+<path d="M 445 440 L 444 490" stroke="black" fill="none" stroke-dasharray="3.0 3.0"/>
+<path d="M 444 490 L 449 481 M 439 481 L 444 490" stroke="black" fill="white"/>
+<text x="444" y="437" font-size="11.75px" font-family="Arial, Helvetica, sans-serif" font-weight="normal" font-style="normal" text-anchor="middle">«include»</text>
+</g></svg>

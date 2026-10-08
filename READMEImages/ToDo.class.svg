@@ -1,0 +1,52 @@
+<svg viewBox="193 53 594 414" xmlns="http://www.w3.org/2000/svg">
+<defs><filter id="shadow" x="-10%" y="-10%">
+  <feGaussianBlur in="SourceGraphic" stdDeviation="1" />
+</filter></defs><g transform="translate(0.5,0.5)" stroke-width="0.75">
+<rect width="146" height="116" x="202" y="162" stroke="none" fill="lightgray" style="filter:url(#shadow);"/>
+<rect width="146" height="116" x="200" y="160" stroke="black" fill="white"/>
+<text x="273" y="179" font-size="11.75px" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-style="normal" text-anchor="middle">ToDoHandler</text>
+<line x1="200" y1="188" x2="346" y2="188" stroke="black"/>
+<text x="207" y="206" font-size="11.75px" font-family="Arial, Helvetica, sans-serif" font-weight="normal" font-style="normal" text-anchor="start">+ toDos : List&lt;ToDo&gt;</text>
+<line x1="200" y1="216" x2="346" y2="216" stroke="black"/>
+<text x="207" y="234" font-size="11.75px" font-family="Arial, Helvetica, sans-serif" font-weight="normal" font-style="normal" text-anchor="start">+Edit(ToDo toDo) : ToDo</text>
+<text x="207" y="250" font-size="11.75px" font-family="Arial, Helvetica, sans-serif" font-weight="normal" font-style="normal" text-anchor="start">+Create()</text>
+<text x="207" y="266" font-size="11.75px" font-family="Arial, Helvetica, sans-serif" font-weight="normal" font-style="normal" text-anchor="start">+Delete()</text>
+<rect width="100" height="60" x="222" y="62" stroke="none" fill="lightgray" style="filter:url(#shadow);"/>
+<rect width="100" height="60" x="220" y="60" stroke="black" fill="white"/>
+<text x="270" y="81" font-size="11.75px" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-style="normal" text-anchor="middle">ToDo</text>
+<line x1="220" y1="92" x2="320" y2="92" stroke="black"/>
+<text x="227" y="110" font-size="11.75px" font-family="Arial, Helvetica, sans-serif" font-weight="normal" font-style="normal" text-anchor="start">+ ToDo(): ToDo</text>
+<rect width="100" height="60" x="682" y="62" stroke="none" fill="lightgray" style="filter:url(#shadow);"/>
+<rect width="100" height="60" x="680" y="60" stroke="black" fill="white"/>
+<text x="730" y="95" font-size="11.75px" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-style="normal" text-anchor="middle">Form</text>
+<rect width="207" height="60" x="402" y="62" stroke="none" fill="lightgray" style="filter:url(#shadow);"/>
+<rect width="207" height="60" x="400" y="60" stroke="black" fill="white"/>
+<text x="503" y="81" font-size="11.75px" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-style="normal" text-anchor="middle">NoteSorter</text>
+<line x1="400" y1="92" x2="607" y2="92" stroke="black"/>
+<text x="407" y="110" font-size="11.75px" font-family="Arial, Helvetica, sans-serif" font-weight="normal" font-style="normal" text-anchor="start">+ Sort(list: List&lt;ToDo&gt;): List&lt;ToDo&gt;</text>
+<rect width="266" height="72" x="472" y="282" stroke="none" fill="lightgray" style="filter:url(#shadow);"/>
+<rect width="266" height="72" x="470" y="280" stroke="black" fill="white"/>
+<text x="603" y="299" font-size="11.75px" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-style="normal" text-anchor="middle">DataHandler</text>
+<line x1="470" y1="308" x2="736" y2="308" stroke="black"/>
+<text x="477" y="326" font-size="11.75px" font-family="Arial, Helvetica, sans-serif" font-weight="normal" font-style="normal" text-anchor="start">+ SaveList(string filePath, list: List&lt;ToDo&gt;): void</text>
+<text x="477" y="342" font-size="11.75px" font-family="Arial, Helvetica, sans-serif" font-weight="normal" font-style="normal" text-anchor="start">+ LoadList(string filePath): List&lt;ToDo&gt;</text>
+<rect width="131" height="60" x="532" y="172" stroke="none" fill="lightgray" style="filter:url(#shadow);"/>
+<rect width="131" height="60" x="530" y="170" stroke="black" fill="white"/>
+<text x="595" y="191" font-size="11.75px" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-style="normal" text-anchor="middle">InputManager</text>
+<line x1="530" y1="202" x2="661" y2="202" stroke="black"/>
+<text x="537" y="220" font-size="11.75px" font-family="Arial, Helvetica, sans-serif" font-weight="normal" font-style="normal" text-anchor="start">-ToDoList List&lt;ToDo&gt;</text>
+<rect width="104" height="60" x="552" y="402" stroke="none" fill="lightgray" style="filter:url(#shadow);"/>
+<rect width="104" height="60" x="550" y="400" stroke="black" fill="white"/>
+<text x="602" y="435" font-size="11.75px" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-style="normal" text-anchor="middle">File or Database</text>
+<path d="M 270 160 L 270 120" stroke="black" fill="none" stroke-dasharray="3.0 3.0"/>
+<path d="M 270 120 L 265 129 M 275 129 L 270 120" stroke="black" fill="white"/>
+<path d="M 530 200 L 438 200 L 438 210 L 346 210" stroke="black" fill="none"/>
+<path d="M 600 230 L 600 255 L 600 255 L 600 280" stroke="black" fill="none"/>
+<path d="M 600 352 L 600 376 L 600 376 L 600 400" stroke="black" fill="none"/>
+<path d="M 600 400 L 605 391 M 595 391 L 600 400" stroke="black" fill="white"/>
+<path d="M 346 220 L 408 220 L 408 320 L 470 320" stroke="black" fill="none"/>
+<path d="M 400 90 L 320 90" stroke="black" fill="none" stroke-dasharray="3.0 3.0"/>
+<path d="M 320 90 L 329 95 M 329 85 L 320 90" stroke="black" fill="white"/>
+<path d="M 600 170 L 600 145 L 730 145 L 730 120" stroke="black" fill="none"/>
+<path d="M 600 170 L 600 145 L 500 145 L 500 120" stroke="black" fill="none"/>
+</g></svg>
