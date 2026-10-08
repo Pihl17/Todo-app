@@ -7,7 +7,6 @@ using ToDo_App.Calender;
 
 namespace ToDo_App_test
 {
-    [TestFixture]
     public class CalendarManagerTests
     {
         private static readonly DateTime OCTOBER_START = new DateTime(2026, 10, 1);
