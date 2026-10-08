@@ -1,0 +1,187 @@
+﻿namespace ToDo_App.UI;
+
+partial class MainForm
+{
+    /// <summary>
+    ///  Required designer variable.
+    /// </summary>
+    private System.ComponentModel.IContainer components = null;
+
+    /// <summary>
+    ///  Clean up any resources being used.
+    /// </summary>
+    /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing && (components != null))
+        {
+            components.Dispose();
+        }
+        base.Dispose(disposing);
+    }
+
+    #region Windows Form Designer generated code
+
+    /// <summary>
+    ///  Required method for Designer support - do not modify
+    ///  the contents of this method with the code editor.
+    /// </summary>
+    private void InitializeComponent()
+    {
+        System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+        toolStripContainer = new ToolStripContainer();
+        tabControl = new TabControl();
+        listTabPage = new TabPage();
+        toDoList = new ToDoListDisplay();
+        topToolStrip = new ToolStrip();
+        createNewToDotoolStripButton = new ToolStripButton();
+        toolStripSeparator1 = new ToolStripSeparator();
+        todosToolStripDropDown = new ToolStripDropDownButton();
+        createNewTodoToolStripMenuItem = new ToolStripMenuItem();
+        SelectSavePath = new ToolStripButton();
+        toolStripContainer.ContentPanel.SuspendLayout();
+        toolStripContainer.TopToolStripPanel.SuspendLayout();
+        toolStripContainer.SuspendLayout();
+        tabControl.SuspendLayout();
+        listTabPage.SuspendLayout();
+        topToolStrip.SuspendLayout();
+        SuspendLayout();
+        // 
+        // toolStripContainer
+        // 
+        // 
+        // toolStripContainer.ContentPanel
+        // 
+        toolStripContainer.ContentPanel.Controls.Add(tabControl);
+        toolStripContainer.ContentPanel.Margin = new Padding(4, 5, 4, 5);
+        toolStripContainer.ContentPanel.Size = new Size(1143, 716);
+        toolStripContainer.Dock = DockStyle.Fill;
+        toolStripContainer.Location = new Point(0, 0);
+        toolStripContainer.Margin = new Padding(4, 5, 4, 5);
+        toolStripContainer.Name = "toolStripContainer";
+        toolStripContainer.Size = new Size(1143, 750);
+        toolStripContainer.TabIndex = 0;
+        toolStripContainer.Text = "toolStripContainer1";
+        // 
+        // toolStripContainer.TopToolStripPanel
+        // 
+        toolStripContainer.TopToolStripPanel.Controls.Add(topToolStrip);
+        // 
+        // tabControl
+        // 
+        tabControl.Controls.Add(listTabPage);
+        tabControl.Dock = DockStyle.Fill;
+        tabControl.Location = new Point(0, 0);
+        tabControl.Margin = new Padding(4, 5, 4, 5);
+        tabControl.Name = "tabControl";
+        tabControl.SelectedIndex = 0;
+        tabControl.Size = new Size(1143, 716);
+        tabControl.TabIndex = 0;
+        // 
+        // listTabPage
+        // 
+        listTabPage.Controls.Add(toDoList);
+        listTabPage.Location = new Point(4, 34);
+        listTabPage.Margin = new Padding(4, 5, 4, 5);
+        listTabPage.Name = "listTabPage";
+        listTabPage.Padding = new Padding(4, 5, 4, 5);
+        listTabPage.Size = new Size(1135, 678);
+        listTabPage.TabIndex = 0;
+        listTabPage.Text = "List";
+        listTabPage.UseVisualStyleBackColor = true;
+        // 
+        // toDoList
+        // 
+        toDoList.AutoSize = true;
+        toDoList.Dock = DockStyle.Fill;
+        toDoList.Location = new Point(4, 5);
+        toDoList.MinimumSize = new Size(400, 300);
+        toDoList.Name = "toDoList";
+        toDoList.Size = new Size(1127, 668);
+        toDoList.TabIndex = 0;
+        // 
+        // topToolStrip
+        // 
+        topToolStrip.Dock = DockStyle.None;
+        topToolStrip.GripStyle = ToolStripGripStyle.Hidden;
+        topToolStrip.ImageScalingSize = new Size(24, 24);
+        topToolStrip.Items.AddRange(new ToolStripItem[] { createNewToDotoolStripButton, toolStripSeparator1, todosToolStripDropDown, SelectSavePath });
+        topToolStrip.Location = new Point(4, 0);
+        topToolStrip.Name = "topToolStrip";
+        topToolStrip.Size = new Size(311, 34);
+        topToolStrip.TabIndex = 0;
+        // 
+        // createNewToDotoolStripButton
+        // 
+        createNewToDotoolStripButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
+        createNewToDotoolStripButton.Image = (Image)resources.GetObject("createNewToDotoolStripButton.Image");
+        createNewToDotoolStripButton.ImageTransparentColor = Color.Magenta;
+        createNewToDotoolStripButton.Name = "createNewToDotoolStripButton";
+        createNewToDotoolStripButton.Size = new Size(34, 29);
+        createNewToDotoolStripButton.Text = "Create new Todo";
+        // 
+        // toolStripSeparator1
+        // 
+        toolStripSeparator1.Name = "toolStripSeparator1";
+        toolStripSeparator1.Size = new Size(6, 34);
+        // 
+        // todosToolStripDropDown
+        // 
+        todosToolStripDropDown.DisplayStyle = ToolStripItemDisplayStyle.Text;
+        todosToolStripDropDown.DropDownItems.AddRange(new ToolStripItem[] { createNewTodoToolStripMenuItem });
+        todosToolStripDropDown.Image = (Image)resources.GetObject("todosToolStripDropDown.Image");
+        todosToolStripDropDown.ImageTransparentColor = Color.Magenta;
+        todosToolStripDropDown.Name = "todosToolStripDropDown";
+        todosToolStripDropDown.Size = new Size(78, 29);
+        todosToolStripDropDown.Text = "Todos";
+        // 
+        // createNewTodoToolStripMenuItem
+        // 
+        createNewTodoToolStripMenuItem.Name = "createNewTodoToolStripMenuItem";
+        createNewTodoToolStripMenuItem.Size = new Size(246, 34);
+        createNewTodoToolStripMenuItem.Text = "Create new Todo";
+        // 
+        // SelectSavePath
+        // 
+        SelectSavePath.DisplayStyle = ToolStripItemDisplayStyle.Text;
+        SelectSavePath.Image = (Image)resources.GetObject("SelectSavePath.Image");
+        SelectSavePath.ImageTransparentColor = Color.Magenta;
+        SelectSavePath.Name = "SelectSavePath";
+        SelectSavePath.Size = new Size(143, 29);
+        SelectSavePath.Text = "Select save path";
+        SelectSavePath.Click += SelectSavePath_Click;
+        // 
+        // MainForm
+        // 
+        AutoScaleDimensions = new SizeF(10F, 25F);
+        AutoScaleMode = AutoScaleMode.Font;
+        ClientSize = new Size(1143, 750);
+        Controls.Add(toolStripContainer);
+        Margin = new Padding(4, 5, 4, 5);
+        Name = "MainForm";
+        Text = "ToDo App";
+        toolStripContainer.ContentPanel.ResumeLayout(false);
+        toolStripContainer.TopToolStripPanel.ResumeLayout(false);
+        toolStripContainer.TopToolStripPanel.PerformLayout();
+        toolStripContainer.ResumeLayout(false);
+        toolStripContainer.PerformLayout();
+        tabControl.ResumeLayout(false);
+        listTabPage.ResumeLayout(false);
+        listTabPage.PerformLayout();
+        topToolStrip.ResumeLayout(false);
+        topToolStrip.PerformLayout();
+        ResumeLayout(false);
+    }
+
+    #endregion
+    private ToDoListDisplay toDoList;
+    private ToolStripContainer toolStripContainer;
+    private ToolStrip topToolStrip;
+    private ToolStripDropDownButton todosToolStripDropDown;
+    private ToolStripMenuItem createNewTodoToolStripMenuItem;
+    private TabControl tabControl;
+    private TabPage listTabPage;
+    private ToolStripButton createNewToDotoolStripButton;
+    private ToolStripSeparator toolStripSeparator1;
+    private ToolStripButton SelectSavePath;
+}
