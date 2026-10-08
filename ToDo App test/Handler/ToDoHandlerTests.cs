@@ -1,6 +1,6 @@
 ﻿using ToDo_App.Models;
 
-namespace ToDo_App_test
+namespace ToDo_App_test.Handler
 {
     public class ToDoHandlerTests
     {
