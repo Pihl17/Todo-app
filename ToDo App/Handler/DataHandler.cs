@@ -24,13 +24,14 @@ public class DataHandler {
     }
 
     /// <summary>
-    /// updades the path for where the useres todolist gets saved
+    /// updades the path for where the useres todolist gets saved and move it to the new location
     /// </summary>
     /// <param name="newpath">string</param>
     public void SelectSavePath(string newpath)
     {
         string jsonString = JsonSerializer.Serialize(newpath);
         File.WriteAllText(UserPreferences, jsonString);
+        File.Move(Path, newpath);
         Path = newpath;
     }
 
