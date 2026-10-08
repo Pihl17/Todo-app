@@ -33,6 +33,7 @@ partial class MainForm
         tabControl = new TabControl();
         listTabPage = new TabPage();
         toDoList = new ToDoListDisplay();
+        calendarTabPage = new TabPage();
         topToolStrip = new ToolStrip();
         createNewToDotoolStripButton = new ToolStripButton();
         toolStripSeparator1 = new ToolStripSeparator();
@@ -46,6 +47,12 @@ partial class MainForm
         listTabPage.SuspendLayout();
         topToolStrip.SuspendLayout();
         SuspendLayout();
+
+        // Initiate the calendar UI component
+        calendarUI = new CalendarUI();
+        calendarUI.Dock = DockStyle.Fill;
+        calendarTabPage.Controls.Add(calendarUI);
+        
         // 
         // toolStripContainer
         // 
@@ -68,6 +75,7 @@ partial class MainForm
         // tabControl
         // 
         tabControl.Controls.Add(listTabPage);
+        tabControl.Controls.Add(calendarTabPage);
         tabControl.Dock = DockStyle.Fill;
         tabControl.Location = new Point(0, 0);
         tabControl.Name = "tabControl";
@@ -80,7 +88,7 @@ partial class MainForm
         listTabPage.Controls.Add(toDoList);
         listTabPage.Location = new Point(4, 24);
         listTabPage.Name = "listTabPage";
-        listTabPage.Padding = new Padding(3, 3, 3, 3);
+        listTabPage.Padding = new Padding(3);
         listTabPage.Size = new Size(792, 391);
         listTabPage.TabIndex = 0;
         listTabPage.Text = "List";
@@ -91,11 +99,21 @@ partial class MainForm
         toDoList.AutoSize = true;
         toDoList.Dock = DockStyle.Fill;
         toDoList.Location = new Point(3, 3);
-        toDoList.Margin = new Padding(1, 1, 1, 1);
+        toDoList.Margin = new Padding(1);
         toDoList.MinimumSize = new Size(280, 180);
         toDoList.Name = "toDoList";
         toDoList.Size = new Size(786, 385);
         toDoList.TabIndex = 0;
+        // 
+        // calendarTabPage
+        // 
+        calendarTabPage.Location = new Point(4, 24);
+        calendarTabPage.Name = "calendarTabPage";
+        calendarTabPage.Padding = new Padding(3);
+        calendarTabPage.Size = new Size(792, 391);
+        calendarTabPage.TabIndex = 1;
+        calendarTabPage.Text = "calendar";
+        calendarTabPage.UseVisualStyleBackColor = true;
         // 
         // topToolStrip
         // 
@@ -103,9 +121,9 @@ partial class MainForm
         topToolStrip.GripStyle = ToolStripGripStyle.Hidden;
         topToolStrip.ImageScalingSize = new Size(24, 24);
         topToolStrip.Items.AddRange(new ToolStripItem[] { createNewToDotoolStripButton, toolStripSeparator1, todosToolStripDropDown, SelectSavePath });
-        topToolStrip.Location = new Point(4, 0);
+        topToolStrip.Location = new Point(3, 0);
         topToolStrip.Name = "topToolStrip";
-        topToolStrip.Size = new Size(120, 31);
+        topToolStrip.Size = new Size(183, 31);
         topToolStrip.TabIndex = 0;
         // 
         // createNewToDotoolStripButton
@@ -130,13 +148,13 @@ partial class MainForm
         todosToolStripDropDown.Image = (Image)resources.GetObject("todosToolStripDropDown.Image");
         todosToolStripDropDown.ImageTransparentColor = Color.Magenta;
         todosToolStripDropDown.Name = "todosToolStripDropDown";
-        todosToolStripDropDown.Size = new Size(52, 28);
+        todosToolStripDropDown.Size = new Size(51, 28);
         todosToolStripDropDown.Text = "Todos";
         // 
         // createNewTodoToolStripMenuItem
         // 
         createNewTodoToolStripMenuItem.Name = "createNewTodoToolStripMenuItem";
-        createNewTodoToolStripMenuItem.Size = new Size(180, 22);
+        createNewTodoToolStripMenuItem.Size = new Size(162, 22);
         createNewTodoToolStripMenuItem.Text = "Create new Todo";
         // 
         // SelectSavePath
@@ -145,7 +163,7 @@ partial class MainForm
         SelectSavePath.Image = (Image)resources.GetObject("SelectSavePath.Image");
         SelectSavePath.ImageTransparentColor = Color.Magenta;
         SelectSavePath.Name = "SelectSavePath";
-        SelectSavePath.Size = new Size(143, 29);
+        SelectSavePath.Size = new Size(95, 28);
         SelectSavePath.Text = "Select save path";
         SelectSavePath.Click += SelectSavePath_Click;
         // 
@@ -171,6 +189,7 @@ partial class MainForm
     }
 
     #endregion
+    private CalendarUI calendarUI;
     private ToDoListDisplay toDoList;
     private ToolStripContainer toolStripContainer;
     private ToolStrip topToolStrip;
@@ -178,6 +197,7 @@ partial class MainForm
     private ToolStripMenuItem createNewTodoToolStripMenuItem;
     private TabControl tabControl;
     private TabPage listTabPage;
+    private TabPage calendarTabPage;
     private ToolStripButton createNewToDotoolStripButton;
     private ToolStripSeparator toolStripSeparator1;
     private ToolStripButton SelectSavePath;
