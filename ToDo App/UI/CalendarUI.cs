@@ -13,9 +13,25 @@ namespace ToDo_App.UI
         public CalendarUI()
         {
             InitializeComponent();
+
+            selectedMonth.Text = DateTime.Now.ToString("MMMM yyyy");
         }
 
         private void CalendarUI_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void selectedMonth_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void previousMonth_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void nextMonth_Click(object sender, EventArgs e)
         {
 
         }

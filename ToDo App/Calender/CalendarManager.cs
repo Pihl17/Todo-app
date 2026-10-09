@@ -6,11 +6,13 @@ using ToDo_App.Models;
 
 namespace ToDo_App.Calender
 {
+
     /// <summary>
     /// Finds the dates where ToDos have a deadline or repeat, for use in a calendar view.
     /// </summary>
     public class CalendarManager
     {
+        public DateTime selectedMonth;
         private readonly List<ToDo> toDos;
 
         /// <summary>
@@ -163,8 +165,24 @@ namespace ToDo_App.Calender
 
             return days;
         }
+    public void NextMonth()
+        {
+            selectedMonth = selectedMonth.AddMonths(1);
+        }
+
+        public void PreviousMonth()
+        {
+            selectedMonth = selectedMonth.AddMonths(-1);
+        }
+
+        public void InitializeSelectedMonth()
+        {
+            selectedMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+        }
+
+
+
     }
-}
 
 /// <summary>
 /// Represents a day in the calendar with its associated ToDos.

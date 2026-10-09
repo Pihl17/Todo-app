@@ -29,51 +29,67 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
-            monthCalendar1 = new MonthCalendar();
-            comboBox1 = new ComboBox();
-            panel1.SuspendLayout();
+            previousMonth = new Button();
+            nextMonth = new Button();
+            selectedMonth = new Button();
             SuspendLayout();
             // 
             // panel1
             // 
-            panel1.Controls.Add(monthCalendar1);
-            panel1.Location = new Point(3, 32);
+            panel1.Location = new Point(3, 43);
+            panel1.Margin = new Padding(3, 4, 3, 4);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1227, 604);
+            panel1.Size = new Size(1402, 805);
             panel1.TabIndex = 2;
             // 
-            // monthCalendar1
+            // previousMonth
             // 
-            monthCalendar1.Location = new Point(274, 378);
-            monthCalendar1.Name = "monthCalendar1";
-            monthCalendar1.TabIndex = 3;
-            monthCalendar1.DateChanged += this.monthCalendar1_DateChanged;
+            previousMonth.Location = new Point(3, 7);
+            previousMonth.Name = "previousMonth";
+            previousMonth.Size = new Size(29, 29);
+            previousMonth.TabIndex = 3;
+            previousMonth.Text = "◄";
+            previousMonth.UseVisualStyleBackColor = true;
+            previousMonth.Click += previousMonth_Click;
             // 
-            // comboBox1
+            // nextMonth
             // 
-            comboBox1.FlatStyle = FlatStyle.System;
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(85, 4);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(121, 23);
-            comboBox1.TabIndex = 3;
+            nextMonth.Location = new Point(138, 7);
+            nextMonth.Name = "nextMonth";
+            nextMonth.Size = new Size(29, 29);
+            nextMonth.TabIndex = 4;
+            nextMonth.Text = "►";
+            nextMonth.UseVisualStyleBackColor = true;
+            nextMonth.Click += nextMonth_Click;
+            // 
+            // selectedMonth
+            // 
+            selectedMonth.Location = new Point(38, 7);
+            selectedMonth.Name = "selectedMonth";
+            selectedMonth.Size = new Size(94, 29);
+            selectedMonth.TabIndex = 5;
+            selectedMonth.UseVisualStyleBackColor = true;
+            selectedMonth.Click += selectedMonth_Click;
             // 
             // CalendarUI
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(comboBox1);
+            Controls.Add(selectedMonth);
+            Controls.Add(nextMonth);
+            Controls.Add(previousMonth);
             Controls.Add(panel1);
+            Margin = new Padding(3, 4, 3, 4);
             Name = "CalendarUI";
-            Size = new Size(1233, 639);
+            Size = new Size(1409, 852);
             Load += CalendarUI_Load;
-            panel1.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
         private Panel panel1;
-        private MonthCalendar monthCalendar1;
-        private ComboBox comboBox1;
+        private Button previousMonth;
+        private Button nextMonth;
+        private Button selectedMonth;
     }
 }
