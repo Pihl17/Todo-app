@@ -16,7 +16,7 @@ public class InputManager : IInputHandling
     DataHandler dataHandler;
     ToDoListSort listSorter;
 
-    public List<ToDo> ToDos { get; private set; } = new List<ToDo>();
+    public List<ToDo> ToDos { get; set; } = new List<ToDo>();
     
     /// <summary>
     /// Constructs the InputManager with all the needed dependencies.
@@ -42,17 +42,69 @@ public class InputManager : IInputHandling
     {
         ToDo createdToDo = toDoHandler.Create("Insert title");
         ToDos.Add(createdToDo);
+        dataHandler.UpdateList(ToDos);
         return createdToDo;
     }
 
     public void DeleteToDo(ToDo todo)
     {
-        throw new NotImplementedException();
+        if (ToDos.Contains(todo))
+        {
+            ToDos.Remove(todo);
+            dataHandler.UpdateList(ToDos);
+        }
     }
 
     public void SetNewSavePath(string path)
     {
         throw new NotImplementedException();
+    }
+
+    public ToDo? UpdateToDo(Guid toDoId, string? title = null, string? description = null, 
+        DateTime? deadline = null, ToDoStatus? status = null, RepeatInterval? repeat = null, 
+        List<ChecklistItem>? checklist = null, int? priority = null)
+    {
+        ToDo? toDo = GetToDo(toDoId);
+        if (toDo == null)
+            return toDo;
+
+        if (title != null && !title.IsWhiteSpace())
+            toDoHandler.EditName(toDo, title);
+        if (description != null && !description.IsWhiteSpace())
+            toDoHandler.EditDescription(toDo, description);
+        if (deadline != null)
+            toDoHandler.EditDeadline(toDo, deadline);
+        if (status != null)
+        {
+            switch (status)
+            {
+                case ToDoStatus.InProgress:
+                    toDoHandler.MarkInProgress(toDo);
+                    break;
+                case ToDoStatus.Done:
+                    toDoHandler.FinishTask(toDo);
+                    break;
+            }
+        }
+        if (repeat != null)
+            toDoHandler.EditRepeat(toDo, (RepeatInterval)repeat);
+        if (checklist != null)
+            toDoHandler.EditChecklist(toDo, checklist);
+        if (priority != null)
+            toDoHandler.EditPriority(toDo, (int)priority);
+
+        dataHandler.UpdateList(ToDos);
+        return toDo;
+    }
+
+    public ToDo? GetToDo(Guid toDoId)
+    {
+        for (int i = 0; i < ToDos.Count; i++)
+        {
+            if (ToDos[i].Id == toDoId)
+                return ToDos[i];
+        }
+        return null;
     }
 
 }

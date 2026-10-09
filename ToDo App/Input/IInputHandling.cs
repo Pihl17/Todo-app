@@ -31,6 +31,27 @@ public interface IInputHandling
     /// <param name="path">The new filepath for the save file</param>
     void SetNewSavePath(string path);
 
+    /// <summary>
+    /// Updates various variables on the ToDo with the given ID.
+    /// </summary>
+    /// <param name="toDoId">ID of the todo to update</param>
+    /// <param name="title">Sets new title</param>
+    /// <param name="description">Sets new description</param>
+    /// <param name="deadline">Sets new deadline</param>
+    /// <param name="status">Changes the status</param>
+    /// <param name="repeat">Sets new RepeatInterval</param>
+    /// <param name="checklist">Sets new checklist</param>
+    /// <param name="priority">Sets new priority</param>
+    /// <returns>The updated ToDo</returns>
+    ToDo? UpdateToDo(Guid toDoId, string? title = null, string? description = null,
+        DateTime? deadline = null, ToDoStatus? status = null, RepeatInterval? repeat = null,
+        List<ChecklistItem>? checklist = null, int? priority = null);
 
+    /// <summary>
+    /// Returns the first todo note with the given ID or null if no such todo exists.
+    /// </summary>
+    /// <param name="toDoId">ID to find the todo with</param>
+    /// <returns>The first todo with the given ID or null if none were found</returns>
+    ToDo? GetToDo(Guid toDoId);
 
 }
