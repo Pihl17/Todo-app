@@ -56,4 +56,19 @@ public class InputManagerTest
     {
         Assert.Fail();
     }
+
+    [Test]
+    public void GetToDoById_ReturnsTheCorrectToDo()
+    {
+        ToDo todo = inputManager.CreateNewToDo();
+        ToDo ? result = inputManager.GetToDoById(Guid.NewGuid());
+        Assert.That(result, Is.Null);
+    }
+
+    [Test]
+    public void GetToDoById_ReturnsNullIfNoToDoWithThatIdExists()
+    {
+        ToDo? result = inputManager.GetToDoById(Guid.NewGuid());
+        Assert.That(result, Is.Null);
+    }
 }

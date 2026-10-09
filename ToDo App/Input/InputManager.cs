@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 using ToDo_App.Handler;
 using ToDo_App.Models;
 
@@ -43,6 +44,11 @@ public class InputManager : IInputHandling
         ToDo createdToDo = toDoHandler.Create("Insert title");
         ToDos.Add(createdToDo);
         return createdToDo;
+    }
+
+    public ToDo GetToDoById(Guid id)
+    {
+        return ToDos.FirstOrDefault(todo => todo.Id == id);
     }
 
     public void DeleteToDo(ToDo todo)

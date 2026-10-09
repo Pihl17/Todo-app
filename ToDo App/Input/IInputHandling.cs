@@ -31,6 +31,11 @@ public interface IInputHandling
     /// <param name="path">The new filepath for the save file</param>
     void SetNewSavePath(string path);
 
-
+    /// <summary>
+    /// Gets a specific ToDo from the current list by its unique ID.
+    /// </summary>
+    /// <param name="id">The unique ID of the todo to retrieve</param>
+    /// <returns>The matching ToDo if found, otherwise null</returns>
+    ToDo GetToDoById(Guid id);
 
 }
