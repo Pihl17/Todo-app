@@ -42,6 +42,7 @@ public class InputManager : IInputHandling
     {
         ToDo createdToDo = toDoHandler.Create("Insert title");
         ToDos.Add(createdToDo);
+        dataHandler.UpdateList(ToDos);
         return createdToDo;
     }
 

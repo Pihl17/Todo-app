@@ -9,13 +9,27 @@ public class InputManagerTest
 
     private InputManager inputManager;
 
+    const string lIST_PATH = "../../../Test List/todoes_inputManagerTest.json";
+    const string PREFERENCE_PATH = "../../../Test List/UserPreferences_inputManagerTest.json";
+
     [SetUp]
     public void Setup()
     {
         ToDoHandler toDoHandler = new ToDoHandler();
-        DataHandler dataHandler = new DataHandler();
+        DataHandler dataHandler = new DataHandler()
+        {
+            UserPreferences = PREFERENCE_PATH
+        };
+        dataHandler.SelectSavePath(lIST_PATH);
         ToDoListSort toDoListSort = new ToDoListSort();
         inputManager = new InputManager(toDoHandler, dataHandler, toDoListSort);
+    }
+
+    [OneTimeTearDown]
+    public void Cleanup()
+    {
+        File.Delete(PREFERENCE_PATH);
+        File.Delete(lIST_PATH);
     }
 
     [Test]
