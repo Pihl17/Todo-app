@@ -159,7 +159,7 @@ public class InputManagerTest
 
         ToDo? result = inputManager.GetToDo(toDoId);
 
-        Assert.AreEqual(null, result);
+        Assert.IsNull(result);
     }
 
     [Test]
@@ -276,6 +276,18 @@ public class InputManagerTest
         Assert.AreEqual(expectedTitle, toDo.Title, "Title was changed when it shouldn't have been");
         Assert.AreEqual(expectedPriority, toDo.Priority, "Priority was changed when it shouldn't have been");
         Assert.AreEqual(expectedDeadline, toDo.Deadline, "Deadline was changed when it shouldn't have been");
+    }
+
+    [Test]
+    public void UpdateToDo_ReturnsNullIfIdDoesntMatch()
+    {
+        ToDo existingToDo = new ToDo();
+        ToDo nonexisitingToDo = new ToDo();
+        inputManager.ToDos = new List<ToDo>() { existingToDo };
+
+        ToDo? result = inputManager.UpdateToDo(nonexisitingToDo.Id);
+
+        Assert.IsNull(result);
     }
 
 }
