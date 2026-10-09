@@ -1,12 +1,26 @@
+using ToDo_App.Input;
+using ToDo_App.Models;
+
 namespace ToDo_App.UI;
 
 public partial class MainForm : Form
 {
 
-    public MainForm()
+    private IInputHandling inputHandler;
+    public ToDoListDisplay ToDoList { get { return toDoList; } }
+
+    public MainForm(IInputHandling inputHandler)
     {
+        this.inputHandler = inputHandler;
         InitializeComponent();
-        //toDoList.RefreshList(); Uncomment when the Inputmanager is ready
+        toDoList.inputHandler = inputHandler;
+        toDoList.RefreshList();
+    }
+
+    public void createNewToDotoolStripButton_Click(object sender, EventArgs e)
+    {
+        ToDo createdToDo = inputHandler.CreateNewToDo();
+        toDoList.AddToList(new ToDoDisplay(createdToDo));
     }
 
     /// <summary>
@@ -22,6 +36,5 @@ public partial class MainForm : Form
             DataHandler datahandler = new DataHandler();
             datahandler.SelectSavePath($"{folder.SelectedPath}\\todoes.json");
         }
-
     }
 }
