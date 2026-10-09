@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using ToDo_App.Calendar;
 using ToDo_App.Models;
 
 namespace ToDo_App.Input;
@@ -31,6 +32,10 @@ public interface IInputHandling
     /// <param name="path">The new filepath for the save file</param>
     void SetNewSavePath(string path);
 
-
+    /// <summary>
+    /// Returns the CalendarManager instance for managing calendar-related functionalities.
+    /// </summary>
+    /// <returns></returns>
+    CalendarManager Calendar();
 
 }

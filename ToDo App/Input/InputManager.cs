@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Text;
 using ToDo_App.Handler;
 using ToDo_App.Models;
+using ToDo_App.Calendar;
 
 namespace ToDo_App.Input;
 
@@ -16,7 +17,7 @@ public class InputManager : IInputHandling
     ToDoHandler toDoHandler;
     DataHandler dataHandler;
     ToDoListSort listSorter;
-    Calendar calendar;
+    CalendarManager calendar;
 
     public List<ToDo> ToDos { get; private set; } = new List<ToDo>();
     
@@ -27,7 +28,7 @@ public class InputManager : IInputHandling
     /// <param name="dataHandler">Object for handling the saving and loading of todo list</param>
     /// <param name="toDoListSort">Object for handling the sorting of the todo list</param>
     /// <param name="calendar">Object for handling calendar-related operations</param>
-    public InputManager(ToDoHandler toDoHandler, DataHandler dataHandler, ToDoListSort toDoListSort, Calendar calendar)
+    public InputManager(ToDoHandler toDoHandler, DataHandler dataHandler, ToDoListSort toDoListSort, CalendarManager calendar)
     {
         this.toDoHandler = toDoHandler;
         this.dataHandler = dataHandler;
@@ -57,6 +58,11 @@ public class InputManager : IInputHandling
     public void SetNewSavePath(string path)
     {
         throw new NotImplementedException();
+    }
+
+    public CalendarManager Calendar()
+    {
+        return calendar;
     }
 
 }

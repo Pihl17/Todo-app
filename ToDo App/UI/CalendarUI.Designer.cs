@@ -32,6 +32,7 @@
             previousMonth = new Button();
             nextMonth = new Button();
             selectedMonth = new Button();
+            monthSelectPanel = new Panel();
             SuspendLayout();
             // 
             // panel1
@@ -54,7 +55,7 @@
             // 
             // nextMonth
             // 
-            nextMonth.Location = new Point(138, 7);
+            nextMonth.Location = new Point(263, 7);
             nextMonth.Name = "nextMonth";
             nextMonth.Size = new Size(29, 29);
             nextMonth.TabIndex = 4;
@@ -66,15 +67,25 @@
             // 
             selectedMonth.Location = new Point(38, 7);
             selectedMonth.Name = "selectedMonth";
-            selectedMonth.Size = new Size(94, 29);
+            selectedMonth.Size = new Size(219, 29);
             selectedMonth.TabIndex = 5;
             selectedMonth.UseVisualStyleBackColor = true;
             selectedMonth.Click += selectedMonth_Click;
+            // 
+            // monthSelectPanel
+            // 
+            monthSelectPanel.BorderStyle = BorderStyle.FixedSingle;
+            monthSelectPanel.Location = new Point(38, 42);
+            monthSelectPanel.Name = "monthSelectPanel";
+            monthSelectPanel.Size = new Size(400, 300);
+            monthSelectPanel.TabIndex = 0;
+            monthSelectPanel.Visible = false;
             // 
             // CalendarUI
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(monthSelectPanel);
             Controls.Add(selectedMonth);
             Controls.Add(nextMonth);
             Controls.Add(previousMonth);
@@ -91,5 +102,6 @@
         private Button previousMonth;
         private Button nextMonth;
         private Button selectedMonth;
+        private Panel monthSelectPanel;
     }
 }

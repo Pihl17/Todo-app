@@ -1,6 +1,7 @@
 ﻿using ToDo_App.Input;
 using ToDo_App.Handler;
 using ToDo_App.Models;
+using ToDo_App.Calendar;
 
 namespace ToDo_App_test;
 
@@ -15,7 +16,8 @@ public class InputManagerTest
         ToDoHandler toDoHandler = new ToDoHandler();
         DataHandler dataHandler = new DataHandler();
         ToDoListSort toDoListSort = new ToDoListSort();
-        inputManager = new InputManager(toDoHandler, dataHandler, toDoListSort);
+        CalendarManager calendar = new CalendarManager();
+        inputManager = new InputManager(toDoHandler, dataHandler, toDoListSort, calendar);
     }
 
     [Test]

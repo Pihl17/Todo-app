@@ -47,11 +47,6 @@ partial class MainForm
         listTabPage.SuspendLayout();
         topToolStrip.SuspendLayout();
         SuspendLayout();
-
-        // Initiate the calendar UI component
-        calendarUI = new CalendarUI();
-        calendarUI.Dock = DockStyle.Fill;
-        calendarTabPage.Controls.Add(calendarUI);
         
         // 
         // toolStripContainer

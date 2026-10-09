@@ -1,6 +1,7 @@
 using ToDo_App.Handler;
 using ToDo_App.Input;
 using ToDo_App.UI;
+using ToDo_App.Calendar;
 
 namespace ToDo_App
 {
@@ -18,7 +19,8 @@ namespace ToDo_App
             ToDoHandler toDoHandler = new ToDoHandler();
             DataHandler dataHandler = new DataHandler();
             ToDoListSort toDoListSort = new ToDoListSort();
-            InputManager inputManager = new InputManager(toDoHandler, dataHandler, toDoListSort);
+            CalendarManager calendar = new CalendarManager();
+            InputManager inputManager = new InputManager(toDoHandler, dataHandler, toDoListSort, calendar);
             Application.Run(new MainForm(inputManager));
         }
     }

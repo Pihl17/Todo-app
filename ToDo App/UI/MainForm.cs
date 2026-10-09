@@ -15,6 +15,10 @@ public partial class MainForm : Form
         InitializeComponent();
         toDoList.inputHandler = inputHandler;
         toDoList.RefreshList();
+
+        calendarUI = new CalendarUI(inputHandler);
+        calendarUI.Dock = DockStyle.Fill;
+        calendarTabPage.Controls.Add(calendarUI);
     }
 
     public void createNewToDotoolStripButton_Click(object sender, EventArgs e)
