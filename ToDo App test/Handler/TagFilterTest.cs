@@ -36,8 +36,9 @@ namespace ToDo_App_test.Handler
         public void AddTagToLibraryTest() {
             Taglibrary.GenerateLibrary(toDos);
             Taglibrary.AddTagToLibrary("FirstTag");
-            Taglibrary.AddTagToLibrary("FourthTag");
+            Taglibrary.AddTagToLibrary("Apple");
             Assert.AreEqual(4,Taglibrary.TagLibrary.Count);
+            Assert.AreEqual("Apple", Taglibrary.TagLibrary[0]);
 
         }
 

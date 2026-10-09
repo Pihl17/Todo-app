@@ -19,11 +19,13 @@ namespace ToDo_App.Handler
                     }
                 }
             }
+            TagLibrary.Sort();
         }
 
         public void AddTagToLibrary(string Tag) {
             if (!TagLibrary.Contains(Tag)) {
                 TagLibrary.Add(Tag);
+                TagLibrary.Sort();
             }
         }
     }
