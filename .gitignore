@@ -3,9 +3,11 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
-# User-specific files
+# UserPreferences and Todo lists created during app runtime
 UserPreferences.json
 Todoes.json
+
+# User-specific files
 *.rsuser
 *.suo
 *.user
