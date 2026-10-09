@@ -1,7 +1,7 @@
-using System.Text.Json;
-using System.IO;
-using ToDo_App.Models;
 using System.Diagnostics;
+using System.IO;
+using System.Text.Json;
+using ToDo_App.Models;
 public class DataHandler {
 
     public string Path { get; set; } = "../../../Files/Todoes.json";
@@ -12,11 +12,16 @@ public class DataHandler {
     /// </summary>
     public void GetPath()
     {
-
         if (File.Exists(UserPreferences))
         {
             var jsondata = File.ReadAllText(UserPreferences);
-            Path = JsonSerializer.Deserialize<string>(jsondata);
+            try
+            {
+                Path = JsonSerializer.Deserialize<string>(jsondata);
+            } catch
+            {
+                
+            }
         } else {
             string jsonString = JsonSerializer.Serialize(Path);
             File.WriteAllText(UserPreferences, jsonString);
@@ -42,11 +47,22 @@ public class DataHandler {
     /// List<ToDo>
     /// </returns>
     public List<ToDo> LoadList() {
+        Directory.CreateDirectory("../../../Files/");
+        GetPath();
         if (File.Exists(Path)){
             var jsondata = File.ReadAllText(Path);
-            return JsonSerializer.Deserialize<List<ToDo>>(jsondata);
+            try
+            {
+                return JsonSerializer.Deserialize<List<ToDo>>(jsondata);
+            } catch
+            {
+                return [];
+            }
         } else {
-            return [];
+            List<ToDo> EmptyList = [];
+            string jsonString = JsonSerializer.Serialize(EmptyList);
+            File.WriteAllText(Path, jsonString);
+            return EmptyList;
         }
     }
 
