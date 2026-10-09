@@ -4,7 +4,7 @@ using ToDo_App.Models;
 using System.Diagnostics;
 public class DataHandler {
 
-    public string Path { get; set; } = "../../../Files/todoes.json";
+    public string Path { get; set; } = "../../../Files/Todoes.json";
     public string UserPreferences { get; set; } = "../../../Files/UserPreferences.json";
 
     /// <summary>

@@ -15,7 +15,7 @@ public partial class ToDoListDisplay : UserControl
     /// <summary>
     /// The input handler that this object calls to connect with the backend.
     /// </summary>
-    IInputHandling inputHandler;
+    public IInputHandling inputHandler;
     
     /// <summary>
     /// Constructs an empty ToDoListDisplay. 
