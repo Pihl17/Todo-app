@@ -63,8 +63,11 @@ namespace ToDo_App.Models
                 CompletionDate = DateTime.Now;
         }
 
-        public void AddTag(string tag) {
-            Taglist.Add(tag);
+        public void AddTag(string Tag) {
+            if (!Taglist.Contains(Tag))
+            {
+                Taglist.Add(Tag);
+            }
         }
     }
 }
