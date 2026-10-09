@@ -48,10 +48,39 @@ public class InputManager : IInputHandling
 
     public void DeleteToDo(ToDo todo)
     {
-        throw new NotImplementedException();
+        if (ToDos.Contains(todo))
+        {
+            ToDos.Remove(todo);
+            dataHandler.UpdateList(ToDos);
+        }
     }
 
     public void SetNewSavePath(string path)
+    {
+        throw new NotImplementedException();
+    }
+
+    public ToDo? UpdateToDo(Guid toDoId, string? title = null, string? description = null, 
+        DateTime? deadline = null, ToDoStatus? status = null, RepeatInterval? repeat = null, 
+        List<ChecklistItem>? checklist = null, int? priority = null)
+    {
+        ToDo? editedToDo = GetToDo(toDoId);
+        if (editedToDo == null)
+        {
+            return editedToDo;
+        }
+        if (title != null && !title.IsWhiteSpace())
+        {
+            toDoHandler.EditName(editedToDo, title);
+        }
+        if (description != null && !description.IsWhiteSpace())
+        {
+            toDoHandler.EditDescription(editedToDo, description);
+        }
+        return editedToDo;
+    }
+
+    public ToDo? GetToDo(Guid toDoId)
     {
         throw new NotImplementedException();
     }
