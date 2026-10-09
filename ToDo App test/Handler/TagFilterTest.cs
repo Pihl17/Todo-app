@@ -30,6 +30,9 @@ namespace ToDo_App_test.Handler
             Taglibrary.GenerateLibrary(toDos);
             Assert.IsNotEmpty(Taglibrary.TagLibrary);
             Assert.AreEqual(3, Taglibrary.TagLibrary.Count);
+            Assert.AreEqual("FirstTag", Taglibrary.TagLibrary[0]);
+            Assert.AreEqual("SecondTag", Taglibrary.TagLibrary[1]);
+            Assert.AreEqual("ThirdTag", Taglibrary.TagLibrary[2]);
         }
 
         [Test]
