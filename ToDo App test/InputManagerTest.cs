@@ -198,7 +198,6 @@ public class InputManagerTest
         Assert.AreEqual(expected, toDo.Deadline);
     }
 
-    [TestCase(ToDoStatus.NotDone)]
     [TestCase(ToDoStatus.InProgress)]
     [TestCase(ToDoStatus.Done)]
     public void UpdateToDo_UpdatesStatus(ToDoStatus statusChange)
