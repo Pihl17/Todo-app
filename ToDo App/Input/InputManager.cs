@@ -16,7 +16,7 @@ public class InputManager : IInputHandling
     DataHandler dataHandler;
     ToDoListSort listSorter;
 
-    public List<ToDo> ToDos { get; private set; } = new List<ToDo>();
+    public List<ToDo> ToDos { get; set; } = new List<ToDo>();
     
     /// <summary>
     /// Constructs the InputManager with all the needed dependencies.
