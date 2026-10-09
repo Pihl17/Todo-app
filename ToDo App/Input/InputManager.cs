@@ -18,13 +18,15 @@ public class InputManager : IInputHandling
     TagFilter tagFilter;
 
     public List<ToDo> ToDos { get; private set; } = new List<ToDo>();
-    
+
     /// <summary>
     /// Constructs the InputManager with all the needed dependencies.
     /// </summary>
     /// <param name="toDoHandler">Object for handling creating and changing todos</param>
     /// <param name="dataHandler">Object for handling the saving and loading of todo list</param>
     /// <param name="toDoListSort">Object for handling the sorting of the todo list</param>
+    /// <param name="toDoListSort">Object for handling creating a sorted list of tags</param>
+
     public InputManager(ToDoHandler toDoHandler, DataHandler dataHandler, ToDoListSort toDoListSort, TagFilter tagFilter)
     {
         this.toDoHandler = toDoHandler;
