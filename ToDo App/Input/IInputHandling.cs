@@ -30,7 +30,4 @@ public interface IInputHandling
     /// </summary>
     /// <param name="path">The new filepath for the save file</param>
     void SetNewSavePath(string path);
-
-
-
 }

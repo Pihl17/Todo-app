@@ -52,7 +52,7 @@ public class InputManager : IInputHandling
 
     public void SetNewSavePath(string path)
     {
-        throw new NotImplementedException();
+        dataHandler.SelectSavePath($"{path}\\todoes.json");
     }
 
 }
