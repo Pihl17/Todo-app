@@ -4,7 +4,7 @@ using System.Text;
 using ToDo_App.Models;
 using ToDo_App.Handler;
 
-namespace ToDo_App_test
+namespace ToDo_App_test.Handler
 {
     public class ToDoListSortTest
     {
