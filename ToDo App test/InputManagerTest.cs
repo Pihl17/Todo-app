@@ -86,13 +86,42 @@ public class InputManagerTest
     [Test]
     public void DeleteToDo_RemovesTheTodoFromTheList()
     {
-        Assert.Fail();
+        ToDo toDo1 = new ToDo();
+        ToDo toDo2 = new ToDo();
+        List<ToDo> expected = new List<ToDo>()
+        {
+            toDo1
+        };
+        List<ToDo> initialToDoList = new List<ToDo>()
+            {
+                toDo2, toDo1
+            };
+        inputManager.ToDos = initialToDoList;
+
+        inputManager.DeleteToDo(toDo2);
+
+        Assert.AreEqual(expected, inputManager.ToDos);
     }
 
     [Test]
     public void DeleteToDo_DoesNotRemoveToDoIfItsNotOnTheList()
     {
-        Assert.Fail();
+        ToDo toDo1 = new ToDo();
+        ToDo toDo2 = new ToDo();
+        ToDo toDo3 = new ToDo();
+        List<ToDo> expected = new List<ToDo>()
+        {
+            toDo2, toDo1
+        };
+        List<ToDo> initialToDoList = new List<ToDo>()
+            {
+                toDo2, toDo1
+            };
+        inputManager.ToDos = initialToDoList;
+
+        inputManager.DeleteToDo(toDo3);
+
+        Assert.AreEqual(expected, inputManager.ToDos);
     }
 
     [Test]
