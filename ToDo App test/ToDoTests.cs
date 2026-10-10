@@ -68,5 +68,16 @@ namespace ToDo_App_test
 
             Assert.That(first.Id, Is.Not.EqualTo(second.Id));
         }
+
+        [Test]
+        public void Add_Tag_Test() {
+            ToDo toDo = new ToDo();
+            Assert.IsEmpty(toDo.Taglist);
+            toDo.AddTag("TestTag");
+            Assert.IsNotEmpty(toDo.Taglist);
+            toDo.AddTag("TestTag");
+            Assert.AreEqual(1, toDo.Taglist.Count);
+
+        }
     }
 }

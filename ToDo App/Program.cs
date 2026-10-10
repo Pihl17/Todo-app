@@ -18,7 +18,8 @@ namespace ToDo_App
             ToDoHandler toDoHandler = new ToDoHandler();
             DataHandler dataHandler = new DataHandler();
             ToDoListSort toDoListSort = new ToDoListSort();
-            InputManager inputManager = new InputManager(toDoHandler, dataHandler, toDoListSort);
+            TagFilter tagFilter = new TagFilter();
+            InputManager inputManager = new InputManager(toDoHandler, dataHandler, toDoListSort, tagFilter);
             Application.Run(new MainForm(inputManager));
         }
     }

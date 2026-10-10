@@ -23,6 +23,7 @@ namespace ToDo_App.Models
         public DateTime? Deadline { get; set; }
         public ToDoStatus Status { private set; get; }
         public RepeatInterval Repeat { get; set; }
+        public List<string> Taglist { get; set; }
         public List<ChecklistItem> Checklist { get; set; }
 
         /// <summary>
@@ -48,6 +49,7 @@ namespace ToDo_App.Models
             CreationDate = DateTime.Now;
             Status = ToDoStatus.NotDone;
             Repeat = RepeatInterval.None;
+            Taglist = new List<string>();
             Checklist = new List<ChecklistItem>();
         }
 
@@ -59,6 +61,13 @@ namespace ToDo_App.Models
             Status = status;
             if (status == ToDoStatus.Done)
                 CompletionDate = DateTime.Now;
+        }
+
+        public void AddTag(string Tag) {
+            if (!Taglist.Contains(Tag))
+            {
+                Taglist.Add(Tag);
+            }
         }
     }
 }

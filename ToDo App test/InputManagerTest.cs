@@ -15,7 +15,9 @@ public class InputManagerTest
         ToDoHandler toDoHandler = new ToDoHandler();
         DataHandler dataHandler = new DataHandler();
         ToDoListSort toDoListSort = new ToDoListSort();
-        inputManager = new InputManager(toDoHandler, dataHandler, toDoListSort);
+        TagFilter tagFilter = new TagFilter();
+
+        inputManager = new InputManager(toDoHandler, dataHandler, toDoListSort, tagFilter);
     }
 
     [Test]
