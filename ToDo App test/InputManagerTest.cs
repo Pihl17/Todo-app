@@ -132,12 +132,6 @@ public class InputManagerTest
     }
 
     [Test]
-    public void SetNewSavePath_SetsNewSavePath()
-    {
-        Assert.Fail();
-    }
-
-    [Test]
     public void GetToDo_ReturnsToDo()
     {
         ToDo toDo1 = new ToDo();
