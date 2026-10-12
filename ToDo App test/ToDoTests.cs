@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using NUnit.Framework;
-using ToDo_App.Models;
+using ToDo_App.Library.Models;
 
 namespace ToDo_App_test
 {

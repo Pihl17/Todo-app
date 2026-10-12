@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ToDo_App.Models
+namespace ToDo_App.Library.Models
 {
     /// <summary>
     /// Represents a single ToDo note with a title, description, date,

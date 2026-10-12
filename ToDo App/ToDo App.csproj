@@ -32,4 +32,8 @@
     <Folder Include="Files\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ToDo App.Library\ToDo App.Library.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using ToDo_App.Handler;
-using ToDo_App.Models;
+using ToDo_App.Library.Handler;
+using ToDo_App.Library.Models;
 
-namespace ToDo_App.Input;
+namespace ToDo_App.Library.Input;
 
 /// <summary>
 /// Class for handling the input calls from the frontend.

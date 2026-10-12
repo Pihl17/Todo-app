@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ToDo_App.Models;
+using ToDo_App.Library.Models;
 
-namespace ToDo_App.Calender
+namespace ToDo_App.Library.Calender
 {
     /// <summary>
     /// Finds the dates where ToDos have a deadline or repeat, for use in a calendar view.

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using NUnit.Framework;
-using ToDo_App.Models;
-using ToDo_App.Calender;
+using ToDo_App.Library.Models;
+using ToDo_App.Library.Calender;
 
 namespace ToDo_App_test
 {

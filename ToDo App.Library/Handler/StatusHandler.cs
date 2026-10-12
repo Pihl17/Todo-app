@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using ToDo_App.Models;
+using ToDo_App.Library.Models;
 
-namespace ToDo_App.Handler
+namespace ToDo_App.Library.Handler
 {
     public class StatusHandler
     {

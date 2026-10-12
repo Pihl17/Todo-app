@@ -1,7 +1,7 @@
-﻿using ToDo_App.Models;
+﻿using ToDo_App.Library.Models;
 using ToDo_App.UI;
 using Moq;
-using ToDo_App.Input;
+using ToDo_App.Library.Input;
 using System.Windows.Forms;
 
 namespace ToDo_App_test.Frontend;
