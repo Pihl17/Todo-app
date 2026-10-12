@@ -66,7 +66,7 @@ public class InputManager : IInputHandling
     {
         ToDo? toDo = GetToDo(toDoId);
         if (toDo == null)
-            return toDo;
+            return null;
 
         if (title != null && !title.IsWhiteSpace())
             toDoHandler.EditName(toDo, title);
