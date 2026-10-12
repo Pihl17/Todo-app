@@ -4,7 +4,7 @@ using Moq;
 using ToDo_App.Library.Input;
 using System.Windows.Forms;
 
-namespace ToDo_App_test.Frontend;
+namespace ToDo_App.Test.Frontend;
 
 public class ToDoListDisplayTest
 {

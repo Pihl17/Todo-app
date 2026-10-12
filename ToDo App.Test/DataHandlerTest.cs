@@ -3,7 +3,7 @@ using System.Formats.Tar;
 
 using ToDo_App.Library.Models;
 
-namespace ToDo_App_test
+namespace ToDo_App.Test
 {
     public class DataHandlerTests
     {

@@ -4,7 +4,7 @@ using System.Text;
 using NUnit.Framework;
 using ToDo_App.Library.Models;
 
-namespace ToDo_App_test
+namespace ToDo_App.Test
 {
     [TestFixture]
     public class ToDoTests

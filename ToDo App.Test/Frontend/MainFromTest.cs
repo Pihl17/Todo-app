@@ -3,7 +3,7 @@ using ToDo_App.Library.Input;
 using ToDo_App.UI;
 using ToDo_App.Library.Models;
 
-namespace ToDo_App_test.Frontend;
+namespace ToDo_App.Test.Frontend;
 
 public class MainFromTest
 {
