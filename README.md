@@ -18,6 +18,9 @@
         - If any issues were found with the code or it did not align fully with our requirements, then the code had to be revised before it could be approved.
     - Finally, once it was approved, could it be merged into the main branch.
 
+- To sart with our goal was to devolep a desktop app using winform
+- Later on it got added to our requirements that there should be both a desktop and web version both using the same backend
+
 ## UML Diagrams
 ### Class Diagram
 ![Class Diagram](READMEImages/ToDo.class.svg)
