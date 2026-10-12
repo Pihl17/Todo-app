@@ -7,6 +7,7 @@
 - C#
 - .NET
 - JSON
+- SQL
 - NUnit
 
 ## Development Process
