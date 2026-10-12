@@ -5,7 +5,6 @@ namespace ToDo_App.UI;
 
 public partial class MainForm : Form
 {
-
     private IInputHandling inputHandler;
     public ToDoListDisplay ToDoList { get { return toDoList; } }
 
@@ -33,8 +32,7 @@ public partial class MainForm : Form
         FolderBrowserDialog folder = new FolderBrowserDialog();
         if (folder.ShowDialog() == DialogResult.OK)
         {
-            DataHandler datahandler = new DataHandler();
-            datahandler.SelectSavePath($"{folder.SelectedPath}\\todoes.json");
+            inputHandler.SetNewSavePath(folder.SelectedPath);
         }
     }
 }
