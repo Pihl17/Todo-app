@@ -12,45 +12,76 @@ namespace ToDo_App.UI
 {
     public partial class CalendarUI : UserControl
     {
+        public event Action<string> MonthSelected;
+        public Button[] MonthButtons => monthSelectPanel.Controls.OfType<Button>().ToArray();
+        public bool MonthPanelVisible => monthSelectPanel.Visible;
+        public int MonthButtonCount => monthSelectPanel.Controls.Count;
+        public Button NextMonthButton => nextMonth;
+        public Button PreviousMonthButton => previousMonth;
+        public Button MonthSelectorButton => selectedMonth;
         private IInputHandling inputHandler;
-
+        /// <summary>
+        /// UI for the calendar, allowing users to view and select months.
+        /// </summary>
         public CalendarUI()
         {
             InitializeComponent();
+            PopulateMonthPanel();
+            this.components = new System.ComponentModel.Container();
         }
-
+        /// <summary>
+        /// Initializes the CalendarUI with an input handler, sets the selected month, and populates the month selection panel.
+        /// </summary>
+        /// <param name="inputHandler"></param>
         public CalendarUI(IInputHandling inputHandler) : this()
         {
             this.inputHandler = inputHandler;
             inputHandler.Calendar().InitializeSelectedMonth();
             selectedMonth.Text = inputHandler.Calendar().selectedMonthString;
 
-            PopulateMonthPanel();
         }
-
+        /// <summary>
+        /// Event handler for the CalendarUI load event. Currently, it does not perform any actions when the control is loaded.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CalendarUI_Load(object sender, EventArgs e)
         {
 
         }
-
+        /// <summary>
+        /// Event handler for the selectedMonth button click event. Toggles the visibility of the monthSelectPanel when the button is clicked.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void selectedMonth_Click(object sender, EventArgs e)
         {
             monthSelectPanel.Visible = !monthSelectPanel.Visible;
         }
-
+        /// <summary>
+        /// Event handler for the previousMonth button click event. Moves to the previous month in the calendar and updates the selectedMonth button text accordingly.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void previousMonth_Click(object sender, EventArgs e)
         {
             inputHandler.Calendar().PreviousMonth();
             selectedMonth.Text = inputHandler.Calendar().selectedMonthString;
         }
-
+        /// <summary>
+        /// Event handler for the nextMonth button click event. Moves to the next month in the calendar and updates the selectedMonth button text accordingly.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void nextMonth_Click(object sender, EventArgs e)
         {
             inputHandler.Calendar().NextMonth();
             selectedMonth.Text = inputHandler.Calendar().selectedMonthString;
         }
-
-            private void PopulateMonthPanel()
+        /// <summary>
+        /// Populates the monthSelectPanel with buttons representing each month of the year. Each button is labeled with the corresponding month number and has a click event that displays a message box indicating which month was clicked.
+        /// </summary>
+        private void PopulateMonthPanel()
         {
             monthSelectPanel.Controls.Clear();
 
@@ -74,14 +105,17 @@ namespace ToDo_App.UI
                 button.Left = column * (buttonWidth + spacing);
                 button.Top = row * (button.Height + spacing);
 
-                button.Click += (sender, e) =>
-                {
-                    MessageBox.Show($"You clicked {button.Text}");
-                };
+                button.Click += MonthButton_Click;
 
                 monthSelectPanel.Controls.Add(button);
             }
-        
-    }
+
+        }
+
+        public void MonthButton_Click(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
+            MonthSelected?.Invoke(button.Text);
+        }
     }
 }

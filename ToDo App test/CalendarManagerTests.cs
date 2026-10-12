@@ -4,6 +4,7 @@ using System.Text;
 using NUnit.Framework;
 using ToDo_App.Models;
 using ToDo_App.Calendar;
+using System.Globalization;
 
 namespace ToDo_App_test
 {
@@ -335,5 +336,31 @@ namespace ToDo_App_test
 
             Assert.That(actualCount, Is.EqualTo(expectedCount));
         }
+
+        [Test]
+        public void NextMonthTest()
+        {
+            calendar.selectedMonth = new DateTime(2026, 10, 1);
+            calendar.NextMonth();
+            DateTime expectedNextMonth = new DateTime(2026, 11, 1);
+            Assert.That(calendar.selectedMonth, Is.EqualTo(expectedNextMonth));
+        }
+
+        [Test]
+        public void PreviousMonthTest()
+        {
+            calendar.selectedMonth = new DateTime(2026, 10, 1);
+            calendar.PreviousMonth();
+            DateTime expectedPreviousMonth = new DateTime(2026, 9, 1);
+            Assert.That(calendar.selectedMonth, Is.EqualTo(expectedPreviousMonth));
+        }
+
+        [Test]
+        public void InitializeSelectedMonthTest()
+        {
+            calendar.InitializeSelectedMonth();
+            Assert.That(calendar.selectedMonth.Month, Is.EqualTo(DateTime.Today.Month));
+        }
+
     }
 }

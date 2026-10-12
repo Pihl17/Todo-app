@@ -158,23 +158,32 @@ namespace ToDo_App.Calendar
 
             return days;
         }
+        /// <summary>
+        /// Updates the selected month to the next month and updates the selectedMonth accordingly.
+        /// </summary>
         public void NextMonth()
         {
             selectedMonth = selectedMonth.AddMonths(1);
             UpdateSelectedMonthString();
         }
-
+        /// <summary>
+        /// Updates the selected month to the previous month and updates the selectedMonth accordingly.
+        /// </summary>
         public void PreviousMonth()
         {
             selectedMonth = selectedMonth.AddMonths(-1);
             UpdateSelectedMonthString();
         }
-
+        /// <summary>
+        /// Updates the selectedMonthString to reflect the current selectedMonth in the format "MMMM yyyy".
+        /// </summary>
         private void UpdateSelectedMonthString()
         {
             selectedMonthString = selectedMonth.ToString("MMMM yyyy");
         }
-
+        /// <summary>
+        /// Initializes the selected month to the current month and updates the selectedMonthString accordingly.
+        /// </summary>
         public void InitializeSelectedMonth()
         {
             selectedMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
