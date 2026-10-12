@@ -6,7 +6,7 @@
 ## Project Techstack
 - C#
 - .NET
-- Json
+- JSON
 - NUnit
 
 ## Development Process
@@ -18,8 +18,9 @@
         - If any issues were found with the code or it did not align fully with our requirements, then the code had to be revised before it could be approved.
     - Finally, once it was approved, could it be merged into the main branch.
 
-- To sart with our goal was to devolep a desktop app using winform
-- Later on it got added to our requirements that there should be both a desktop and web version both using the same backend
+- To start with our goal was to develop a desktop app using winform that use JSON files to store todoes and user preferences.
+- Later on it got added to our requirements that there should be both a desktop and web version both using the same backend.
+- We also moved over to using a SQl database to store data instead of using a JSON file.
 
 ## UML Diagrams
 ### Class Diagram
