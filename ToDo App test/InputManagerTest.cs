@@ -33,7 +33,7 @@ public class InputManagerTest
         CalendarManager calendar = new CalendarManager();
         TagFilter tagFilter = new TagFilter();
 
-        inputManager = new InputManager(toDoHandler, dataHandler, toDoListSort, calendar, tagFilter);
+        inputManager = new InputManager(toDoHandler, dataHandler, toDoListSort, tagFilter, calendar);
     }
 
     [OneTimeTearDown]
