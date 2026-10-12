@@ -12,6 +12,7 @@ public class DataHandler {
     /// </summary>
     public void GetPath()
     {
+        Directory.CreateDirectory("../../../Files/");
         if (File.Exists(UserPreferences))
         {
             var jsondata = File.ReadAllText(UserPreferences);
@@ -47,7 +48,6 @@ public class DataHandler {
     /// List<ToDo>
     /// </returns>
     public List<ToDo> LoadList() {
-        Directory.CreateDirectory("../../../Files/");
         GetPath();
         if (File.Exists(Path)){
             var jsondata = File.ReadAllText(Path);
