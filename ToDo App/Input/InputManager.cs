@@ -18,8 +18,9 @@ public class InputManager : IInputHandling
     DataHandler dataHandler;
     ToDoListSort listSorter;
     CalendarManager calendar;
+    TagFilter tagFilter;
 
-    public List<ToDo> ToDos { get; private set; } = new List<ToDo>();
+    public List<ToDo> ToDos { get; set; } = new List<ToDo>();
     
     /// <summary>
     /// Constructs the InputManager with all the needed dependencies.
@@ -28,13 +29,22 @@ public class InputManager : IInputHandling
     /// <param name="dataHandler">Object for handling the saving and loading of todo list</param>
     /// <param name="toDoListSort">Object for handling the sorting of the todo list</param>
     /// <param name="calendar">Object for handling calendar-related operations</param>
-    public InputManager(ToDoHandler toDoHandler, DataHandler dataHandler, ToDoListSort toDoListSort, CalendarManager calendar)
+    /// <param name="toDoListSort">Object for handling creating a sorted list of tags</param>
+
+    public InputManager(ToDoHandler toDoHandler, DataHandler dataHandler, ToDoListSort toDoListSort, TagFilter tagFilter, CalendarManager calendar)
+
     {
         this.toDoHandler = toDoHandler;
         this.dataHandler = dataHandler;
         this.calendar = calendar;
         ToDos = this.dataHandler.LoadList();
         listSorter = toDoListSort;
+        this.tagFilter = tagFilter;
+    }
+
+    public List<string> GetAllTags(){
+        tagFilter.GenerateLibrary(ToDos);
+        return tagFilter.TagLibrary;
     }
 
     public List<ToDo> GetToDoList()
@@ -47,17 +57,69 @@ public class InputManager : IInputHandling
     {
         ToDo createdToDo = toDoHandler.Create("Insert title");
         ToDos.Add(createdToDo);
+        dataHandler.UpdateList(ToDos);
         return createdToDo;
     }
 
     public void DeleteToDo(ToDo todo)
     {
-        throw new NotImplementedException();
+        if (ToDos.Contains(todo))
+        {
+            ToDos.Remove(todo);
+            dataHandler.UpdateList(ToDos);
+        }
     }
 
     public void SetNewSavePath(string path)
     {
-        throw new NotImplementedException();
+        dataHandler.SelectSavePath($"{path}\\todoes.json");
+    }
+
+    public ToDo? UpdateToDo(Guid toDoId, string? title = null, string? description = null, 
+        DateTime? deadline = null, ToDoStatus? status = null, RepeatInterval? repeat = null, 
+        List<ChecklistItem>? checklist = null, int? priority = null)
+    {
+        ToDo? toDo = GetToDo(toDoId);
+        if (toDo == null)
+            return null;
+
+        if (title != null && !title.IsWhiteSpace())
+            toDoHandler.EditName(toDo, title);
+        if (description != null && !description.IsWhiteSpace())
+            toDoHandler.EditDescription(toDo, description);
+        if (deadline != null)
+            toDoHandler.EditDeadline(toDo, deadline);
+        if (status != null)
+        {
+            switch (status)
+            {
+                case ToDoStatus.InProgress:
+                    toDoHandler.MarkInProgress(toDo);
+                    break;
+                case ToDoStatus.Done:
+                    toDoHandler.FinishTask(toDo);
+                    break;
+            }
+        }
+        if (repeat != null)
+            toDoHandler.EditRepeat(toDo, (RepeatInterval)repeat);
+        if (checklist != null)
+            toDoHandler.EditChecklist(toDo, checklist);
+        if (priority != null)
+            toDoHandler.EditPriority(toDo, (int)priority);
+
+        dataHandler.UpdateList(ToDos);
+        return toDo;
+    }
+
+    public ToDo? GetToDo(Guid toDoId)
+    {
+        for (int i = 0; i < ToDos.Count; i++)
+        {
+            if (ToDos[i].Id == toDoId)
+                return ToDos[i];
+        }
+        return null;
     }
 
     public CalendarManager Calendar()

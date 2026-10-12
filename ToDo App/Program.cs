@@ -20,7 +20,8 @@ namespace ToDo_App
             DataHandler dataHandler = new DataHandler();
             ToDoListSort toDoListSort = new ToDoListSort();
             CalendarManager calendar = new CalendarManager();
-            InputManager inputManager = new InputManager(toDoHandler, dataHandler, toDoListSort, calendar);
+            TagFilter tagFilter = new TagFilter();
+            InputManager inputManager = new InputManager(toDoHandler, dataHandler, toDoListSort, tagFilter, calendar);
             Application.Run(new MainForm(inputManager));
         }
     }
