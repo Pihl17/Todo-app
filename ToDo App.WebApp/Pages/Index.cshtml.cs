@@ -18,5 +18,9 @@ namespace ToDo_App.WebApp.Pages
             this.inputHandler = inputHandler;
             ToDoList = inputHandler.GetToDoList();
         }
+
+        public void OnGet()
+        {
+        }
     }
 }
