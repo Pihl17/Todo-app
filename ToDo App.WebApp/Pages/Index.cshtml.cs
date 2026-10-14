@@ -9,16 +9,6 @@ namespace ToDo_App.WebApp.Pages
 {
     public class IndexModel : PageModel
     {
-        private IInputHandling inputHandler;
-
-        public List<ToDo> ToDoList { get; set;}
-
-        public IndexModel(IInputHandling inputHandler)
-        {
-            this.inputHandler = inputHandler;
-            ToDoList = inputHandler.GetToDoList();
-        }
-
         public void OnGet()
         {
         }
