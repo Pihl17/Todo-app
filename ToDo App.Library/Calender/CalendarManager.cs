@@ -4,27 +4,23 @@ using System.Linq;
 using System.Text;
 using ToDo_App.Library.Models;
 
-namespace ToDo_App.Library.Calender
+
+namespace ToDo_App.Library.Calendar
 {
+
     /// <summary>
     /// Finds the dates where ToDos have a deadline or repeat, for use in a calendar view.
     /// </summary>
     public class CalendarManager
     {
-        private readonly List<ToDo> toDos;
+        public DateTime selectedMonth;
+        public string selectedMonthString;
 
-        /// <summary>
-        /// Creates a calender manager that works on the given list of ToDos.
-        /// </summary>
-        public CalendarManager(List<ToDo> toDos)
-        {
-            this.toDos = toDos;
-        }
 
         /// <summary>
         /// Returns all dates in a range with a deadline, including repeated deadlines.
         /// </summary>
-        public List<DateTime> GetDeadlineDates(DateTime from, DateTime to)
+        public List<DateTime> GetDeadlineDates(List<ToDo> toDos, DateTime from, DateTime to)
         {
             List<DateTime> dates = new List<DateTime>();
             foreach (ToDo toDo in toDos)
@@ -38,7 +34,7 @@ namespace ToDo_App.Library.Calender
         /// Returns all dates in the range where a repeating ToDo comes back.
         /// The original deadline is not included.
         /// </summary>
-        public List<DateTime> GetRepeatDates(DateTime from, DateTime to)
+        public List<DateTime> GetRepeatDates(List<ToDo> toDos, DateTime from, DateTime to)
         {
             List<DateTime> dates = new List<DateTime>();
             foreach (ToDo toDo in toDos)
@@ -53,7 +49,7 @@ namespace ToDo_App.Library.Calender
         /// <summary>
         /// Returns the ToDos that have a deadline or repeat on the given date.
         /// </summary>
-        public List<ToDo> GetToDosOnDate(DateTime date)
+        public List<ToDo> GetToDosOnDate(List<ToDo> toDos, DateTime date)
         {
             List<ToDo> result = new List<ToDo>();
             foreach (ToDo toDo in toDos)
@@ -148,13 +144,13 @@ namespace ToDo_App.Library.Calender
         /// <param name="year"></param>
         /// <param name="month"></param>
         /// <returns></returns>
-        public List<CalendarDay> GetToDosInGivenMonth(int year, int month)
+        public List<CalendarDay> GetToDosInGivenMonth(List<ToDo> toDos, int year, int month)
         {
             var days = new List<CalendarDay>();
             for (int day = 1; day <= DateTime.DaysInMonth(year, month); day++)
             {
                 var date = new DateTime(year, month, day);
-                var toDosOfTheDay = GetToDosOnDate(date);
+                var toDosOfTheDay = GetToDosOnDate(toDos, date);
                 {
                     days.Add(new CalendarDay { Date = date, ToDosOfTheDay = toDosOfTheDay });
 
@@ -163,14 +159,49 @@ namespace ToDo_App.Library.Calender
 
             return days;
         }
-    }
-}
+        /// <summary>
+        /// Updates the selected month to the next month and updates the selectedMonth accordingly.
+        /// </summary>
+        public void NextMonth()
+        {
+            selectedMonth = selectedMonth.AddMonths(1);
+            UpdateSelectedMonthString();
+        }
+        /// <summary>
+        /// Updates the selected month to the previous month and updates the selectedMonth accordingly.
+        /// </summary>
+        public void PreviousMonth()
+        {
+            selectedMonth = selectedMonth.AddMonths(-1);
+            UpdateSelectedMonthString();
+        }
+        /// <summary>
+        /// Updates the selectedMonthString to reflect the current selectedMonth in the format "MMMM yyyy".
+        /// </summary>
+        private void UpdateSelectedMonthString()
+        {
+            selectedMonthString = selectedMonth.ToString("MMMM yyyy");
+        }
+        /// <summary>
+        /// Initializes the selected month to the current month and updates the selectedMonthString accordingly.
+        /// </summary>
+        public void InitializeSelectedMonth()
+        {
+            selectedMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            UpdateSelectedMonthString();
 
-/// <summary>
-/// Represents a day in the calendar with its associated ToDos.
-/// </summary>
-public class CalendarDay
-{
-    public List<ToDo> ToDosOfTheDay { get; set; }
-    public DateTime Date { get; set; }
+        }
+
+
+
+    }
+
+    /// <summary>
+    /// Represents a day in the calendar with its associated ToDos.
+    /// </summary>
+    public class CalendarDay
+    {
+        public List<ToDo> ToDosOfTheDay { get; set; }
+        public DateTime Date { get; set; }
+    }
 }
