@@ -110,6 +110,7 @@ namespace ToDo_App_test.Handler
             }
         }
 
+        [Test]
         public void CheckPriorityTest()
         {
             Assert.AreEqual(4, toDos[0].Priority);
