@@ -36,8 +36,8 @@ namespace ToDo_App.UI
         public CalendarUI(IInputHandling inputHandler) : this()
         {
             this.inputHandler = inputHandler;
-            inputHandler.Calendar().InitializeSelectedMonth();
-            selectedMonth.Text = inputHandler.Calendar().selectedMonthString;
+            inputHandler.InitializeSelectedMonth();
+            selectedMonth.Text = inputHandler.SelectedMonthString();
 
         }
         /// <summary>
@@ -65,8 +65,8 @@ namespace ToDo_App.UI
         /// <param name="e"></param>
         private void previousMonth_Click(object sender, EventArgs e)
         {
-            inputHandler.Calendar().PreviousMonth();
-            selectedMonth.Text = inputHandler.Calendar().selectedMonthString;
+            inputHandler.PreviousMonth();
+            selectedMonth.Text = inputHandler.SelectedMonthString();
         }
         /// <summary>
         /// Event handler for the nextMonth button click event. Moves to the next month in the calendar and updates the selectedMonth button text accordingly.
@@ -75,8 +75,8 @@ namespace ToDo_App.UI
         /// <param name="e"></param>
         private void nextMonth_Click(object sender, EventArgs e)
         {
-            inputHandler.Calendar().NextMonth();
-            selectedMonth.Text = inputHandler.Calendar().selectedMonthString;
+            inputHandler.NextMonth();
+            selectedMonth.Text = inputHandler.SelectedMonthString();
         }
         /// <summary>
         /// Populates the monthSelectPanel with buttons representing each month of the year. Each button is labeled with the corresponding month number and has a click event that displays a message box indicating which month was clicked.

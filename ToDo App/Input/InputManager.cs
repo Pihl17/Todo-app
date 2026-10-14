@@ -122,9 +122,21 @@ public class InputManager : IInputHandling
         return null;
     }
 
-    public CalendarManager Calendar()
+    public void InitializeSelectedMonth()
     {
-        return calendar;
+       calendar.InitializeSelectedMonth();
+    }
+    public string SelectedMonthString()
+    {
+        return calendar.selectedMonthString;
+    }
+    public void NextMonth()
+    {
+        calendar.NextMonth();
+    }
+    public void PreviousMonth()
+    {
+        calendar.PreviousMonth();
     }
 
 }

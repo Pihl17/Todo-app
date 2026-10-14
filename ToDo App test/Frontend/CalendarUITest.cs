@@ -12,20 +12,31 @@ namespace ToDo_App_test.Frontend
     {
 
         CalendarUI calendarUI;
+        private Mock<IInputHandling> inputMock;
+        private DateTime currentMonth;
 
         [SetUp]
         public void Setup()
         {
-            calendarUI = new CalendarUI();
-            var calendarMock = new Mock<CalendarManager>();
-            var inputMock = new Mock<IInputHandling>();
+            currentMonth = new DateTime(2026, 10, 1);
 
-            inputMock
-                .Setup(x => x.Calendar())
-                .Returns(calendarMock.Object);
+            inputMock = new Mock<IInputHandling>();
+
+            inputMock.Setup(x => x.InitializeSelectedMonth())
+                .Callback(() => currentMonth = new DateTime(2026, 10, 1));
+
+            inputMock.Setup(x => x.SelectedMonthString())
+                .Returns(() => currentMonth.ToString("MMMM yyyy"));
+
+            inputMock.Setup(x => x.NextMonth())
+                .Callback(() => currentMonth = currentMonth.AddMonths(1));
+
+            inputMock.Setup(x => x.PreviousMonth())
+                .Callback(() => currentMonth = currentMonth.AddMonths(-1));
 
             calendarUI = new CalendarUI(inputMock.Object);
         }
+
 
         [Test]
         public void TestCalendarUIInitialization()
@@ -37,19 +48,13 @@ namespace ToDo_App_test.Frontend
         [Test]
         public void CalendarUI_InitializesWithInputHandlerTest()
         {
-            var calendarMock = new Mock<CalendarManager>();
             var inputMock = new Mock<IInputHandling>();
-
-            inputMock
-                .Setup(x => x.Calendar())
-                .Returns(calendarMock.Object);
 
             Assert.DoesNotThrow(() => calendarUI = new CalendarUI(inputMock.Object));
         }
         [Test]
         public void CalendarUI_CreatesTwelveMonthButtons()
         {
-
             try
             {
                 Assert.That(calendarUI.MonthButtonCount, Is.EqualTo(12));

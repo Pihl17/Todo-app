@@ -32,11 +32,6 @@ public interface IInputHandling
     /// <param name="path">The new filepath for the save file</param>
     void SetNewSavePath(string path);
 
-    /// <summary>
-    /// Returns the CalendarManager instance for managing calendar-related functionalities.
-    /// </summary>
-    /// <returns></returns>
-    CalendarManager Calendar();
     /// Updates various variables on the ToDo with the given ID.
     /// </summary>
     /// <param name="toDoId">ID of the todo to update</param>
@@ -58,5 +53,10 @@ public interface IInputHandling
     /// <param name="toDoId">ID to find the todo with</param>
     /// <returns>The first todo with the given ID or null if none were found</returns>
     ToDo? GetToDo(Guid toDoId);
+
+    public void InitializeSelectedMonth();
+    public string SelectedMonthString();
+    public void NextMonth();
+    public void PreviousMonth();
 
 }
