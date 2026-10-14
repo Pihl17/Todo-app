@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Forms;
 using ToDo_App.Calendar;
 using ToDo_App.Input;
 using ToDo_App.UI;
@@ -65,6 +66,23 @@ namespace ToDo_App_test.Frontend
             }
         }
         [Test]
+        public void CalendarUI_ClickTwelveMonthButtons()
+        {
+            try
+            {
+                    int i = 0;
+                foreach (Button button in calendarUI.MonthButtons)
+                {
+                    i++;
+                Assert.That(button.Text, Is.EqualTo("Month " + i));
+                }
+            }
+            finally
+            {
+                calendarUI.Dispose();
+            }
+        }
+        [Test]
         public void MonthSelectorButton_TogglesPanelVisibilityTest()
         {
 
@@ -76,6 +94,14 @@ namespace ToDo_App_test.Frontend
                 calendarUI.MonthPanelVisible,
                 Is.EqualTo(!initialVisibility));
 
+        }
+        [Test]
+        public void MonthButton_Click_NoSubscribers_DoesNotThrow()
+        {
+            Assert.DoesNotThrow(() =>
+                calendarUI.MonthButton_Click(
+                    calendarUI.MonthButtons[0],
+                    EventArgs.Empty));
         }
         [Test]
         public void NextMonthButton_GivesNextMonthTest()
