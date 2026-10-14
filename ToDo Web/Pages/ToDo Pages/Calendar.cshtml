@@ -1,0 +1,14 @@
+﻿@page
+@model ToDo_Web.Pages.ToDo_Pages.CalendarModel
+@{
+}
+<html lang="en">
+<body>
+    This is your calendar!
+    
+    @foreach (var month in Model.Months)
+        {
+    <button type="button">@month</button>
+    }
+</body>
+</html>
