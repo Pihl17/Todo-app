@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ToDo App.Library\ToDo App.Library.csproj" />
     <ProjectReference Include="..\ToDo App.WindowsApp\ToDo App.WindowsApp.csproj" />
+	<ProjectReference Include="..\ToDo App.WebApp\ToDo App.WebApp.csproj" />
   </ItemGroup>
 
   <ItemGroup>
