@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using ToDo_App.Library.Handler;
@@ -11,7 +12,28 @@ namespace ToDo_App.Test.Web
     internal class WebTest
     {
         [Test]
-        public void setuptest()
+        public void IndexTest()
+        {
+            IndexModel indexmodel = new IndexModel();
+            indexmodel.OnGet();
+        }
+
+        [Test]
+        public void PrivacyTest()
+        {
+            PrivacyModel privacymodel = new PrivacyModel();
+            privacymodel.OnGet();
+        }
+
+        [Test]
+        public void ErrorTest()
+        {
+            ErrorModel errormodel = new ErrorModel();
+            errormodel.OnGet();
+        }
+
+        [Test]
+        public void TodoViewTest()
         {
             ToDoHandler toDoHandler = new ToDoHandler();
             DataHandler dataHandler = new DataHandler();
@@ -19,7 +41,8 @@ namespace ToDo_App.Test.Web
             TagFilter tagFilter = new TagFilter();
             InputManager inputManager = new InputManager(toDoHandler, dataHandler, toDoListSort, tagFilter);
 
-            IndexModel indexmode = new IndexModel(inputManager);
+            TodoViewsModel todoviewsmodel = new TodoViewsModel(inputManager);
         }
+
     }
 }
