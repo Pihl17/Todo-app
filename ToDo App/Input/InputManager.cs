@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using ToDo_App.Handler;
 using ToDo_App.Models;
+using ToDo_App.Calendar;
 
 namespace ToDo_App.Input;
 
@@ -15,6 +17,7 @@ public class InputManager : IInputHandling
     ToDoHandler toDoHandler;
     DataHandler dataHandler;
     ToDoListSort listSorter;
+    CalendarManager calendar;
     TagFilter tagFilter;
 
     public List<ToDo> ToDos { get; set; } = new List<ToDo>();
@@ -25,12 +28,15 @@ public class InputManager : IInputHandling
     /// <param name="toDoHandler">Object for handling creating and changing todos</param>
     /// <param name="dataHandler">Object for handling the saving and loading of todo list</param>
     /// <param name="toDoListSort">Object for handling the sorting of the todo list</param>
+    /// <param name="calendar">Object for handling calendar-related operations</param>
     /// <param name="toDoListSort">Object for handling creating a sorted list of tags</param>
 
-    public InputManager(ToDoHandler toDoHandler, DataHandler dataHandler, ToDoListSort toDoListSort, TagFilter tagFilter)
+    public InputManager(ToDoHandler toDoHandler, DataHandler dataHandler, ToDoListSort toDoListSort, TagFilter tagFilter, CalendarManager calendar)
+
     {
         this.toDoHandler = toDoHandler;
         this.dataHandler = dataHandler;
+        this.calendar = calendar;
         ToDos = this.dataHandler.LoadList();
         listSorter = toDoListSort;
         this.tagFilter = tagFilter;
@@ -114,6 +120,23 @@ public class InputManager : IInputHandling
                 return ToDos[i];
         }
         return null;
+    }
+
+    public void InitializeSelectedMonth()
+    {
+       calendar.InitializeSelectedMonth();
+    }
+    public string GetSelectedMonthString()
+    {
+        return calendar.selectedMonthString;
+    }
+    public void NextMonth()
+    {
+        calendar.NextMonth();
+    }
+    public void PreviousMonth()
+    {
+        calendar.PreviousMonth();
     }
 
 }

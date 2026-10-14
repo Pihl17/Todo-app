@@ -1,6 +1,7 @@
 ﻿using ToDo_App.Input;
 using ToDo_App.Handler;
 using ToDo_App.Models;
+using ToDo_App.Calendar;
 
 namespace ToDo_App_test;
 
@@ -10,7 +11,7 @@ public class InputManagerTest
     private InputManager inputManager;
 
     const string TEST_FOLDER_PATH = "../../../Test Folder InputManager/";
-    const string lIST_PATH = TEST_FOLDER_PATH + "todoes_inputManagerTest.json";
+    const string LIST_PATH = TEST_FOLDER_PATH + "todoes_inputManagerTest.json";
     const string PREFERENCE_PATH = TEST_FOLDER_PATH + "UserPreferences_inputManagerTest.json";
 
     [OneTimeSetUp]
@@ -26,19 +27,20 @@ public class InputManagerTest
         DataHandler dataHandler = new DataHandler()
         {
             UserPreferences = PREFERENCE_PATH,
-            Path = lIST_PATH
+            Path = LIST_PATH
         };
         ToDoListSort toDoListSort = new ToDoListSort();
+        CalendarManager calendar = new CalendarManager();
         TagFilter tagFilter = new TagFilter();
 
-        inputManager = new InputManager(toDoHandler, dataHandler, toDoListSort, tagFilter);
+        inputManager = new InputManager(toDoHandler, dataHandler, toDoListSort, tagFilter, calendar);
     }
 
     [OneTimeTearDown]
     public void Cleanup()
     {
         File.Delete(PREFERENCE_PATH);
-        File.Delete(lIST_PATH);
+        File.Delete(LIST_PATH);
         Directory.Delete(TEST_FOLDER_PATH);
     }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using ToDo_App.Calendar;
 using ToDo_App.Models;
 
 namespace ToDo_App.Input;
@@ -31,7 +32,6 @@ public interface IInputHandling
     /// <param name="path">The new filepath for the save file</param>
     void SetNewSavePath(string path);
 
-    /// <summary>
     /// Updates various variables on the ToDo with the given ID.
     /// </summary>
     /// <param name="toDoId">ID of the todo to update</param>
@@ -53,5 +53,23 @@ public interface IInputHandling
     /// <param name="toDoId">ID to find the todo with</param>
     /// <returns>The first todo with the given ID or null if none were found</returns>
     ToDo? GetToDo(Guid toDoId);
+
+    /// <summary>
+    /// Initializes the selected month to the current month and updates the selectedMonthString accordingly.
+    /// </summary>
+    public void InitializeSelectedMonth();
+    /// <summary>
+    /// Returns the selected month as a string.
+    /// </summary>
+    /// <returns></returns>
+    public string GetSelectedMonthString();
+    /// <summary>
+    /// Updates the selected month to the previous month and updates the selectedMonth accordingly.
+    /// </summary>
+    public void NextMonth();
+    /// <summary>
+    /// Updates the selected month to the next month and updates the selectedMonth accordingly.
+    /// </summary>
+    public void PreviousMonth();
 
 }
