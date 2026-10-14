@@ -39,9 +39,4 @@ public partial class MainForm : Form
             inputHandler.SetNewSavePath(folder.SelectedPath);
         }
     }
-
-    private void calendarTabPage_Click(object sender, EventArgs e)
-    {
-
-    }
 }

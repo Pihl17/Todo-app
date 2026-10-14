@@ -41,15 +41,6 @@ namespace ToDo_App.UI
 
         }
         /// <summary>
-        /// Event handler for the CalendarUI load event. Currently, it does not perform any actions when the control is loaded.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CalendarUI_Load(object sender, EventArgs e)
-        {
-
-        }
-        /// <summary>
         /// Event handler for the selectedMonth button click event. Toggles the visibility of the monthSelectPanel when the button is clicked.
         /// </summary>
         /// <param name="sender"></param>
