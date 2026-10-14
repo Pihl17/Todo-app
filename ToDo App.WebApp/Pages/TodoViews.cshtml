@@ -3,3 +3,10 @@
 @{
 	ViewData["Title"] = "Todoes";
 }
+
+<section>
+    @{
+        @System.Text.Json.JsonSerializer.Serialize(Model.ToDoList);
+        <p>test</p>
+    }
+</section>

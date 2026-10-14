@@ -5,15 +5,10 @@ using ToDo_App.Library.Models;
 
 namespace ToDo_App.WebApp.Pages
 {
-    public class TodoViewsModel : PageModel {
-        private IInputHandling inputHandler;
+    public class TodoViewsModel(IInputHandling inputHandler) : PageModel {
 
-        public List<ToDo> ToDoList { get; set; }
+        public List<ToDo> ToDoList { get; set; } = inputHandler.GetToDoList();
 
-        public TodoViewsModel(IInputHandling inputHandler)
-        {
-            this.inputHandler = inputHandler;
-            ToDoList = inputHandler.GetToDoList();
-        }
+
     }
 }

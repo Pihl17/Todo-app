@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -29,7 +30,18 @@ namespace ToDo_App.Test.Web
         public void ErrorTest()
         {
             ErrorModel errormodel = new ErrorModel();
+
+            var httpContext = new DefaultHttpContext();
+
+            errormodel.PageContext = new PageContext
+            {
+                HttpContext = httpContext
+            };
+
             errormodel.OnGet();
+
+            Assert.NotNull(errormodel.RequestId);
+            Assert.True(errormodel.ShowRequestId);
         }
 
         [Test]
