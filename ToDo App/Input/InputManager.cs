@@ -126,7 +126,7 @@ public class InputManager : IInputHandling
     {
        calendar.InitializeSelectedMonth();
     }
-    public string SelectedMonthString()
+    public string GetSelectedMonthString()
     {
         return calendar.selectedMonthString;
     }

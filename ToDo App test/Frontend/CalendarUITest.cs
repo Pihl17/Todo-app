@@ -25,7 +25,7 @@ namespace ToDo_App_test.Frontend
             inputMock.Setup(x => x.InitializeSelectedMonth())
                 .Callback(() => currentMonth = new DateTime(2026, 10, 1));
 
-            inputMock.Setup(x => x.SelectedMonthString())
+            inputMock.Setup(x => x.GetSelectedMonthString())
                 .Returns(() => currentMonth.ToString("MMMM yyyy"));
 
             inputMock.Setup(x => x.NextMonth())

@@ -54,9 +54,22 @@ public interface IInputHandling
     /// <returns>The first todo with the given ID or null if none were found</returns>
     ToDo? GetToDo(Guid toDoId);
 
+    /// <summary>
+    /// Initializes the selected month to the current month and updates the selectedMonthString accordingly.
+    /// </summary>
     public void InitializeSelectedMonth();
-    public string SelectedMonthString();
+    /// <summary>
+    /// Returns the selected month as a string.
+    /// </summary>
+    /// <returns></returns>
+    public string GetSelectedMonthString();
+    /// <summary>
+    /// Updates the selected month to the previous month and updates the selectedMonth accordingly.
+    /// </summary>
     public void NextMonth();
+    /// <summary>
+    /// Updates the selected month to the next month and updates the selectedMonth accordingly.
+    /// </summary>
     public void PreviousMonth();
 
 }
