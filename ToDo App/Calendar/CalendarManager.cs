@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using ToDo_App.Models;
+using ToDo_App.Library.Models;
 
+<<<<<<<< HEAD:ToDo App.Library/Calender/CalendarManager.cs
+namespace ToDo_App.Library.Calender
+========
 namespace ToDo_App.Calendar
+>>>>>>>> main:ToDo App/Calendar/CalendarManager.cs
 {
 
     /// <summary>
