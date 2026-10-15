@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using NUnit.Framework;
 using ToDo_App.Library.Models;
-using ToDo_App.Library.Calender;
+using ToDo_App.Library.Calendar;
+using System.Globalization;
 
 namespace ToDo_App.Test
 {
@@ -11,6 +12,14 @@ namespace ToDo_App.Test
     {
         private static readonly DateTime OCTOBER_START = new DateTime(2026, 10, 1);
         private static readonly DateTime OCTOBER_END = new DateTime(2026, 10, 31);
+        private List<ToDo> toDos;
+        private CalendarManager calendar;
+
+        [SetUp]
+        public void SetUp()
+        {
+            calendar = new CalendarManager();
+        }
 
         private ToDo CreateToDo(DateTime? deadline, RepeatInterval repeat)
         {
@@ -18,11 +27,6 @@ namespace ToDo_App.Test
             toDo.Deadline = deadline;
             toDo.Repeat = repeat;
             return toDo;
-        }
-
-        private CalendarManager CreateCalendar(params ToDo[] toDos)
-        {
-            return new CalendarManager(new List<ToDo>(toDos));
         }
 
         private List<DateTime> DatesOf(params DateTime[] dates)
@@ -35,9 +39,11 @@ namespace ToDo_App.Test
         [Test]
         public void GetDeadlineDates_NoRepeat_ReturnsDeadline()
         {
-            CalendarManager calendar = CreateCalendar(CreateToDo(new DateTime(2026, 10, 10), RepeatInterval.None));
-
-            List<DateTime> dates = calendar.GetDeadlineDates(OCTOBER_START, OCTOBER_END);
+            var toDos = new List<ToDo>
+            {
+                CreateToDo(new DateTime(2026, 10, 10), RepeatInterval.None)
+            };
+            List<DateTime> dates = calendar.GetDeadlineDates(toDos, OCTOBER_START, OCTOBER_END);
 
             Assert.That(dates, Is.EqualTo(DatesOf(new DateTime(2026, 10, 10))));
         }
@@ -45,9 +51,12 @@ namespace ToDo_App.Test
         [Test]
         public void GetDeadlineDates_NullDeadline_ReturnsEmpty()
         {
-            CalendarManager calendar = CreateCalendar(CreateToDo(null, RepeatInterval.None));
+            var toDos = new List<ToDo>
+            {
+                CreateToDo(null, RepeatInterval.None)
+            };
 
-            List<DateTime> dates = calendar.GetDeadlineDates(OCTOBER_START, OCTOBER_END);
+            List<DateTime> dates = calendar.GetDeadlineDates(toDos, OCTOBER_START, OCTOBER_END);
 
             Assert.That(dates, Is.EqualTo(DatesOf()));
         }
@@ -55,9 +64,9 @@ namespace ToDo_App.Test
         [Test]
         public void GetDeadlineDates_EmptyList_ReturnsEmpty()
         {
-            CalendarManager calendar = CreateCalendar();
+            var toDos = new List<ToDo>();
 
-            List<DateTime> dates = calendar.GetDeadlineDates(OCTOBER_START, OCTOBER_END);
+            List<DateTime> dates = calendar.GetDeadlineDates(toDos, OCTOBER_START, OCTOBER_END);
 
             Assert.That(dates, Is.Empty);
         }
@@ -65,9 +74,12 @@ namespace ToDo_App.Test
         [Test]
         public void GetDeadlineDates_DeadlineAfterRange_ReturnsEmpty()
         {
-            CalendarManager calendar = CreateCalendar(CreateToDo(new DateTime(2026, 11, 10), RepeatInterval.None));
+            var toDos = new List<ToDo>
+            {
+                CreateToDo(new DateTime(2026, 11, 1), RepeatInterval.None)
+            };
 
-            List<DateTime> dates = calendar.GetDeadlineDates(OCTOBER_START, OCTOBER_END);
+            List<DateTime> dates = calendar.GetDeadlineDates(toDos, OCTOBER_START, OCTOBER_END);
 
             Assert.That(dates, Is.Empty);
         }
@@ -75,9 +87,12 @@ namespace ToDo_App.Test
         [Test]
         public void GetDeadlineDates_DeadlineBeforeRange_ReturnsEmpty()
         {
-            CalendarManager calendar = CreateCalendar(CreateToDo(new DateTime(2026, 9, 10), RepeatInterval.None));
+            var toDos = new List<ToDo>
+            {
+                CreateToDo(new DateTime(2026, 9, 30), RepeatInterval.None)
+            };
 
-            List<DateTime> dates = calendar.GetDeadlineDates(OCTOBER_START, OCTOBER_END);
+            List<DateTime> dates = calendar.GetDeadlineDates(toDos, OCTOBER_START, OCTOBER_END);
 
             Assert.That(dates, Is.Empty);
         }
@@ -85,9 +100,11 @@ namespace ToDo_App.Test
         [Test]
         public void GetDeadlineDates_IgnoresTimeOfDay()
         {
-            CalendarManager calendar = CreateCalendar(CreateToDo(new DateTime(2026, 10, 10, 15, 30, 0), RepeatInterval.None));
-
-            List<DateTime> dates = calendar.GetDeadlineDates(OCTOBER_START, OCTOBER_END);
+            var toDos = new List<ToDo>
+            {
+                CreateToDo(new DateTime(2026, 10, 10, 14, 30, 0), RepeatInterval.None)
+            };
+            List<DateTime> dates = calendar.GetDeadlineDates(toDos, OCTOBER_START, OCTOBER_END);
 
             Assert.That(dates, Is.EqualTo(DatesOf(new DateTime(2026, 10, 10))));
         }
@@ -95,9 +112,13 @@ namespace ToDo_App.Test
         [Test]
         public void GetDeadlineDates_Daily_ReturnsEveryDay()
         {
-            CalendarManager calendar = CreateCalendar(CreateToDo(new DateTime(2026, 10, 10), RepeatInterval.Daily));
-
-            List<DateTime> dates = calendar.GetDeadlineDates(new DateTime(2026, 10, 10), new DateTime(2026, 10, 12));
+            var toDos = new List<ToDo>
+            {
+                CreateToDo(new DateTime(2026, 10, 10), RepeatInterval.None),
+                CreateToDo(new DateTime(2026, 10, 11), RepeatInterval.None),
+                CreateToDo(new DateTime(2026, 10, 12), RepeatInterval.None)
+            };
+            List<DateTime> dates = calendar.GetDeadlineDates(toDos, new DateTime(2026, 10, 10), new DateTime(2026, 10, 12));
 
             Assert.That(dates, Is.EqualTo(DatesOf(new DateTime(2026, 10, 10), new DateTime(2026, 10, 11), new DateTime(2026, 10, 12))));
         }
@@ -105,9 +126,12 @@ namespace ToDo_App.Test
         [Test]
         public void GetDeadlineDates_WeeklyStartingBeforeRange_SkipsDatesBeforeRange()
         {
-            CalendarManager calendar = CreateCalendar(CreateToDo(new DateTime(2026, 9, 28), RepeatInterval.Weekly));
-
-            List<DateTime> dates = calendar.GetDeadlineDates(new DateTime(2026, 10, 1), new DateTime(2026, 10, 14));
+            var toDos = new List<ToDo>
+            {
+                CreateToDo(new DateTime(2026, 10, 5), RepeatInterval.None),
+                CreateToDo(new DateTime(2026, 10, 12), RepeatInterval.None)
+            };
+            List<DateTime> dates = calendar.GetDeadlineDates(toDos, new DateTime(2026, 10, 1), new DateTime(2026, 10, 14));
 
             Assert.That(dates, Is.EqualTo(DatesOf(new DateTime(2026, 10, 5), new DateTime(2026, 10, 12))));
         }
@@ -115,9 +139,14 @@ namespace ToDo_App.Test
         [Test]
         public void GetDeadlineDates_Monthly_KeepsEndOfMonth()
         {
-            CalendarManager calendar = CreateCalendar(CreateToDo(new DateTime(2026, 1, 31), RepeatInterval.Monthly));
-
-            List<DateTime> dates = calendar.GetDeadlineDates(new DateTime(2026, 1, 1), new DateTime(2026, 4, 30));
+            var toDos = new List<ToDo>
+            {
+                CreateToDo(new DateTime(2026, 1, 31), RepeatInterval.None),
+                CreateToDo(new DateTime(2026, 2, 28), RepeatInterval.None),
+                CreateToDo(new DateTime(2026, 3, 31), RepeatInterval.None),
+                CreateToDo(new DateTime(2026, 4, 30), RepeatInterval.None)
+            };
+            List<DateTime> dates = calendar.GetDeadlineDates(toDos, new DateTime(2026, 1, 1), new DateTime(2026, 4, 30));
 
             Assert.That(dates, Is.EqualTo(DatesOf(new DateTime(2026, 1, 31), new DateTime(2026, 2, 28), new DateTime(2026, 3, 31), new DateTime(2026, 4, 30))));
         }
@@ -125,9 +154,11 @@ namespace ToDo_App.Test
         [Test]
         public void GetDeadlineDates_Yerly_ReturnsSameDateEachYear()
         {
-            CalendarManager calendar = CreateCalendar(CreateToDo(new DateTime(2026, 10, 10), RepeatInterval.Yearly));
-
-            List<DateTime> dates = calendar.GetDeadlineDates(OCTOBER_START, new DateTime(2028, 12, 31));
+            var toDos = new List<ToDo>
+            {
+                CreateToDo(new DateTime(2026, 10, 10), RepeatInterval.Yearly)
+            };
+            List<DateTime> dates = calendar.GetDeadlineDates(toDos, OCTOBER_START, new DateTime(2028, 12, 31));
 
             Assert.That(dates, Is.EqualTo(DatesOf(new DateTime(2026, 10, 10), new DateTime(2027, 10, 10), new DateTime(2028, 10, 10))));
         }
@@ -135,11 +166,12 @@ namespace ToDo_App.Test
         [Test]
         public void GetDeadlineDates_SameDateTwice_ReturnsOnce()
         {
-            CalendarManager calendar = CreateCalendar(
-                CreateToDo(new DateTime(2026, 10, 10), RepeatInterval.None),
-                CreateToDo(new DateTime(2026, 10, 10), RepeatInterval.None));
-
-            List<DateTime> dates = calendar.GetDeadlineDates(OCTOBER_START, OCTOBER_END);
+            var toDos = new List<ToDo>
+            {
+                CreateToDo(new DateTime(2026, 10, 10), RepeatInterval.None)
+            };
+            toDos.Add(CreateToDo(new DateTime(2026, 10, 10), RepeatInterval.None));
+            List<DateTime> dates = calendar.GetDeadlineDates(toDos, OCTOBER_START, OCTOBER_END);
 
             Assert.That(dates, Has.Count.EqualTo(1));
         }
@@ -147,11 +179,12 @@ namespace ToDo_App.Test
         [Test]
         public void GetDeadlineDates_MultipleToDos_ReturnDatesSorted()
         {
-            CalendarManager calendar = CreateCalendar(
+            var toDos = new List<ToDo>
+            {
                 CreateToDo(new DateTime(2026, 10, 20), RepeatInterval.None),
-                CreateToDo(new DateTime(2026, 10, 5), RepeatInterval.None));
-
-            List<DateTime> dates = calendar.GetDeadlineDates(OCTOBER_START, OCTOBER_END);
+                CreateToDo(new DateTime(2026, 10, 5), RepeatInterval.None)
+            };
+            List<DateTime> dates = calendar.GetDeadlineDates(toDos, OCTOBER_START, OCTOBER_END);
 
             Assert.That(dates, Is.EqualTo(DatesOf(new DateTime(2026, 10, 5), new DateTime(2026, 10, 20))));
         }
@@ -161,9 +194,11 @@ namespace ToDo_App.Test
         [Test]
         public void GetRepeatDates_NoRepeat_ReturnsEmpty()
         {
-            CalendarManager calendar = CreateCalendar(CreateToDo(new DateTime(2026, 10, 10), RepeatInterval.None));
-
-            List<DateTime> dates = calendar.GetRepeatDates(OCTOBER_START, OCTOBER_END);
+            var toDos = new List<ToDo>
+            {
+                CreateToDo(new DateTime(2026, 10, 10), RepeatInterval.None)
+            };
+            List<DateTime> dates = calendar.GetRepeatDates(toDos, OCTOBER_START, OCTOBER_END);
 
             Assert.That(dates, Is.Empty);
         }
@@ -171,9 +206,11 @@ namespace ToDo_App.Test
         [Test]
         public void GetRepeatDates_Weekly_ExcludesOriginalDeadline()
         {
-            CalendarManager calendar = CreateCalendar(CreateToDo(new DateTime(2026, 10, 5), RepeatInterval.Weekly));
-
-            List<DateTime> dates = calendar.GetRepeatDates(OCTOBER_START, OCTOBER_END);
+            var toDos = new List<ToDo>
+            {
+                CreateToDo(new DateTime(2026, 10, 5), RepeatInterval.Weekly)
+            };
+            List<DateTime> dates = calendar.GetRepeatDates(toDos, OCTOBER_START, OCTOBER_END);
 
             Assert.That(dates, Is.EqualTo(DatesOf(new DateTime(2026, 10, 12), new DateTime(2026, 10, 19), new DateTime(2026, 10, 26))));
         }
@@ -181,9 +218,11 @@ namespace ToDo_App.Test
         [Test]
         public void GetRepeatDates_WeekdaysFromFriday_SkipsWeekends()
         {
-            CalendarManager calendar = CreateCalendar(CreateToDo(new DateTime(2026, 10, 2), RepeatInterval.Weekdays));
-
-            List<DateTime> dates = calendar.GetRepeatDates(new DateTime(2026, 10, 2), new DateTime(2026, 10, 8));
+            var toDos = new List<ToDo>
+            {
+                CreateToDo(new DateTime(2026, 10, 2), RepeatInterval.Weekdays)
+            };
+            List<DateTime> dates = calendar.GetRepeatDates(toDos, new DateTime(2026, 10, 2), new DateTime(2026, 10, 8));
 
             Assert.That(dates, Is.EqualTo(DatesOf(new DateTime(2026, 10, 5), new DateTime(2026, 10, 6), new DateTime(2026, 10, 7), new DateTime(2026, 10, 8))));
         }
@@ -191,9 +230,11 @@ namespace ToDo_App.Test
         [Test]
         public void GetRepeatDates_WeekdaysFromMonday_JumpsOverWeekend()
         {
-            CalendarManager calendar = CreateCalendar(CreateToDo(new DateTime(2026, 10, 5), RepeatInterval.Weekdays));
-
-            List<DateTime> dates = calendar.GetRepeatDates(new DateTime(2026, 10, 5), new DateTime(2026, 10, 12));
+            var toDos = new List<ToDo>
+            {
+                CreateToDo(new DateTime(2026, 10, 5), RepeatInterval.Weekdays)
+            };
+            List<DateTime> dates = calendar.GetRepeatDates(toDos, new DateTime(2026, 10, 5), new DateTime(2026, 10, 12));
 
             Assert.That(dates, Is.EqualTo(DatesOf(new DateTime(2026, 10, 6), new DateTime(2026, 10, 7), new DateTime(2026, 10, 8), new DateTime(2026, 10, 9), new DateTime(2026, 10, 12))));
         }
@@ -205,9 +246,12 @@ namespace ToDo_App.Test
         {
             ToDo onDay = CreateToDo(new DateTime(2026, 10, 12), RepeatInterval.None);
             ToDo otherDay = CreateToDo(new DateTime(2026, 10, 13), RepeatInterval.None);
-            CalendarManager calendar = CreateCalendar(onDay, otherDay);
-
-            List<ToDo> result = calendar.GetToDosOnDate(new DateTime(2026, 10, 12));
+            var toDos = new List<ToDo>
+            {
+                onDay,
+                otherDay
+            };
+            List<ToDo> result = calendar.GetToDosOnDate(toDos, new DateTime(2026, 10, 12));
 
             Assert.That(result, Is.EqualTo(new List<ToDo> { onDay }));
         }
@@ -216,9 +260,12 @@ namespace ToDo_App.Test
         public void GetToDosOnDate_RepeatingToDo_IsFoundOnRepeatDate()
         {
             ToDo weekly = CreateToDo(new DateTime(2026, 10, 5), RepeatInterval.Weekly);
-            CalendarManager calendar = CreateCalendar(weekly);
+            var toDos = new List<ToDo>
+            {
+                weekly
+            };
 
-            List<ToDo> result = calendar.GetToDosOnDate(new DateTime(2026, 10, 12));
+            List<ToDo> result = calendar.GetToDosOnDate(toDos, new DateTime(2026, 10, 12));
 
             Assert.That(result, Is.EqualTo(new List<ToDo> { weekly }));
         }
@@ -226,22 +273,29 @@ namespace ToDo_App.Test
         [Test]
         public void GetToDosOnDate_DayWithNoToDos_ReturnsEmpty()
         {
-            CalendarManager calendar = CreateCalendar(CreateToDo(new DateTime(2026, 10, 5), RepeatInterval.Weekly));
+            var toDos = new List<ToDo>
+            {
+                CreateToDo(new DateTime(2026, 10, 12), RepeatInterval.None)
+            };
 
-            List<ToDo> result = calendar.GetToDosOnDate(new DateTime(2026, 10, 13));
+            List<ToDo> result = calendar.GetToDosOnDate(toDos, new DateTime(2026, 10, 13));
 
             Assert.That(result, Is.Empty);
         }
         [Test]
         public void GetToDosInGivenMonthTest_CheckNonRepeatingToDos()
         {
+            var toDos = new List<ToDo>
+            {
+                CreateToDo(new DateTime(2026, 10, 5), RepeatInterval.None),
+                CreateToDo(new DateTime(2026, 10, 10), RepeatInterval.None),
+                CreateToDo(new DateTime(2026, 11, 1), RepeatInterval.None)
+            };
             ToDo toDo1 = CreateToDo(new DateTime(2026, 10, 5), RepeatInterval.None);
             ToDo toDo2 = CreateToDo(new DateTime(2026, 10, 10), RepeatInterval.None);
             ToDo toDo3 = CreateToDo(new DateTime(2026, 11, 1), RepeatInterval.None);
 
-            CalendarManager calendar = CreateCalendar(toDo1, toDo2, toDo3);
-
-            List<CalendarDay> result = calendar.GetToDosInGivenMonth(2026, 10);
+            List<CalendarDay> result = calendar.GetToDosInGivenMonth(toDos, 2026, 10);
 
             Assert.That(result, Has.Count.EqualTo(31));
 
@@ -257,10 +311,9 @@ namespace ToDo_App.Test
         public void GetToDosInGivenMonthTest_CheckRepeatingToDos(RepeatInterval repeatInterval, int expectedCount)
         {
             ToDo toDo = CreateToDo(new DateTime(2025, 2, 1), repeatInterval);
+            toDos = new List<ToDo> { toDo };
 
-            CalendarManager calendar = CreateCalendar(toDo);
-
-            List<CalendarDay> result = calendar.GetToDosInGivenMonth(2026, 2);
+            List<CalendarDay> result = calendar.GetToDosInGivenMonth(toDos, 2026, 2);
 
             Assert.That(result, Has.Count.EqualTo(28));
 
@@ -273,10 +326,9 @@ namespace ToDo_App.Test
         public void GetToDosInGivenMonthTest_CheckRepeatingYearly_NoResult(RepeatInterval repeatInterval, int expectedCount)
         {
             ToDo toDo = CreateToDo(new DateTime(2025, 2, 1), repeatInterval);
+            toDos = new List<ToDo> { toDo };
 
-            CalendarManager calendar = CreateCalendar(toDo);
-
-            List<CalendarDay> result = calendar.GetToDosInGivenMonth(2026, 3);
+            List<CalendarDay> result = calendar.GetToDosInGivenMonth(toDos, 2026, 3);
 
             Assert.That(result, Has.Count.EqualTo(31));
 
@@ -284,5 +336,31 @@ namespace ToDo_App.Test
 
             Assert.That(actualCount, Is.EqualTo(expectedCount));
         }
+
+        [Test]
+        public void NextMonthTest()
+        {
+            calendar.selectedMonth = new DateTime(2026, 10, 1);
+            calendar.NextMonth();
+            DateTime expectedNextMonth = new DateTime(2026, 11, 1);
+            Assert.That(calendar.selectedMonth, Is.EqualTo(expectedNextMonth));
+        }
+
+        [Test]
+        public void PreviousMonthTest()
+        {
+            calendar.selectedMonth = new DateTime(2026, 10, 1);
+            calendar.PreviousMonth();
+            DateTime expectedPreviousMonth = new DateTime(2026, 9, 1);
+            Assert.That(calendar.selectedMonth, Is.EqualTo(expectedPreviousMonth));
+        }
+
+        [Test]
+        public void InitializeSelectedMonthTest()
+        {
+            calendar.InitializeSelectedMonth();
+            Assert.That(calendar.selectedMonth.Month, Is.EqualTo(DateTime.Today.Month));
+        }
+
     }
 }
