@@ -1,0 +1,13 @@
+﻿@page
+@model TodoViewsModel
+@{
+	ViewData["Title"] = "Todoes";
+}
+
+<section>
+    @foreach (var todo in Model.ToDoList)
+    {
+        <p>creation date @todo.CreationDate</p>
+    }
+
+</section>
