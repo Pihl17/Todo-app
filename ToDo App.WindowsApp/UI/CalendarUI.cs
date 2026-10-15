@@ -25,9 +25,7 @@ namespace ToDo_App.UI
         /// </summary>
         public CalendarUI()
         {
-            InitializeComponent();
-            PopulateMonthPanel();
-            this.components = new System.ComponentModel.Container();
+
         }
         /// <summary>
         /// Initializes the CalendarUI with an input handler, sets the selected month, and populates the month selection panel.
@@ -35,9 +33,13 @@ namespace ToDo_App.UI
         /// <param name="inputHandler"></param>
         public CalendarUI(IInputHandling inputHandler) : this()
         {
+            InitializeComponent();
+            this.components = new System.ComponentModel.Container();
             this.inputHandler = inputHandler;
             inputHandler.InitializeSelectedMonth();
             selectedMonth.Text = inputHandler.GetSelectedMonthString();
+            PopulateCalendarDisplayPanel();
+            PopulateMonthPanel();
 
         }
         /// <summary>
@@ -74,6 +76,7 @@ namespace ToDo_App.UI
         /// </summary>
         private void PopulateMonthPanel()
         {
+
             monthSelectPanel.Controls.Clear();
 
             int columns = 3;
@@ -107,6 +110,67 @@ namespace ToDo_App.UI
         {
             Button button = (Button)sender;
             MonthSelected?.Invoke(button.Text);
+        }
+
+        public void PopulateCalendarDisplayPanel()
+        {
+
+            DateTime selectedMonth =
+                DateTime.Parse(inputHandler.GetSelectedMonthString());
+
+            int columns = 7;
+            int spacing = 3;
+            int days = DateTime.DaysInMonth(
+                selectedMonth.Year, selectedMonth.Month);
+
+            int buttonWidth =
+                (calendarDisplayPanel.ClientSize.Width
+                - (columns - 1) * spacing) / columns;
+
+            calendarDisplayPanel.Controls.Clear();
+
+            for (int i = 0; i < 7; i++)
+            {
+                int column = i % columns;
+
+                Button button = new Button();
+                button.Text = $"{i + 1}";
+                button.Width = buttonWidth;
+                button.Height = 40;
+                button.Enabled = false;
+
+                button.Left = column * (buttonWidth + spacing);
+
+                button.Anchor = AnchorStyles.Top | AnchorStyles.Left
+                              | AnchorStyles.Right;
+
+                button.Click += MonthButton_Click;
+
+                calendarDisplayPanel.Controls.Add(button);
+            }
+
+            for (int i = 0; i < days; i++)
+            {
+                int column = i % columns;
+                int row = i / columns;
+
+                Button button = new Button();
+                button.Text = $"{i + 1}";
+                button.Width = buttonWidth;
+                button.Height = 80;
+                button.TextAlign = ContentAlignment.TopLeft;
+                button.Enabled = false;
+
+                button.Left = column * (buttonWidth + spacing);
+                button.Top = row * (button.Height + spacing) + 43;
+
+                button.Anchor = AnchorStyles.Top | AnchorStyles.Left
+                              | AnchorStyles.Right;
+
+                button.Click += MonthButton_Click;
+
+                calendarDisplayPanel.Controls.Add(button);
+            }
         }
     }
 }
