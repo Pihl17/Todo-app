@@ -114,4 +114,69 @@ public class ToDoListDisplayTest
         Assert.That(list.GetToDos(), Is.EqualTo(initialList));
     }
 
+    [Test]
+    public void RemoveFromList_RemovesExistingToDo()
+    {
+        ToDoDisplay todo = new ToDoDisplay(new ToDo());
+
+        ToDoListDisplay list = new ToDoListDisplay();
+        list.AddToList(todo);
+
+        list.RemoveFromList(todo);
+
+        Assert.That(list.GetToDos().Contains(todo), Is.False);
+    }
+
+    [Test]
+    public void RemoveFromList_NonExistingToDo_DoesNothing()
+    {
+        ToDoDisplay todo = new ToDoDisplay(new ToDo());
+
+        ToDoListDisplay list = new ToDoListDisplay();
+
+        Assert.DoesNotThrow(() => list.RemoveFromList(todo));
+    }
+
+    [Test]
+    public void Constructor_WithToDos_AddsAllToList()
+    {
+        ToDoDisplay todo1 = new ToDoDisplay(new ToDo());
+        ToDoDisplay todo2 = new ToDoDisplay(new ToDo());
+
+        ToDoListDisplay list = new ToDoListDisplay(todo1, todo2);
+
+        Assert.That(list.GetToDos().Count, Is.EqualTo(2));
+    }
+
+    [Test]
+    public void Constructor_WithInputHandlerAndToDos_AddsAllToList()
+    {
+        Mock<IInputHandling> mock = new Mock<IInputHandling>();
+
+        ToDoDisplay todo1 = new ToDoDisplay(new ToDo());
+        ToDoDisplay todo2 = new ToDoDisplay(new ToDo());
+
+        ToDoListDisplay list = new ToDoListDisplay(
+            mock.Object,
+            todo1,
+            todo2);
+
+        Assert.That(list.GetToDos().Count, Is.EqualTo(2));
+    }
+
+    [Test]
+    public void RefreshList_EmptyList_RemovesAllControls()
+    {
+        Mock<IInputHandling> mock = new Mock<IInputHandling>();
+
+        mock.Setup(x => x.GetToDoList())
+            .Returns(new List<ToDo>());
+
+        ToDoListDisplay list = new ToDoListDisplay(mock.Object);
+
+        list.RefreshList();
+
+        Assert.That(list.GetToDos().Count, Is.EqualTo(0));
+    }
+
 }

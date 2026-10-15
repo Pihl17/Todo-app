@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
-using ToDo_App.Handler;
+using System.Diagnostics.CodeAnalysis;
+using ToDo_App.Input;
 using ToDo_App.Models;
 
 
@@ -12,22 +13,27 @@ namespace ToDo_App.UI
     public partial class ToDoDetailForm : Form
     {
         private readonly ToDo toDo;
-        private readonly ToDoHandler toDoHandler;
+        private readonly IInputHandling inputManager;
 
         /// <summary>
         /// Creates the form for the given ToDo.
-        /// <summary>
-        public ToDoDetailForm(ToDo toDo, ToDoHandler toDoHandler)
+        /// </summary>
+        /// <param name="toDo">The ToDo to show end edit </param>
+        /// <param name="inputManager">The input manager that saves the changes </param>
+        public ToDoDetailForm(ToDo toDo, IInputHandling inputManager)
         {
             InitializeComponent();
             this.toDo = toDo;
-            this.toDoHandler = toDoHandler;
+            this.inputManager = inputManager;
             
             FormInputReader.FillEnum<ToDoStatus>(statusComboBox);
             FormInputReader.FillEnum<RepeatInterval>(repeatComboBox);
             ShowToDo();
         }
 
+        /// <summary>
+        /// Fills all controls with the values of th ToDo.
+        /// </summary>
         private void ShowToDo()
         {
             idLabel.Text = toDo.Id.ToString();
@@ -42,23 +48,51 @@ namespace ToDo_App.UI
             
         }
 
+        /// <summary>
+        /// Reads the controls and asks the input manager to save the changes.
+        /// The form closes with OK if it worked, otherwise a message is shown
+        /// and the formstays open.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void saveButton_Click(object sender, EventArgs e)
         {
             string title = FormInputReader.ReadText(titleTextBox);
             if (title.Length == 0)
             {
-                MessageBox.Show("Title cannot be empty.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                ShowMessage("The title cannot be empty");
                 return;
             }
 
-            toDoHandler.EditName(toDo, title);
-            toDoHandler.EditDescription(toDo, FormInputReader.ReadText(descriptionTextBox));
-            toDoHandler.EditDeadline(toDo, FormInputReader.ReadDate(deadlinePicker));
-            toDoHandler.EditPriority(toDo, FormInputReader.ReadNumber(priorityNumberBox));
-            toDoHandler.EditRepeat(toDo, FormInputReader.ReadEnum<RepeatInterval>(repeatComboBox));
-            toDo.MarkProgress(FormInputReader.ReadEnum<ToDoStatus>(statusComboBox));
+            ToDoStatus selectedStatus = FormInputReader.ReadEnum<ToDoStatus>(statusComboBox);
+            DateTime? selectedDeadline = FormInputReader.ReadDate(deadlinePicker);
 
+            ToDo? updated = inputManager.UpdateToDo(
+                toDo.Id,
+                title: title,
+                description: FormInputReader.ReadText(descriptionTextBox),
+                deadline: selectedDeadline,
+                removeDeadline: selectedDeadline == null && toDo.Deadline != null,
+                status: selectedStatus != toDo.Status ? selectedStatus : null,
+                repeat: FormInputReader.ReadEnum<RepeatInterval>(repeatComboBox),
+                priority: FormInputReader.ReadNumber(priorityNumberBox));
+            
+            if (updated == null)
+            {
+                ShowMessage("The ToDo no longer exists");
+                return;
+            }
             DialogResult = DialogResult.OK;
+        }
+
+        /// <summary>
+        /// Shows a message to the user. Can be overridden so tests don't open a dialog.
+        /// </summary>
+        /// <param name="message">The text to show</param>
+        [ExcludeFromCodeCoverage]
+        protected virtual void ShowMessage(string message)
+        {
+            MessageBox.Show(message);
         }
     }
 }

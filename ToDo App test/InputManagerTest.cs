@@ -134,7 +134,9 @@ public class InputManagerTest
     [Test]
     public void SetNewSavePath_SetsNewSavePath()
     {
-        Assert.Fail();
+        inputManager.SetNewSavePath(TEST_FOLDER_PATH);
+
+        Assert.Pass();
     }
 
     [Test]
