@@ -5,8 +5,9 @@
 }
 
 <section>
-    @{
-        @System.Text.Json.JsonSerializer.Serialize(Model.ToDoList);
-        <p>test</p>
+    @foreach (var todo in Model.ToDoList)
+    {
+        <p>creation date @todo.CreationDate</p>
     }
+
 </section>
