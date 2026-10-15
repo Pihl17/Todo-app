@@ -5,7 +5,7 @@ using ToDo_App.Library.Models;
 
 namespace ToDo_App.WebApp.Pages
 {
-    public class TodoViewsModel(IInputHandling inputHandler) : PageModel {
+    public class TodoesModel(IInputHandling inputHandler) : PageModel {
 
         public List<ToDo> ToDoList { get; set; } = inputHandler.GetToDoList();
 

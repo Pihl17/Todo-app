@@ -11,4 +11,8 @@
     <ProjectReference Include="..\ToDo App.Library\ToDo App.Library.csproj" />
 </ItemGroup>
 	
+<ItemGroup>
+  <Folder Include="Pages\Todoes\" />
+</ItemGroup>
+	
 </Project>
