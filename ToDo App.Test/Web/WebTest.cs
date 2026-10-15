@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Collections.Generic;
@@ -54,6 +56,21 @@ namespace ToDo_App.Test.Web
             InputManager inputManager = new InputManager(toDoHandler, dataHandler, toDoListSort, tagFilter);
 
             TodoViewsModel todoviewsmodel = new TodoViewsModel(inputManager);
+        }
+
+        [Test]
+        public void PostTodoTest() {
+            ToDoHandler toDoHandler = new ToDoHandler();
+            DataHandler dataHandler = new DataHandler();
+            ToDoListSort toDoListSort = new ToDoListSort();
+            TagFilter tagFilter = new TagFilter();
+            InputManager inputManager = new InputManager(toDoHandler, dataHandler, toDoListSort, tagFilter);
+
+            SubmitTodoModel Model = new SubmitTodoModel(inputManager);
+
+            ActionResult result = Model.OnPost();
+
+            Assert.NotNull(result);
         }
 
     }
