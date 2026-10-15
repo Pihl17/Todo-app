@@ -1,7 +1,7 @@
-﻿@page "/Todoes/Todo/{id:int}"
+﻿@page "/Todoes/Todo/{id:Guid}"
 @model TodoModel
 
 @{
-	ViewData["Title"] = "Todo";
+	ViewData["Title"] = Model.ToDo.Title;
 }
 <div></div>

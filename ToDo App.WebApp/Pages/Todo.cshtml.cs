@@ -1,14 +1,17 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using ToDo_App.Library.Input;
+using ToDo_App.Library.Models;
 
 namespace ToDo_App.WebApp.Pages
 {
-    public class TodoModel : PageModel
+    public class TodoModel(IInputHandling inputHandler) : PageModel
     {
-        public int Id { get; set; } = 10;
-        public void OnGet()
+        public ToDo? ToDo { get; set; }
+
+        public void OnGet(Guid id)
         {
-           
+            ToDo = inputHandler.GetToDo(id);
         }
     }
 }

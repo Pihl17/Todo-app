@@ -5,9 +5,12 @@
 }
 
 <section>
+    
     @foreach (var todo in Model.ToDoList)
     {
+        <h2>@todo.Title</h2>
         <p>creation date @todo.CreationDate</p>
+        <a class="nav-link text-dark" asp-page="/Todo" asp-route-id="@todo.Id">Rediger</a>
     }
 
 </section>
