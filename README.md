@@ -6,7 +6,8 @@
 ## Project Techstack
 - C#
 - .NET
-- JSON
+- Razor (C#)
+- JSON (No longer used)
 - SQL
 - NUnit
 
@@ -20,7 +21,7 @@
     - Finally, once it was approved, could it be merged into the main branch.
 
 - To start with our goal was to develop a desktop app using winform that use JSON files to store todoes and user preferences.
-- Later on it got added to our requirements that there should be both a desktop and web version both using the same backend.
+- Later on it got added to our requirements that there should be both a desktop and web version both using the same backend. Here we settled on using Razor.
 - We also moved over to using a SQl database to store data instead of using a JSON file.
 
 ## UML Diagrams
