@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using ToDo_App.Library.Calendar;
 using ToDo_App.Library.Handler;
 using ToDo_App.Library.Input;
 using ToDo_App.WebApp.Pages;
@@ -14,6 +15,19 @@ namespace ToDo_App.Test.Web
 {
     internal class WebTest
     {
+        private InputManager TestInputManager;
+
+        [OneTimeSetUp]
+        public void Setup(){
+            ToDoHandler toDoHandler = new ToDoHandler();
+            DataHandler dataHandler = new DataHandler();
+            ToDoListSort toDoListSort = new ToDoListSort();
+            TagFilter tagFilter = new TagFilter();
+            CalendarManager calendarManager = new CalendarManager();
+
+            TestInputManager = new InputManager(toDoHandler, dataHandler, toDoListSort, tagFilter, calendarManager);
+        }
+
         [Test]
         public void IndexTest()
         {
@@ -49,24 +63,14 @@ namespace ToDo_App.Test.Web
         [Test]
         public void TodoViewTest()
         {
-            ToDoHandler toDoHandler = new ToDoHandler();
-            DataHandler dataHandler = new DataHandler();
-            ToDoListSort toDoListSort = new ToDoListSort();
-            TagFilter tagFilter = new TagFilter();
-            InputManager inputManager = new InputManager(toDoHandler, dataHandler, toDoListSort, tagFilter);
+            
 
-            TodoViewsModel todoviewsmodel = new TodoViewsModel(inputManager);
+            TodoViewsModel todoviewsmodel = new TodoViewsModel(TestInputManager);
         }
 
         [Test]
         public void PostTodoTest() {
-            ToDoHandler toDoHandler = new ToDoHandler();
-            DataHandler dataHandler = new DataHandler();
-            ToDoListSort toDoListSort = new ToDoListSort();
-            TagFilter tagFilter = new TagFilter();
-            InputManager inputManager = new InputManager(toDoHandler, dataHandler, toDoListSort, tagFilter);
-
-            SubmitTodoModel Model = new SubmitTodoModel(inputManager);
+            SubmitTodoModel Model = new SubmitTodoModel(TestInputManager);
 
             ActionResult result = Model.OnPost();
 
