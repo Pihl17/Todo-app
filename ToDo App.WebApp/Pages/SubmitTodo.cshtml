@@ -4,5 +4,13 @@
 }
 
 <section>
-	<form method="post"><button class="btn btn-default">create todo</button></form>
+	<form method="post">
+		<label for="Title">Title:</label><br>
+		<input type="text" id="Title" name="Title" placeholder="Enter Todo Titel" required>
+		<label for="Description">Description:</label>
+		<textarea id="Description" name="Description"></textarea>
+		<label for="Deadline">Deadline</label>
+		<input type="datetime-local" id="Deadline" name="Deadline" required/>
+		<button class="btn btn-default">create todo</button>
+	</form>
 </section>
