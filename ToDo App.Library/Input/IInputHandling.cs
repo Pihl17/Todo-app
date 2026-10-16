@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using ToDo_App.Library.Calendar;
 using ToDo_App.Library.Models;
 namespace ToDo_App.Library.Input;
 
@@ -69,5 +70,11 @@ public interface IInputHandling
     /// Updates the selected month to the next month and updates the selectedMonth accordingly.
     /// </summary>
     public void PreviousMonth();
+    /// <summary>
+    /// Returns a list of CalendarDay objects for the given month and year, each containing the date and the ToDos that have a deadline or repeat on that date.
+    /// </summary>
+    /// <param name="toDos"></param>
+    /// <returns></returns>
+    public List<CalendarDay> GetToDosInGivenMonth(List<ToDo> toDos);
 
 }

@@ -138,5 +138,9 @@ public class InputManager : IInputHandling
     {
         calendar.PreviousMonth();
     }
+    public List<CalendarDay> GetToDosInGivenMonth(List<ToDo> toDos)
+    {
+        return calendar.GetToDosInGivenMonth(toDos);
+    }
 
 }

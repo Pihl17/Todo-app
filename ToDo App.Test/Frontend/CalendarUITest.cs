@@ -2,8 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Forms;
 using ToDo_App.Library.Calendar;
 using ToDo_App.Library.Input;
+using ToDo_App.Library.Models;
 using ToDo_App.UI;
 
 namespace ToDo_App_test.Frontend
@@ -34,6 +36,26 @@ namespace ToDo_App_test.Frontend
             inputMock.Setup(x => x.PreviousMonth())
                 .Callback(() => currentMonth = currentMonth.AddMonths(-1));
 
+            inputMock.Setup(x => x.GetToDoList())
+                .Returns(new List<ToDo>());
+
+            inputMock.Setup(x => x.GetToDosInGivenMonth(It.IsAny<List<ToDo>>()))
+                .Returns(() =>
+                {
+                    int days = DateTime.DaysInMonth(
+                        currentMonth.Year, currentMonth.Month);
+
+                    return Enumerable.Range(1, days)
+                        .Select(day => new CalendarDay
+                        {
+                            Date = new DateTime(
+                                currentMonth.Year, currentMonth.Month, day),
+                            ToDosOfTheDay = new List<ToDo>()
+                        })
+                        .ToList();
+                });
+
+            // Construct the UI only after configuring the mock.
             calendarUI = new CalendarUI(inputMock.Object);
         }
 
@@ -48,9 +70,9 @@ namespace ToDo_App_test.Frontend
         [Test]
         public void CalendarUI_InitializesWithInputHandlerTest()
         {
-            var inputMock = new Mock<IInputHandling>();
+            using var ui = new CalendarUI(inputMock.Object);
 
-            Assert.DoesNotThrow(() => calendarUI = new CalendarUI(inputMock.Object));
+            Assert.That(ui, Is.Not.Null);
         }
         [Test]
         public void CalendarUI_CreatesTwelveMonthButtons()
@@ -69,11 +91,11 @@ namespace ToDo_App_test.Frontend
         {
             try
             {
-                    int i = 0;
+                int i = 0;
                 foreach (Button button in calendarUI.MonthButtons)
                 {
                     i++;
-                Assert.That(button.Text, Is.EqualTo("Month " + i));
+                    Assert.That(button.Text, Is.EqualTo("Month " + i));
                 }
             }
             finally
@@ -155,7 +177,7 @@ namespace ToDo_App_test.Frontend
         [TearDown]
         public void TearDown()
         {
-            calendarUI.Dispose();
+            calendarUI?.Dispose();
         }
     }
 }

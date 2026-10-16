@@ -19,6 +19,8 @@ namespace ToDo_App.Test
         public void SetUp()
         {
             calendar = new CalendarManager();
+
+            calendar.selectedMonth = new DateTime(2026, 2,1);
         }
 
         private ToDo CreateToDo(DateTime? deadline, RepeatInterval repeat)
@@ -287,17 +289,17 @@ namespace ToDo_App.Test
         {
             var toDos = new List<ToDo>
             {
-                CreateToDo(new DateTime(2026, 10, 5), RepeatInterval.None),
-                CreateToDo(new DateTime(2026, 10, 10), RepeatInterval.None),
+                CreateToDo(new DateTime(2026, 2, 5), RepeatInterval.None),
+                CreateToDo(new DateTime(2026, 2, 10), RepeatInterval.None),
                 CreateToDo(new DateTime(2026, 11, 1), RepeatInterval.None)
             };
-            ToDo toDo1 = CreateToDo(new DateTime(2026, 10, 5), RepeatInterval.None);
-            ToDo toDo2 = CreateToDo(new DateTime(2026, 10, 10), RepeatInterval.None);
+            ToDo toDo1 = CreateToDo(new DateTime(2026, 2, 5), RepeatInterval.None);
+            ToDo toDo2 = CreateToDo(new DateTime(2026, 2, 10), RepeatInterval.None);
             ToDo toDo3 = CreateToDo(new DateTime(2026, 11, 1), RepeatInterval.None);
 
-            List<CalendarDay> result = calendar.GetToDosInGivenMonth(toDos, 2026, 10);
+            List<CalendarDay> result = calendar.GetToDosInGivenMonth(toDos);
 
-            Assert.That(result, Has.Count.EqualTo(31));
+            Assert.That(result, Has.Count.EqualTo(28));
 
             int actualCount = result.Sum(day => day.ToDosOfTheDay.Count);
 
@@ -313,7 +315,7 @@ namespace ToDo_App.Test
             ToDo toDo = CreateToDo(new DateTime(2025, 2, 1), repeatInterval);
             toDos = new List<ToDo> { toDo };
 
-            List<CalendarDay> result = calendar.GetToDosInGivenMonth(toDos, 2026, 2);
+            List<CalendarDay> result = calendar.GetToDosInGivenMonth(toDos);
 
             Assert.That(result, Has.Count.EqualTo(28));
 
@@ -325,12 +327,12 @@ namespace ToDo_App.Test
         [TestCase(RepeatInterval.Yearly, 0)]
         public void GetToDosInGivenMonthTest_CheckRepeatingYearly_NoResult(RepeatInterval repeatInterval, int expectedCount)
         {
-            ToDo toDo = CreateToDo(new DateTime(2025, 2, 1), repeatInterval);
+            ToDo toDo = CreateToDo(new DateTime(2025, 1, 1), repeatInterval);
             toDos = new List<ToDo> { toDo };
 
-            List<CalendarDay> result = calendar.GetToDosInGivenMonth(toDos, 2026, 3);
+            List<CalendarDay> result = calendar.GetToDosInGivenMonth(toDos);
 
-            Assert.That(result, Has.Count.EqualTo(31));
+            Assert.That(result, Has.Count.EqualTo(28));
 
             int actualCount = result.Sum(day => day.ToDosOfTheDay.Count);
 
