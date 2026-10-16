@@ -13,7 +13,7 @@ namespace ToDo_App.WebApp.Pages
         public ActionResult OnPost()
         {
             inputHandler.CreateNewToDo();
-            return RedirectToPage("./TodoViews");
+            return RedirectToPage("./Todoes");
         }
     }
 }
