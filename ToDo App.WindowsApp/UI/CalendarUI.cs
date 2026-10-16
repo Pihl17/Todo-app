@@ -26,8 +26,6 @@ namespace ToDo_App.UI
         /// </summary>
         public CalendarUI()
         {
-            InitializeComponent();
-            this.components = new System.ComponentModel.Container();
         }
         /// <summary>
         /// Initializes the CalendarUI with an input handler, sets the selected month, and populates the month selection panel.
@@ -35,6 +33,8 @@ namespace ToDo_App.UI
         /// <param name="inputHandler"></param>
         public CalendarUI(IInputHandling inputHandler) : this()
         {
+            InitializeComponent();
+            this.components = new System.ComponentModel.Container();
             this.inputHandler = inputHandler;
 
             inputHandler.InitializeSelectedMonth();
@@ -151,8 +151,6 @@ namespace ToDo_App.UI
                               | AnchorStyles.Right;
 
                 button.Click += MonthButton_Click;
-
-              
 
                 calendarDisplayPanel.Controls.Add(button);
             }
