@@ -77,7 +77,7 @@ public class InputManager : IInputHandling
 
     public ToDo? UpdateToDo(Guid toDoId, string? title = null, string? description = null, 
         DateTime? deadline = null, ToDoStatus? status = null, RepeatInterval? repeat = null, 
-        List<ChecklistItem>? checklist = null, int? priority = null)
+        List<ChecklistItem>? checklist = null, int? priority = null, bool removeDeadline = false)
     {
         ToDo? toDo = GetToDo(toDoId);
         if (toDo == null)
@@ -87,12 +87,17 @@ public class InputManager : IInputHandling
             toDoHandler.EditName(toDo, title);
         if (description != null && !description.IsWhiteSpace())
             toDoHandler.EditDescription(toDo, description);
-        if (deadline != null)
+        if (removeDeadline)
+            toDoHandler.EditDeadline(toDo, null);
+        else if (deadline != null)
             toDoHandler.EditDeadline(toDo, deadline);
         if (status != null)
         {
             switch (status)
             {
+                case ToDoStatus.NotDone:
+                    toDo.MarkProgress(ToDoStatus.NotDone);
+                    break;
                 case ToDoStatus.InProgress:
                     toDoHandler.MarkInProgress(toDo);
                     break;
