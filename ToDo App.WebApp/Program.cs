@@ -1,3 +1,4 @@
+using ToDo_App.Library.Calendar;
 using ToDo_App.Library.Handler;
 using ToDo_App.Library.Input;
 
@@ -7,7 +8,8 @@ ToDoHandler toDoHandler = new ToDoHandler();
 DataHandler dataHandler = new DataHandler();
 ToDoListSort toDoListSort = new ToDoListSort();
 TagFilter tagFilter = new TagFilter();
-InputManager inputManager = new InputManager(toDoHandler, dataHandler, toDoListSort, tagFilter);
+CalendarManager calendarManager = new CalendarManager();
+InputManager inputManager = new InputManager(toDoHandler, dataHandler, toDoListSort, tagFilter, calendarManager);
 
 builder.Services.AddSingleton<IInputHandling>(inputManager);
 
