@@ -38,7 +38,19 @@ public class DataHandler {
     {
         string jsonString = JsonSerializer.Serialize(newpath);
         File.WriteAllText(UserPreferences, jsonString);
+
+        if (Path == newpath)
+        {
+            return;
+        }
+
+        if (File.Exists(newpath))
+        {
+            File.Delete(newpath);
+        }
+
         File.Move(Path, newpath);
+
         Path = newpath;
     }
 
