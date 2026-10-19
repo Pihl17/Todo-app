@@ -69,7 +69,8 @@ public class DataHandler {
             todoList.Add(toDoHandler.Create(reader.GetString(1),
                 desc: reader.GetString(2),
                 priority: reader.GetInt32(4),
-                repeat: reader.GetFieldValue<RepeatInterval>(9)
+                repeat: reader.GetFieldValue<RepeatInterval>(8),
+                choosenDeadLine: reader.IsDBNull(7) ? null : reader.GetDateTime(7)
             ));
         }
 

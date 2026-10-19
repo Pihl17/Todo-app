@@ -11,7 +11,6 @@ CREATE TABLE todos (
 	priority INT NOT NULL,
 	created_date DATE,
 	finished_date DATE,
-	has_deadline BOOL NOT NULL,
 	deadline_date DATE,
 	repeat_interval REPEAT_INTERVAL NOT NULL
 );
