@@ -1,3 +1,6 @@
+using Npgsql;
+using Npgsql.NameTranslation;
+using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
@@ -48,22 +51,29 @@ public class DataHandler {
     /// List<ToDo>
     /// </returns>
     public List<ToDo> LoadList() {
-        GetPath();
-        if (File.Exists(Path)){
-            var jsondata = File.ReadAllText(Path);
-            try
-            {
-                return JsonSerializer.Deserialize<List<ToDo>>(jsondata);
-            } catch
-            {
-                return [];
-            }
-        } else {
-            List<ToDo> EmptyList = [];
-            string jsonString = JsonSerializer.Serialize(EmptyList);
-            File.WriteAllText(Path, jsonString);
-            return EmptyList;
+
+        string connectionString = "Host=localhost;Username=postgres;Password=password_here;Database=postgres";
+        NpgsqlDataSourceBuilder dataSourceBuilder = new NpgsqlDataSourceBuilder(connectionString);
+        dataSourceBuilder.MapEnum<ToDoStatus>();
+        dataSourceBuilder.MapEnum<RepeatInterval>();
+        using NpgsqlDataSource dataSource = dataSourceBuilder.Build();
+
+        using NpgsqlCommand command = dataSource.CreateCommand("SELECT * FROM todos");
+        using NpgsqlDataReader reader = command.ExecuteReader();
+
+        List<ToDo> todoList = new List<ToDo>();
+        ToDoHandler toDoHandler = new ToDoHandler();
+
+        while (reader.Read())
+        {
+            todoList.Add(toDoHandler.Create(reader.GetString(1),
+                desc: reader.GetString(2),
+                priority: reader.GetInt32(4),
+                repeat: reader.GetFieldValue<RepeatInterval>(9)
+            ));
         }
+
+        return todoList;
     }
 
     /// <summary>
