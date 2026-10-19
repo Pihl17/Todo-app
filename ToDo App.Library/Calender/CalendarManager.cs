@@ -115,7 +115,6 @@ namespace ToDo_App.Library.Calendar
                     return start;
             }
         }
-
         /// <summary>
         /// Adds a given number of weekdays to a start date, skipping weekends.
         /// </summary>
@@ -136,8 +135,6 @@ namespace ToDo_App.Library.Calendar
             }
             return date;
         }
-
-
         /// <summary>
         /// Returns a list of CalendarDay objects for the given month and year, each containing the date and the ToDos that have a deadline or repeat on that date.
         /// </summary>
@@ -161,19 +158,12 @@ namespace ToDo_App.Library.Calendar
             return days;
         }
         /// <summary>
-        /// Updates the selected month to the next month and updates the selectedMonth accordingly.
+        /// Updates the selected month to the add or subtract 'i' months and updates the selectedMonth accordingly.
         /// </summary>
-        public void NextMonth()
+        /// <param name="i"></param>
+        public void ChangeByMonths(int i)
         {
-            selectedMonth = selectedMonth.AddMonths(1);
-            UpdateSelectedMonthString();
-        }
-        /// <summary>
-        /// Updates the selected month to the previous month and updates the selectedMonth accordingly.
-        /// </summary>
-        public void PreviousMonth()
-        {
-            selectedMonth = selectedMonth.AddMonths(-1);
+            selectedMonth = selectedMonth.AddMonths(i);
             UpdateSelectedMonthString();
         }
         /// <summary>
@@ -190,11 +180,7 @@ namespace ToDo_App.Library.Calendar
         {
             selectedMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             UpdateSelectedMonthString();
-
         }
-
-
-
     }
 
     /// <summary>

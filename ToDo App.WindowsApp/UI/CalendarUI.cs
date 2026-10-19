@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Text;
 using System.Windows.Forms;
-using ToDo_App.Library.Input;
 using ToDo_App.Library.Calendar;
+using ToDo_App.Library.Input;
 using ToDo_App.Library.Models;
 
 namespace ToDo_App.UI
@@ -39,7 +40,9 @@ namespace ToDo_App.UI
 
             inputHandler.InitializeSelectedMonth();
 
-            selectedMonth.Text = inputHandler.GetSelectedMonthString();
+            selectedMonth.Text =
+                string.Create(inputHandler.GetSelectedMonthString().Length, inputHandler.GetSelectedMonthString(), static (chars, str) => { chars[0] = char.ToUpperInvariant(str[0]); str.AsSpan(1).CopyTo(chars[1..]); });
+            yearBtn.Text = DateTime.Parse(inputHandler.GetSelectedMonthString()).Year.ToString();
 
             PopulateMonthPanel();
             PopulateCalendarDisplayPanel();
@@ -61,7 +64,9 @@ namespace ToDo_App.UI
         private void previousMonth_Click(object sender, EventArgs e)
         {
             inputHandler.PreviousMonth();
-            selectedMonth.Text = inputHandler.GetSelectedMonthString();
+            yearBtn.Text = DateTime.Parse(inputHandler.GetSelectedMonthString()).Year.ToString();
+            selectedMonth.Text =
+                string.Create(inputHandler.GetSelectedMonthString().Length, inputHandler.GetSelectedMonthString(), static (chars, str) => { chars[0] = char.ToUpperInvariant(str[0]); str.AsSpan(1).CopyTo(chars[1..]); });
             PopulateCalendarDisplayPanel();
         }
         /// <summary>
@@ -72,7 +77,9 @@ namespace ToDo_App.UI
         private void nextMonth_Click(object sender, EventArgs e)
         {
             inputHandler.NextMonth();
-            selectedMonth.Text = inputHandler.GetSelectedMonthString();
+            yearBtn.Text = DateTime.Parse(inputHandler.GetSelectedMonthString()).Year.ToString();
+            selectedMonth.Text =
+                string.Create(inputHandler.GetSelectedMonthString().Length, inputHandler.GetSelectedMonthString(), static (chars, str) => { chars[0] = char.ToUpperInvariant(str[0]); str.AsSpan(1).CopyTo(chars[1..]); });
             PopulateCalendarDisplayPanel();
         }
         /// <summary>
@@ -81,7 +88,6 @@ namespace ToDo_App.UI
         private void PopulateMonthPanel()
         {
 
-            monthSelectPanel.Controls.Clear();
 
             int columns = 3;
             int spacing = 3;
@@ -96,12 +102,14 @@ namespace ToDo_App.UI
                 int row = i / columns;
 
                 Button button = new Button();
-                button.Text = $"Month {i + 1}";
+                string month = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(i + 1);
+                month = string.Create(month.Length, month, static (chars, str) => { chars[0] = char.ToUpperInvariant(str[0]); str.AsSpan(1).CopyTo(chars[1..]); });
+                button.Text = $"{month}";
                 button.Width = buttonWidth;
                 button.Height = 40;
 
                 button.Left = column * (buttonWidth + spacing);
-                button.Top = row * (button.Height + spacing);
+                button.Top = (row + 1) * (button.Height + spacing);
 
                 button.Click += MonthButton_Click;
 
@@ -182,6 +190,29 @@ namespace ToDo_App.UI
 
                 calendarDisplayPanel.Controls.Add(button);
             }
+        }
+
+        private void previousYearBtn_Click(object sender, EventArgs e)
+        {
+            inputHandler.PreviousYear();
+            yearBtn.Text = DateTime.Parse(inputHandler.GetSelectedMonthString()).Year.ToString();
+            selectedMonth.Text =
+    string.Create(inputHandler.GetSelectedMonthString().Length, inputHandler.GetSelectedMonthString(), static (chars, str) => { chars[0] = char.ToUpperInvariant(str[0]); str.AsSpan(1).CopyTo(chars[1..]); });
+            PopulateCalendarDisplayPanel();
+        }
+
+        private void nextYearBtn_Click(object sender, EventArgs e)
+        {
+            inputHandler.NextYear();
+            yearBtn.Text = DateTime.Parse(inputHandler.GetSelectedMonthString()).Year.ToString();
+            selectedMonth.Text =
+    string.Create(inputHandler.GetSelectedMonthString().Length, inputHandler.GetSelectedMonthString(), static (chars, str) => { chars[0] = char.ToUpperInvariant(str[0]); str.AsSpan(1).CopyTo(chars[1..]); });
+            PopulateCalendarDisplayPanel();
+        }
+
+        private void CalendarUI_Click(object sender, EventArgs e)
+        {
+            monthSelectPanel.Visible = false;
         }
     }
 }

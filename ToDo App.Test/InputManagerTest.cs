@@ -1,7 +1,8 @@
-using ToDo_App.Library.Input;
-using ToDo_App.Library.Handler;
-using ToDo_App.Library.Models;
+using System.Globalization;
 using ToDo_App.Library.Calendar;
+using ToDo_App.Library.Handler;
+using ToDo_App.Library.Input;
+using ToDo_App.Library.Models;
 
 namespace ToDo_App.Test;
 
@@ -287,5 +288,85 @@ public class InputManagerTest
 
         Assert.IsNull(result);
     }
+    [Test]
+    public void InitializeSelectedMonth_Test()
+    {
+        inputManager.InitializeSelectedMonth();
+        DateTime currentMonth = DateTime.Now;
+        Assert.That(inputManager.GetSelectedMonth().Month, Is.EqualTo(currentMonth.Month));
+        Assert.That(inputManager.GetSelectedMonth().Year, Is.EqualTo(currentMonth.Year));
+    }
+    [Test]
+    public void GetSelectedMonthString_Test()
+    {
+        inputManager.InitializeSelectedMonth();
+        DateTime currentMonth = DateTime.Now;
+        string currentMonthString = currentMonth.ToString("MMMM yyyy");
+        Assert.That(inputManager.GetSelectedMonthString(), Is.EqualTo(currentMonthString));
+    }
+    [Test]
+    public void SetSelectedMonth_Test()
+    {
+        inputManager.InitializeSelectedMonth();
+        inputManager.SetSelectedMonth(new DateTime(2026, 10, 1));
+        Assert.AreEqual(inputManager.GetSelectedMonthString(), new DateTime(2026, 10, 1).ToString("MMMM yyyy"));
+    }
+    [Test]
+    public void NextMonth_Test()
+    {
+        inputManager.InitializeSelectedMonth();
+        inputManager.SetSelectedMonth(new DateTime(2026, 10, 1));
+        inputManager.NextMonth();
+        Assert.AreEqual(inputManager.GetSelectedMonthString(), new DateTime(2026, 11, 1).ToString("MMMM yyyy"));
+    }
+    [Test]
+    public void PreviousMonth_Test()
+    {
+        inputManager.InitializeSelectedMonth();
+        inputManager.SetSelectedMonth(new DateTime(2026, 10, 1));
+        inputManager.PreviousMonth();
+        Assert.AreEqual(inputManager.GetSelectedMonthString(), new DateTime(2026, 9, 1).ToString("MMMM yyyy"));
+    }
+    [Test]
+    public void NextYear_Test()
+    {
+        inputManager.InitializeSelectedMonth();
+        inputManager.SetSelectedMonth(new DateTime(2026, 10, 1));
+        inputManager.NextYear();
+        Assert.AreEqual(inputManager.GetSelectedMonthString(), new DateTime(2027, 10, 1).ToString("MMMM yyyy"));
+    }
+    [Test]
+    public void PreviousYear_Test()
+    {
+        inputManager.InitializeSelectedMonth();
+        inputManager.SetSelectedMonth(new DateTime(2026, 10, 1));
+        inputManager.PreviousYear();
+        Assert.AreEqual(inputManager.GetSelectedMonthString(), new DateTime(2025, 10, 1).ToString("MMMM yyyy"));
+    }
+    private ToDo CreateToDo(DateTime? deadline, RepeatInterval repeat)
+    {
+        ToDo toDo = new ToDo();
+        toDo.Deadline = deadline;
+        toDo.Repeat = repeat;
+        return toDo;
+    }
+    [Test]
+    public void GetToDosInGivenMonthTest_Test()
+    {
+        var toDos = new List<ToDo>
+            {
+                CreateToDo(new DateTime(2026, 2, 5), RepeatInterval.None),
+                CreateToDo(new DateTime(2026, 2, 10), RepeatInterval.None),
+                CreateToDo(new DateTime(2026, 11, 1), RepeatInterval.None)
+            };
 
+        inputManager.SetSelectedMonth(new DateTime (2026,2,1));
+        int count = 0;
+        foreach (var day in inputManager.GetToDosInGivenMonth(toDos))
+        {
+            count += day.ToDosOfTheDay.Count;
+        }
+
+        Assert.That(count, Is.EqualTo(2));
+    }
 }
