@@ -1,6 +1,6 @@
 -- Set up enum types
-CREATE TYPE STATUS AS ENUM('NotDone', 'InProgress', 'Done');
-CREATE TYPE REPEATINTERVAL AS ENUM('None', 'Daily', 'Weekly', 'Weekdays', 'Monthly', 'Yearly');
+CREATE TYPE STATUS AS ENUM('not_done', 'in_progress', 'done');
+CREATE TYPE REPEAT_INTERVAL AS ENUM('none', 'daily', 'weekly', 'weekdays', 'monthly', 'yearly');
 
 -- Set up tables on the database
 CREATE TABLE todos (
@@ -13,7 +13,7 @@ CREATE TABLE todos (
 	finished_date DATE,
 	has_deadline BOOL NOT NULL,
 	deadline_date DATE,
-	repeat_interval REPEATINTERVAL NOT NULL
+	repeat_interval REPEAT_INTERVAL NOT NULL
 );
 
 CREATE TABLE tags (
