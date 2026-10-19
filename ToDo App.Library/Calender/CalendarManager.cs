@@ -144,12 +144,13 @@ namespace ToDo_App.Library.Calendar
         /// <param name="year"></param>
         /// <param name="month"></param>
         /// <returns></returns>
-        public List<CalendarDay> GetToDosInGivenMonth(List<ToDo> toDos, int year, int month)
+        public List<CalendarDay> GetToDosInGivenMonth(List<ToDo> toDos)
         {
+
             var days = new List<CalendarDay>();
-            for (int day = 1; day <= DateTime.DaysInMonth(year, month); day++)
+            for (int day = 1; day <= DateTime.DaysInMonth(selectedMonth.Year, selectedMonth.Month); day++)
             {
-                var date = new DateTime(year, month, day);
+                var date = new DateTime(selectedMonth.Year, selectedMonth.Month, day);
                 var toDosOfTheDay = GetToDosOnDate(toDos, date);
                 {
                     days.Add(new CalendarDay { Date = date, ToDosOfTheDay = toDosOfTheDay });
