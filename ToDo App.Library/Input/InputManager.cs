@@ -37,7 +37,7 @@ public class InputManager : IInputHandling
         this.toDoHandler = toDoHandler;
         this.dataHandler = dataHandler;
         this.calendar = calendar;
-        ToDos = this.dataHandler.LoadList();
+        //ToDos = this.dataHandler.LoadList();
         listSorter = toDoListSort;
         this.tagFilter = tagFilter;
     }
