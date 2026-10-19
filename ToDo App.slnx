@@ -1,5 +1,6 @@
 <Solution>
   <Project Path="ToDo App.Library/ToDo App.Library.csproj" Id="650a630d-f960-40d1-8760-b9339fb1b87f" />
   <Project Path="ToDo App.Test/ToDo App.Test.csproj" />
+  <Project Path="ToDo App.WebApp/ToDo App.WebApp.csproj" Id="f84aee16-b88a-495c-89f7-0c31ff1cb38e" />
   <Project Path="ToDo App.WindowsApp/ToDo App.WindowsApp.csproj" />
 </Solution>
