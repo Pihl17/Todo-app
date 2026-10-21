@@ -20,15 +20,12 @@
 	<div>
 		<label for="Repeat">Repeat:</label>
 		<select id="Repeat" name="Repeat" required>
-			@{
-				for (int i = 0; i < 5; i++)
-				{
-					<option value="@i" selected="@(Convert.ToInt32(Model.ToDo.Repeat) == @i)">
-						@i
-					</option>
-
-				}
-			}
+			<option value=0 selected="@(Convert.ToInt32(Model.ToDo.Repeat) == 0)">None</option>
+			<option value=1 selected="@(Convert.ToInt32(Model.ToDo.Repeat) == 1)">Daily</option>
+			<option value=2 selected="@(Convert.ToInt32(Model.ToDo.Repeat) == 2)">Weekly</option>
+			<option value=3 selected="@(Convert.ToInt32(Model.ToDo.Repeat) == 3)">Weekdays</option>
+			<option value=4 selected="@(Convert.ToInt32(Model.ToDo.Repeat) == 4)">Monthly</option>
+			<option value=5 selected="@(Convert.ToInt32(Model.ToDo.Repeat) == 5)">Yearly</option>
 		</select>
 	</div>
 	<div>
