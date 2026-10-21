@@ -36,7 +36,12 @@
 		$("#Tags").select2({
 			tags: true,
 			placeholder: "Enter or search for tags",
-			tokenSeparators: [',']
+			language: {
+				noResults: function() {
+					return "no tags found add your own";
+				}
+			}
+
 		});
 	});
 </script>
