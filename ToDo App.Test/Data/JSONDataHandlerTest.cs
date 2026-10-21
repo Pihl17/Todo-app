@@ -4,7 +4,7 @@ using System.Formats.Tar;
 using ToDo_App.Library.Models;
 using ToDo_App.Library.Data;
 
-namespace ToDo_App.Test
+namespace ToDo_App.Test.Data
 {
     public class JSONDataHandlerTests
     {
