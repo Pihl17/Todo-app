@@ -149,10 +149,8 @@ namespace ToDo_App.Library.Calendar
             {
                 var date = new DateTime(selectedMonth.Year, selectedMonth.Month, day);
                 var toDosOfTheDay = GetToDosOnDate(toDos, date);
-                {
-                    days.Add(new CalendarDay { Date = date, ToDosOfTheDay = toDosOfTheDay });
 
-                }
+                days.Add(new CalendarDay { Date = date, ToDosOfTheDay = toDosOfTheDay });
             }
 
             return days;
@@ -165,6 +163,14 @@ namespace ToDo_App.Library.Calendar
         {
             selectedMonth = selectedMonth.AddMonths(i);
             UpdateSelectedMonthString();
+        }
+        /// <summary>
+        /// Updates the selected month to a specific month.
+        /// </summary>
+        /// <param name="m"></param>
+        public void ChangeToMonth(int m)
+        {
+            ChangeByMonths(m - selectedMonth.Month);
         }
         /// <summary>
         /// Updates the selectedMonthString to reflect the current selectedMonth in the format "MMMM yyyy".

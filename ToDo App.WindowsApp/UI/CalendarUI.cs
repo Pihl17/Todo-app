@@ -9,11 +9,13 @@ using System.Windows.Forms;
 using ToDo_App.Library.Calendar;
 using ToDo_App.Library.Input;
 using ToDo_App.Library.Models;
+using ToDo_App.WindowsApp.UI;
 
 namespace ToDo_App.UI
 {
     public partial class CalendarUI : UserControl
     {
+        private DayAllTaskDisplay datDisplay;
         public event Action<string> MonthSelected;
         public Button[] MonthButtons => monthSelectPanel.Controls.OfType<Button>().ToArray();
         public bool MonthPanelVisible => monthSelectPanel.Visible;
@@ -40,12 +42,8 @@ namespace ToDo_App.UI
 
             inputHandler.InitializeSelectedMonth();
 
-            selectedMonth.Text =
-                string.Create(inputHandler.GetSelectedMonthString().Length, inputHandler.GetSelectedMonthString(), static (chars, str) => { chars[0] = char.ToUpperInvariant(str[0]); str.AsSpan(1).CopyTo(chars[1..]); });
-            yearBtn.Text = DateTime.Parse(inputHandler.GetSelectedMonthString()).Year.ToString();
-
             PopulateMonthPanel();
-            PopulateCalendarDisplayPanel();
+            UpdateCalendarDisplay();
         }
         /// <summary>
         /// Event handler for the selectedMonth button click event. Toggles the visibility of the monthSelectPanel when the button is clicked.
@@ -64,10 +62,7 @@ namespace ToDo_App.UI
         private void previousMonth_Click(object sender, EventArgs e)
         {
             inputHandler.PreviousMonth();
-            yearBtn.Text = DateTime.Parse(inputHandler.GetSelectedMonthString()).Year.ToString();
-            selectedMonth.Text =
-                string.Create(inputHandler.GetSelectedMonthString().Length, inputHandler.GetSelectedMonthString(), static (chars, str) => { chars[0] = char.ToUpperInvariant(str[0]); str.AsSpan(1).CopyTo(chars[1..]); });
-            PopulateCalendarDisplayPanel();
+            UpdateCalendarDisplay();
         }
         /// <summary>
         /// Event handler for the nextMonth button click event. Moves to the next month in the calendar and updates the selectedMonth button text accordingly.
@@ -77,6 +72,14 @@ namespace ToDo_App.UI
         private void nextMonth_Click(object sender, EventArgs e)
         {
             inputHandler.NextMonth();
+            UpdateCalendarDisplay();
+
+        }
+        /// <summary>
+        /// Updates the display to apply the selected month and year.
+        /// </summary>
+        private void UpdateCalendarDisplay()
+        {
             yearBtn.Text = DateTime.Parse(inputHandler.GetSelectedMonthString()).Year.ToString();
             selectedMonth.Text =
                 string.Create(inputHandler.GetSelectedMonthString().Length, inputHandler.GetSelectedMonthString(), static (chars, str) => { chars[0] = char.ToUpperInvariant(str[0]); str.AsSpan(1).CopyTo(chars[1..]); });
@@ -121,9 +124,44 @@ namespace ToDo_App.UI
         public void MonthButton_Click(object sender, EventArgs e)
         {
             Button button = (Button)sender;
+
+            int month = DateTime.ParseExact(
+                button.Text,
+                "MMMM",
+                CultureInfo.CurrentCulture
+            ).Month;
+
+            inputHandler.ChangeToMonth(month);
+            UpdateCalendarDisplay();
+
             MonthSelected?.Invoke(button.Text);
         }
+        public void CalendarDayButton_Click(object sender, EventArgs e)
+        {
+            Button button = (Button)sender;
 
+            int day = int.Parse(button.Text.Split('\n')[0]);
+
+            DateTime selectedMonth = DateTime.Parse(
+                inputHandler.GetSelectedMonthString()
+            );
+
+            DateTime selectedDay = new DateTime(
+                selectedMonth.Year,
+                selectedMonth.Month,
+                day
+            );
+
+            datDisplay = new DayAllTaskDisplay(inputHandler, selectedDay)
+            {
+                Dock = DockStyle.Fill
+            };
+
+            this.Controls.Add(datDisplay);
+            datDisplay.BringToFront();
+
+            MonthSelected?.Invoke(button.Text);
+        }
         public void PopulateCalendarDisplayPanel()
         {
 
@@ -158,8 +196,6 @@ namespace ToDo_App.UI
                 button.Anchor = AnchorStyles.Top | AnchorStyles.Left
                               | AnchorStyles.Right;
 
-                button.Click += MonthButton_Click;
-
                 calendarDisplayPanel.Controls.Add(button);
             }
 
@@ -173,7 +209,7 @@ namespace ToDo_App.UI
                 button.Width = buttonWidth;
                 button.Height = 80;
                 button.TextAlign = ContentAlignment.TopLeft;
-                button.Enabled = false;
+                button.Enabled = true;
 
                 button.Left = column * (buttonWidth + spacing);
                 button.Top = row * (button.Height + spacing) + 43;
@@ -186,12 +222,11 @@ namespace ToDo_App.UI
                 button.Anchor = AnchorStyles.Top | AnchorStyles.Left
                               | AnchorStyles.Right;
 
-                button.Click += MonthButton_Click;
+                button.Click += CalendarDayButton_Click;
 
                 calendarDisplayPanel.Controls.Add(button);
             }
         }
-
         private void previousYearBtn_Click(object sender, EventArgs e)
         {
             inputHandler.PreviousYear();
@@ -200,7 +235,6 @@ namespace ToDo_App.UI
     string.Create(inputHandler.GetSelectedMonthString().Length, inputHandler.GetSelectedMonthString(), static (chars, str) => { chars[0] = char.ToUpperInvariant(str[0]); str.AsSpan(1).CopyTo(chars[1..]); });
             PopulateCalendarDisplayPanel();
         }
-
         private void nextYearBtn_Click(object sender, EventArgs e)
         {
             inputHandler.NextYear();
@@ -209,7 +243,6 @@ namespace ToDo_App.UI
     string.Create(inputHandler.GetSelectedMonthString().Length, inputHandler.GetSelectedMonthString(), static (chars, str) => { chars[0] = char.ToUpperInvariant(str[0]); str.AsSpan(1).CopyTo(chars[1..]); });
             PopulateCalendarDisplayPanel();
         }
-
         private void CalendarUI_Click(object sender, EventArgs e)
         {
             monthSelectPanel.Visible = false;

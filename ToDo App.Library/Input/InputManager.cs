@@ -158,5 +158,13 @@ public class InputManager : IInputHandling
     {
         return calendar.GetToDosInGivenMonth(toDos);
     }
+    public void ChangeToMonth(int m)
+    {
+        calendar.ChangeToMonth(m);
+    }
+    public List<ToDo> GetToDosOnDate(List<ToDo> toDos, DateTime date)
+    {
+        return calendar.GetToDosOnDate(toDos,date);
+    }
 
 }

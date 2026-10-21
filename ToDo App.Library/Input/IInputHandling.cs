@@ -84,5 +84,13 @@ public interface IInputHandling
     /// <param name="toDos"></param>
     /// <returns></returns>
     public List<CalendarDay> GetToDosInGivenMonth(List<ToDo> toDos);
-
+    /// <summary>
+    /// Updates the selected month to a specific month.
+    /// </summary>
+    /// <param name="m"></param>
+    public void ChangeToMonth(int m);
+    /// <summary>
+    /// Returns the ToDos that have a deadline or repeat on the given date.
+    /// </summary>
+    public List<ToDo> GetToDosOnDate(List<ToDo> toDos, DateTime date);
 }
