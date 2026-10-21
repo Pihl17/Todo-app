@@ -16,7 +16,7 @@ public class InputManager : IInputHandling
 {
 
     ToDoHandler toDoHandler;
-    JSONDataHandler dataHandler;
+    IDataHandler dataHandler;
     ToDoListSort listSorter;
     CalendarManager calendar;
     TagFilter tagFilter;
@@ -32,8 +32,7 @@ public class InputManager : IInputHandling
     /// <param name="calendar">Object for handling calendar-related operations</param>
     /// <param name="toDoListSort">Object for handling creating a sorted list of tags</param>
 
-    public InputManager(ToDoHandler toDoHandler, JSONDataHandler dataHandler, ToDoListSort toDoListSort, TagFilter tagFilter, CalendarManager calendar)
-
+    public InputManager(ToDoHandler toDoHandler, IDataHandler dataHandler, ToDoListSort toDoListSort, TagFilter tagFilter, CalendarManager calendar)
     {
         this.toDoHandler = toDoHandler;
         this.dataHandler = dataHandler;
@@ -59,7 +58,7 @@ public class InputManager : IInputHandling
     {
         ToDo createdToDo = toDoHandler.Create("Insert title");
         ToDos.Add(createdToDo);
-        dataHandler.UpdateList(ToDos);
+        dataHandler.AddTodo(createdToDo);
         return createdToDo;
     }
 
@@ -68,13 +67,14 @@ public class InputManager : IInputHandling
         if (ToDos.Contains(todo))
         {
             ToDos.Remove(todo);
-            dataHandler.UpdateList(ToDos);
+            dataHandler.RemoveTodo(todo.Id);
         }
     }
 
     public void SetNewSavePath(string path)
     {
-        dataHandler.SelectSavePath($"{path}\\todoes.json");
+        if (dataHandler is JSONDataHandler jsonHandler)
+            jsonHandler.SelectSavePath($"{path}\\todoes.json");
     }
 
     public ToDo? UpdateToDo(Guid toDoId, string? title = null, string? description = null, 
@@ -115,7 +115,7 @@ public class InputManager : IInputHandling
         if (priority != null)
             toDoHandler.EditPriority(toDo, (int)priority);
 
-        dataHandler.UpdateList(ToDos);
+        dataHandler.UpdateTodo(toDo);
         return toDo;
     }
 
