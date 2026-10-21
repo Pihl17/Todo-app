@@ -4,14 +4,21 @@
 }
 
 <section id="container">
-	<form id="test" method="post">
-		<label for="Title">Title:</label><br>
-		<input type="text" id="Title" name="Title" placeholder="Enter Todo Titel" required>
-		<label for="Description">Description:</label>
-		<textarea id="Description" name="Description"></textarea>
+	<form id="form" method="post">
+		<div>
+			<label for="Title">Title:</label>
+			<input type="text" id="Title" name="Title" placeholder="Enter Todo Titel" required>
+		</div>
+		<div>
+			<label for="Description">Description:</label>
+			<textarea id="Description" name="Description"></textarea>
+		</div>
+		<div>
 		<label for="Deadline">Deadline</label>
 		<input type="datetime-local" id="Deadline" name="Deadline" required/>
-		<label for="Repeat">Repeat:</label><br>
+		</div>
+		<div>
+		<label for="Repeat">Repeat:</label>
 		<select id="Repeat" name="Repeat" required>
 			<option value=0>None</option>
 			<option value=1>Daily</option>
@@ -20,22 +27,32 @@
 			<option value=4>Monthly</option>
 			<option value=5>Yearly</option>
 		</select>
-		<label for="Tags">Tags:</label><br>
+		</div>
+		<div>
+		<label for="Tags">Tags:</label>
 		<select name="Tags" id="Tags" multiple="multiple">
 			@foreach(var tag in Model.TagLibrary)
 				{
 				<option value="@tag">@tag</option>
 				}
 			</select>
+		</div>
 		<button class="btn btn-default">create todo</button>
 	</form>
 </section>
 
 <style>
 	#container{
-		width:25%
+		width:25%;
+		height: 60vh
 	}
-	#test {
+	#form {
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		gap: 2%;
+	}
+	#form > div{
 		display: flex;
 		flex-direction: column;
 	}
