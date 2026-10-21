@@ -54,6 +54,58 @@ namespace ToDo_App.Test.Data
             Assert.AreEqual("../../../Test Folder One/todoes.json", TestHandler.Path);
         }
 
+        [Test]
+        public void AddToDo_AddsToDoToList()
+        {
+            Assert.Fail();
+        }
+
+        [Test]
+        public void AddToDo_SavesToDoToJsonFile()
+        {
+            Assert.Fail();
+        }
+
+        [Test]
+        public void AddToDo_ToDoAlreadyExists_DoesNotAdd()
+        {
+            Assert.Fail();
+        }
+
+        [Test]
+        public void RemoveToDo_RemovesToDoFromListAndJSON()
+        {
+            Assert.Fail();
+        }
+
+        [Test]
+        public void RemoveToDo_ToDoDoesNotExist_ReturnsError()
+        {
+            Assert.Fail();
+        }
+
+        [Test]
+        public void UpdateToDo_ReplacesToDoValuesWithNewValues()
+        {
+            Assert.Fail();
+        }
+
+        [Test]
+        public void UpdateToDo_ToDoCannotBeFound_ReturnsError()
+        {
+            Assert.Fail();
+        }
+
+        public void LoadToDo_ReturnsToDo()
+        {
+            Assert.Fail();
+        }
+
+        public void LoadToDo_ToDoCannotBeFound_ReturnsFailure()
+        {
+            Assert.Fail();
+        }
+
         //cleanup after test
         [OneTimeTearDown]
         public void Cleanup() {

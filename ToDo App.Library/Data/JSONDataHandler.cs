@@ -78,21 +78,25 @@ public class JSONDataHandler : IDataHandler {
         File.WriteAllText(Path, jsonString);
     }
 
+    // Check Interface for summary
     public DataQueryResult AddTodo(ToDo todo)
     {
         throw new NotImplementedException();
     }
 
+    // Check Interface for summary
     public DataQueryResult RemoveTodo(Guid todoId)
     {
         throw new NotImplementedException();
     }
 
+    // Check Interface for summary
     public DataQueryResult UpdateTodo(ToDo updatedTodo)
     {
         throw new NotImplementedException();
     }
 
+    // Check Interface for summary
     public DataQueryResult LoadTodo(Guid todoId, out ToDo todo)
     {
         throw new NotImplementedException();
