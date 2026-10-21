@@ -6,7 +6,7 @@ using ToDo_App.Library.Data;
 
 namespace ToDo_App.Test
 {
-    public class DataHandlerTests
+    public class JSONDataHandlerTests
     {
         private JSONDataHandler TestHandler;
 
@@ -19,13 +19,13 @@ namespace ToDo_App.Test
             TestHandler = new JSONDataHandler();
             TestHandler.UserPreferences = "../../../Test Folder One/UserPreferences.json";
             TestHandler.Path = "../../../Test Folder One/todoes.json";
-            List<ToDo> Testlist = TestHandler.LoadList();
+            TestHandler.LoadTodoList(out List<ToDo> Testlist);
             TestHandler.UpdateList(Testlist);
         }
 
         [Test]
         public void Load_And_Update_List_Test(){
-            List<ToDo> Testlist = TestHandler.LoadList();
+            TestHandler.LoadTodoList(out List<ToDo> Testlist);
             ToDo toDo = new ToDo();
             Testlist.Add(toDo);
 
@@ -33,7 +33,7 @@ namespace ToDo_App.Test
 
             Assert.True(File.Exists(TestHandler.Path));
 
-            List<ToDo> UpdatedTestlist = TestHandler.LoadList();
+            TestHandler.LoadTodoList(out List<ToDo> UpdatedTestlist);
             Assert.AreEqual(1, UpdatedTestlist.Count);
         }
 

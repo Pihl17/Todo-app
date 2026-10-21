@@ -139,7 +139,8 @@ public class InputManagerTest
     public void SetNewSavePath_SetsNewSavePath()
     {
         string newPath = TEST_FOLDER_PATH + "Nested Test Folder/";
-        Directory.CreateDirectory(newPath);
+        if (!Directory.Exists(newPath))
+            Directory.CreateDirectory(newPath);
         string expectedPath = newPath + "\\todoes.json";
         inputManager.SetNewSavePath(newPath);
 

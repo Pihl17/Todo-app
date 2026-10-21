@@ -38,9 +38,10 @@ public class InputManager : IInputHandling
         this.toDoHandler = toDoHandler;
         this.dataHandler = dataHandler;
         this.calendar = calendar;
-        ToDos = this.dataHandler.LoadList();
         listSorter = toDoListSort;
         this.tagFilter = tagFilter;
+        DataQueryResult result = this.dataHandler.LoadTodoList(out List<ToDo> toDos);
+        ToDos = toDos;
     }
 
     public List<string> GetAllTags(){

@@ -5,7 +5,7 @@ using ToDo_App.Library.Models;
 
 namespace ToDo_App.Library.Data;
 
-public class JSONDataHandler {
+public class JSONDataHandler : IDataHandler {
 
     public string Path { get; set; } = "../../../Files/Todoes.json";
     public string UserPreferences { get; set; } = "../../../Files/UserPreferences.json";
@@ -45,28 +45,26 @@ public class JSONDataHandler {
         Path = newpath;
     }
 
-    /// <summary>
-    /// Returns a list of todos
-    /// </summary>
-    /// <returns>
-    /// List<ToDo>
-    /// </returns>
-    public List<ToDo> LoadList() {
+    // Check Interface for summary
+    public DataQueryResult LoadTodoList(out List<ToDo> todoList) {
         GetPath();
         if (File.Exists(Path)){
             var jsondata = File.ReadAllText(Path);
             try
             {
-                return JsonSerializer.Deserialize<List<ToDo>>(jsondata);
-            } catch
+                todoList = JsonSerializer.Deserialize<List<ToDo>>(jsondata);
+                return new DataQueryResult(true);
+            } catch (Exception e)
             {
-                return [];
+                todoList = [];
+                return new DataQueryResult(false, e);
             }
         } else {
             List<ToDo> EmptyList = [];
             string jsonString = JsonSerializer.Serialize(EmptyList);
             File.WriteAllText(Path, jsonString);
-            return EmptyList;
+            todoList = EmptyList;
+            return new DataQueryResult(false, new Exception("No Todo list was found in the given Path: A new empty list has been created."));
         }
     }
 
@@ -79,4 +77,25 @@ public class JSONDataHandler {
         string jsonString = JsonSerializer.Serialize(list, options);
         File.WriteAllText(Path, jsonString);
     }
+
+    public DataQueryResult AddTodo(ToDo todo)
+    {
+        throw new NotImplementedException();
+    }
+
+    public DataQueryResult RemoveTodo(Guid todoId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public DataQueryResult UpdateTodo(ToDo updatedTodo)
+    {
+        throw new NotImplementedException();
+    }
+
+    public DataQueryResult LoadTodo(Guid todoId, out ToDo todo)
+    {
+        throw new NotImplementedException();
+    }
+
 }

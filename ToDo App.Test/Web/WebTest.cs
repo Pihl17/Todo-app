@@ -9,6 +9,7 @@ using ToDo_App.Library.Calendar;
 using ToDo_App.Library.Handler;
 using ToDo_App.Library.Input;
 using ToDo_App.WebApp.Pages;
+using ToDo_App.Library.Data;
 
 
 namespace ToDo_App.Test.Web
@@ -20,7 +21,7 @@ namespace ToDo_App.Test.Web
         [OneTimeSetUp]
         public void Setup(){
             ToDoHandler toDoHandler = new ToDoHandler();
-            DataHandler dataHandler = new DataHandler();
+            JSONDataHandler dataHandler = new JSONDataHandler();
             ToDoListSort toDoListSort = new ToDoListSort();
             TagFilter tagFilter = new TagFilter();
             CalendarManager calendarManager = new CalendarManager();
