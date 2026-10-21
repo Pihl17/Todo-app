@@ -32,9 +32,9 @@
 	<select name="Tags" id="Tags" multiple="multiple">
 		@foreach(var tag in Model.TagLibrary)
 			{
-			<option value="@tag">@tag</option>
+				<option value="@tag">@tag</option>
 			}
-		</select>
+	</select>
 	</div>
 	<button class="btn btn-default">create todo</button>
 </form>
@@ -56,7 +56,6 @@
 <script>
 	$(document).ready(function() {
 		$("#Tags").select2({
-
 			tags: true,
 			placeholder: "Enter or search for tags",
 			language: {
