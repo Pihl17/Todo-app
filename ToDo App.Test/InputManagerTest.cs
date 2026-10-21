@@ -3,6 +3,7 @@ using ToDo_App.Library.Handler;
 using ToDo_App.Library.Models;
 using ToDo_App.Library.Calendar;
 using ToDo_App.Library.Data;
+using Moq;
 
 namespace ToDo_App.Test;
 
@@ -10,40 +11,28 @@ public class InputManagerTest
 {
 
     private InputManager inputManager;
-    private JSONDataHandler dataHandler;
+    private ToDoHandler toDoHandler;
+    private ToDoListSort toDoListSort;
+    private CalendarManager calendar;
+    private TagFilter tagFilter;
+    private Mock<IDataHandler> dataMock;
 
     const string TEST_FOLDER_PATH = "../../../Test Folder InputManager/";
     const string LIST_PATH = TEST_FOLDER_PATH + "todoes_inputManagerTest.json";
     const string PREFERENCE_PATH = TEST_FOLDER_PATH + "UserPreferences_inputManagerTest.json";
 
-    [OneTimeSetUp]
-    public void StartSetup()
-    {
-        Directory.CreateDirectory(TEST_FOLDER_PATH);
-    }
-
     [SetUp]
     public void Setup()
     {
-        ToDoHandler toDoHandler = new ToDoHandler();
-        dataHandler = new JSONDataHandler()
-        {
-            UserPreferences = PREFERENCE_PATH,
-            Path = LIST_PATH
-        };
-        ToDoListSort toDoListSort = new ToDoListSort();
-        CalendarManager calendar = new CalendarManager();
-        TagFilter tagFilter = new TagFilter();
+        toDoHandler = new ToDoHandler();
+        toDoListSort = new ToDoListSort();
+        calendar = new CalendarManager();
+        tagFilter = new TagFilter();
+        dataMock = new Mock<IDataHandler>();
+        List<ToDo> newList = new List<ToDo>();
+        dataMock.Setup(x => x.LoadTodoList(out newList));
 
-        inputManager = new InputManager(toDoHandler, dataHandler, toDoListSort, tagFilter, calendar);
-    }
-
-    [OneTimeTearDown]
-    public void Cleanup()
-    {
-        File.Delete(PREFERENCE_PATH);
-        File.Delete(LIST_PATH);
-        Directory.Delete(TEST_FOLDER_PATH);
+        inputManager = new InputManager(toDoHandler, dataMock.Object, toDoListSort, tagFilter, calendar);
     }
 
     [Test]
@@ -138,16 +127,28 @@ public class InputManagerTest
     [Test]
     public void SetNewSavePath_SetsNewSavePath()
     {
+        if (!Directory.Exists(TEST_FOLDER_PATH))
+            Directory.CreateDirectory(TEST_FOLDER_PATH);
+        JSONDataHandler jSONDataHandler = new JSONDataHandler()
+        {
+            UserPreferences = PREFERENCE_PATH,
+            Path = LIST_PATH
+        };
+        InputManager inputManagerWithJson = new InputManager(toDoHandler, jSONDataHandler, toDoListSort, tagFilter, calendar);
+
         string newPath = TEST_FOLDER_PATH + "Nested Test Folder/";
         if (!Directory.Exists(newPath))
             Directory.CreateDirectory(newPath);
         string expectedPath = newPath + "\\todoes.json";
-        inputManager.SetNewSavePath(newPath);
+        inputManagerWithJson.SetNewSavePath(newPath);
 
-        Assert.AreEqual(expectedPath, dataHandler.Path);
+        Assert.AreEqual(expectedPath, jSONDataHandler.Path);
 
-        inputManager.SetNewSavePath(TEST_FOLDER_PATH);
+        File.Delete(expectedPath);
         Directory.Delete(newPath);
+        File.Delete(PREFERENCE_PATH);
+        File.Delete(LIST_PATH);
+        Directory.Delete(TEST_FOLDER_PATH);
     }
 
     [Test]
