@@ -90,6 +90,11 @@ public class ToDoHandler
         toDo.Checklist = checklist;
     }
 
+    /// <summary>
+    /// Edits the taglist for the ToDo item.
+    /// </summary>
+    /// <param name="toDo"></param>
+    /// <param name="taglist"></param>
     public void EditTagList(ToDo toDo, List<string> taglist)
     {
         toDo.Taglist = taglist;

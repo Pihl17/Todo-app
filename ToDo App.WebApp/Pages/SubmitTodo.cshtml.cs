@@ -14,15 +14,15 @@ namespace ToDo_App.WebApp.Pages
 
         }
 
-    /// <summary>
-    /// runs when post method is called in the HTML
-    /// </summary>
-    /// <param name="Title"></param>
-    /// <param name="Description"></param>
-    /// <param name="Deadline"></param>
-    /// <param name="Repeat"></param>
-    /// <param name="Tags"></param>
-    /// <returns></returns>
+        /// <summary>
+        /// on post call CreateNewToDo and then redirect back to the Todoes page
+        /// </summary>
+        /// <param name="Title"></param>
+        /// <param name="Description"></param>
+        /// <param name="Deadline"></param>
+        /// <param name="Repeat"></param>
+        /// <param name="Tags"></param>
+        /// <returns></returns>
         public ActionResult OnPost(string Title, string Description, DateTime Deadline, RepeatInterval Repeat, int Priority, List<string> Tags)
         {
 

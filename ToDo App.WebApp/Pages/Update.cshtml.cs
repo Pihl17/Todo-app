@@ -16,6 +16,17 @@ namespace ToDo_App.WebApp.Pages
             TagLibrary = ToDo.Taglist;
         }
 
+        /// <summary>
+        /// on post call UpdateToDo and then redirect back to the Todoes page
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="Title"></param>
+        /// <param name="Description"></param>
+        /// <param name="Deadline"></param>
+        /// <param name="Repeat"></param>
+        /// <param name="Priority"></param>
+        /// <param name="Tags"></param>
+        /// <returns></returns>
         public ActionResult OnPost(Guid id, string Title, string Description, DateTime Deadline, RepeatInterval Repeat, int Priority, List<string> Tags)
         {
             inputHandler.UpdateToDo(id, Title, Description, Deadline, null, Repeat, null, Priority, Tags);
