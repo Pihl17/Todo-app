@@ -28,21 +28,32 @@
 	</select>
 	</div>
 	<div>
+		<label for="Priority">Priority:</label>
+		<select id="Priority" name="Priority" required>
+			@{
+					for (int i = 0; i < 10; i++)
+					{
+					<option value="@i">@i</option>
+
+					}
+				}
+		</select>
+	</div>
+	<div>
 	<label for="Tags">Tags:</label>
 	<select name="Tags" id="Tags" multiple="multiple">
-		@foreach(var tag in Model.TagLibrary)
-			{
+		@foreach(var tag in Model.TagLibrary) {
 				<option value="@tag">@tag</option>
 			}
 	</select>
 	</div>
-	<button class="btn btn-default">create todo</button>
+	<button class="btn btn-default submit-btn">create todo</button>
 </form>
 
 <style>
 	#form {
 		width:25%;
-		height: 60vh;
+		height: 80%;
 		display: flex;
 		flex-direction: column;
 		gap: 3%;
@@ -50,6 +61,15 @@
 	#form > div{
 		display: flex;
 		flex-direction: column;
+	}
+	.submit-btn{
+		background-color:skyblue;
+		color:white;
+	}
+
+	.submit-btn:hover {
+		background-color:cornflowerblue;
+		color: white;
 	}
 </style>
 
@@ -60,7 +80,7 @@
 			placeholder: "Enter or search for tags",
 			language: {
 				noResults: function() {
-					return "no tags found add your own";
+					return "No tags found type to add your own";
 				}
 			}
 

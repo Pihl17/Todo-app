@@ -53,9 +53,8 @@ public class InputManager : IInputHandling
         return ToDos;
     }
 
-    public ToDo CreateNewToDo()
-    {
-        ToDo createdToDo = toDoHandler.Create("Insert title");
+    public ToDo CreateNewToDo(string titel, string description, DateTime choosenDeadLine, RepeatInterval repeat , int priority, List<string> tags){
+        ToDo createdToDo = toDoHandler.Create(titel, null , priority, description, choosenDeadLine, repeat, tags);
         ToDos.Add(createdToDo);
         dataHandler.UpdateList(ToDos);
         return createdToDo;
@@ -75,9 +74,9 @@ public class InputManager : IInputHandling
         dataHandler.SelectSavePath($"{path}\\todoes.json");
     }
 
-    public ToDo? UpdateToDo(Guid toDoId, string? title = null, string? description = null, 
+    public ToDo? UpdateToDo(Guid toDoId, string? title = null, string? description = null,
         DateTime? deadline = null, ToDoStatus? status = null, RepeatInterval? repeat = null, 
-        List<ChecklistItem>? checklist = null, int? priority = null)
+        List<ChecklistItem>? checklist = null, int? priority = null, List<string>? tags = null)
     {
         ToDo? toDo = GetToDo(toDoId);
         if (toDo == null)
@@ -105,6 +104,8 @@ public class InputManager : IInputHandling
             toDoHandler.EditRepeat(toDo, (RepeatInterval)repeat);
         if (checklist != null)
             toDoHandler.EditChecklist(toDo, checklist);
+        if (tags != null)
+            toDoHandler.EditTagList(toDo, tags);
         if (priority != null)
             toDoHandler.EditPriority(toDo, (int)priority);
 

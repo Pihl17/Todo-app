@@ -16,7 +16,7 @@ public interface IInputHandling
     /// Creates a new todo and adds it to the list.
     /// </summary>
     /// <returns>The newly created todo</returns>
-    ToDo CreateNewToDo();
+    ToDo CreateNewToDo(string titel, string description, DateTime choosenDeadLine, RepeatInterval repeat, int priority, List<string> tags);
 
     /// <summary>
     /// Deletes a todo from the list.
@@ -43,7 +43,7 @@ public interface IInputHandling
     /// <returns>The updated ToDo</returns>
     ToDo? UpdateToDo(Guid toDoId, string? title = null, string? description = null,
         DateTime? deadline = null, ToDoStatus? status = null, RepeatInterval? repeat = null,
-        List<ChecklistItem>? checklist = null, int? priority = null);
+        List<ChecklistItem>? checklist = null, int? priority = null, List<string>? tags = null);
 
     /// <summary>
     /// Returns the first todo note with the given ID or null if no such todo exists.

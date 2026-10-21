@@ -13,20 +13,20 @@ namespace ToDo_App.WebApp.Pages
         public void OnGet() {
 
         }
-        /// <summary>
-        /// when you post run the function
-        /// </summary>
-        public ActionResult OnPost(string Title, string Description, DateTime Deadline, int Repeat, List<string> Tags)
-        {
-            Debug.WriteLine($"{Title}");
-            Debug.WriteLine($"{Description}");
-            Debug.WriteLine($"{Deadline}");
-            Debug.WriteLine($"{Repeat}");
-            for (int i = 0; i < Tags.Count; i++){
-                Debug.WriteLine($"Tag {i} is: {Tags[i]}");
-            }
 
-            //inputHandler.CreateNewToDo();
+    /// <summary>
+    /// runs when post method is called in the HTML
+    /// </summary>
+    /// <param name="Title"></param>
+    /// <param name="Description"></param>
+    /// <param name="Deadline"></param>
+    /// <param name="Repeat"></param>
+    /// <param name="Tags"></param>
+    /// <returns></returns>
+        public ActionResult OnPost(string Title, string Description, DateTime Deadline, RepeatInterval Repeat, int Priority, List<string> Tags)
+        {
+
+            inputHandler.CreateNewToDo(Title, Description, Deadline, Repeat, Priority, Tags);
             return RedirectToPage("./Todoes");
         }
     }
