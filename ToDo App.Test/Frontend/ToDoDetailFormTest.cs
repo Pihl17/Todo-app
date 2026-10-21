@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using System.Windows.Forms;
+using ToDo_App.Library.Calendar;
 using ToDo_App.Library.Input;
 using ToDo_App.Library.Models;
 using ToDo_App.UI;
@@ -52,6 +53,11 @@ namespace ToDo_App_test.Frontend;
         }
 
         public void PreviousMonth()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<CalendarDay> GetToDosInGivenMonth(List<ToDo> toDos)
         {
             throw new NotImplementedException();
         }

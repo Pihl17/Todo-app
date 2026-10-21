@@ -2,6 +2,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
 using ToDo_App.Library.Models;
+
+namespace ToDo_App.Library.Data;
+
 public class DataHandler {
 
     public string Path { get; set; } = "../../../Files/Todoes.json";
