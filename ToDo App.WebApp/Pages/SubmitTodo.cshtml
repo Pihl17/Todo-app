@@ -3,8 +3,8 @@
 @{
 }
 
-<section>
-	<form method="post">
+<section id="container">
+	<form id="test" method="post">
 		<label for="Title">Title:</label><br>
 		<input type="text" id="Title" name="Title" placeholder="Enter Todo Titel" required>
 		<label for="Description">Description:</label>
@@ -21,7 +21,7 @@
 			<option value=5>Yearly</option>
 		</select>
 		<label for="Tags">Tags:</label><br>
-		<select name="Tags" id="Tags" multiple="multiple" style="width: 50%;">
+		<select name="Tags" id="Tags" multiple="multiple">
 			@foreach(var tag in Model.TagLibrary)
 				{
 				<option value="@tag">@tag</option>
@@ -31,9 +31,20 @@
 	</form>
 </section>
 
+<style>
+	#container{
+		width:25%
+	}
+	#test {
+		display: flex;
+		flex-direction: column;
+	}
+</style>
+
 <script>
 	$(document).ready(function() {
 		$("#Tags").select2({
+
 			tags: true,
 			placeholder: "Enter or search for tags",
 			language: {
