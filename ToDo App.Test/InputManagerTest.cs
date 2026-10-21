@@ -10,7 +10,7 @@ public class InputManagerTest
 {
 
     private InputManager inputManager;
-    private DataHandler dataHandler;
+    private JSONDataHandler dataHandler;
 
     const string TEST_FOLDER_PATH = "../../../Test Folder InputManager/";
     const string LIST_PATH = TEST_FOLDER_PATH + "todoes_inputManagerTest.json";
@@ -26,7 +26,7 @@ public class InputManagerTest
     public void Setup()
     {
         ToDoHandler toDoHandler = new ToDoHandler();
-        dataHandler = new DataHandler()
+        dataHandler = new JSONDataHandler()
         {
             UserPreferences = PREFERENCE_PATH,
             Path = LIST_PATH

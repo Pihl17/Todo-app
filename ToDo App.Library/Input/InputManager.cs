@@ -16,7 +16,7 @@ public class InputManager : IInputHandling
 {
 
     ToDoHandler toDoHandler;
-    DataHandler dataHandler;
+    JSONDataHandler dataHandler;
     ToDoListSort listSorter;
     CalendarManager calendar;
     TagFilter tagFilter;
@@ -32,7 +32,7 @@ public class InputManager : IInputHandling
     /// <param name="calendar">Object for handling calendar-related operations</param>
     /// <param name="toDoListSort">Object for handling creating a sorted list of tags</param>
 
-    public InputManager(ToDoHandler toDoHandler, DataHandler dataHandler, ToDoListSort toDoListSort, TagFilter tagFilter, CalendarManager calendar)
+    public InputManager(ToDoHandler toDoHandler, JSONDataHandler dataHandler, ToDoListSort toDoListSort, TagFilter tagFilter, CalendarManager calendar)
 
     {
         this.toDoHandler = toDoHandler;

@@ -5,7 +5,7 @@ using ToDo_App.Library.Models;
 
 namespace ToDo_App.Library.Data;
 
-public class DataHandler {
+public class JSONDataHandler {
 
     public string Path { get; set; } = "../../../Files/Todoes.json";
     public string UserPreferences { get; set; } = "../../../Files/UserPreferences.json";

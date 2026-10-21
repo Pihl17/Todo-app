@@ -18,7 +18,7 @@ namespace ToDo_App
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             ToDoHandler toDoHandler = new ToDoHandler();
-            DataHandler dataHandler = new DataHandler();
+            JSONDataHandler dataHandler = new JSONDataHandler();
             ToDoListSort toDoListSort = new ToDoListSort();
             CalendarManager calendar = new CalendarManager();
             TagFilter tagFilter = new TagFilter();

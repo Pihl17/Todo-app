@@ -8,7 +8,7 @@ namespace ToDo_App.Test
 {
     public class DataHandlerTests
     {
-        private DataHandler TestHandler;
+        private JSONDataHandler TestHandler;
 
         //setup Testhandler
         [OneTimeSetUp]
@@ -16,7 +16,7 @@ namespace ToDo_App.Test
         {
             Directory.CreateDirectory("../../../Test Folder One");
             Directory.CreateDirectory("../../../Test Folder Two");
-            TestHandler = new DataHandler();
+            TestHandler = new JSONDataHandler();
             TestHandler.UserPreferences = "../../../Test Folder One/UserPreferences.json";
             TestHandler.Path = "../../../Test Folder One/todoes.json";
             List<ToDo> Testlist = TestHandler.LoadList();
