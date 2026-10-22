@@ -303,4 +303,185 @@ public class InputManagerTest
         Assert.IsNull(result);
     }
 
+    [Test]
+    public void InitializeSelectedMonth_DoesNotThrow()
+    {
+        Assert.DoesNotThrow(() => inputManager.InitializeSelectedMonth());
+    }
+
+    [Test]
+    public void GetSelectedMonthString_ReturnsValue()
+    {
+        inputManager.InitializeSelectedMonth();
+
+        string result = inputManager.GetSelectedMonthString();
+
+        Assert.That(result, Is.Not.Null.And.Not.Empty);
+    }
+
+    [Test]
+    public void NextMonth_DoesNotThrow()
+    {
+        Assert.DoesNotThrow(() => inputManager.NextMonth());
+    }
+
+    [Test]
+    public void PreviousMonth_DoesNotThrow()
+    {
+        Assert.DoesNotThrow(() => inputManager.PreviousMonth());
+    }
+
+    [Test]
+    public void GetAllTags_ReturnsTagsFromToDos()
+    {
+        ToDo todo = new ToDo();
+
+        todo.Taglist.Add("Work");
+        todo.Taglist.Add("School");
+
+        inputManager.ToDos = new List<ToDo>(){todo};
+
+        List<string> result = inputManager.GetAllTags();
+
+        Assert.That(result, Contains.Item("Work"));
+        Assert.That(result, Contains.Item("School"));
+    }
+
+
+    [Test]
+    public void GetToDosInGivenMonth_ReturnsCalendarDays()
+    {
+        List<ToDo> todos = new();
+
+        var result = inputManager.GetToDosInGivenMonth(todos);
+
+        Assert.That(result, Is.Not.Null);
+    }
+
+    [Test]
+    public void PreviousMonth_CrossesYearBoundary()
+    {
+        CalendarManager calendar = new CalendarManager();
+
+        calendar.selectedMonth = new DateTime(2026, 1, 1);
+
+        calendar.PreviousMonth();
+
+        Assert.That(calendar.selectedMonth.Year, Is.EqualTo(2025));
+        Assert.That(calendar.selectedMonth.Month, Is.EqualTo(12));
+    }
+
+    [Test]
+    public void CreateNewToDo_WithPriority_SetsPriority()
+    {
+        ToDo todo = inputManager.CreateNewToDo(
+            title: "Test",
+            priority: 7);
+
+        Assert.That(todo.Priority, Is.EqualTo(7));
+    }
+
+    [Test]
+    public void CreateNewToDo_WithWhitespaceTitle_UsesInsertTitle()
+    {
+        ToDo todo = inputManager.CreateNewToDo("   ");
+
+        Assert.That(todo.Title, Is.EqualTo("Insert title"));
+    }
+
+    [Test]
+    public void PreviousMonth_CalledTwice_ChangesMonthTwice()
+    {
+        inputManager.InitializeSelectedMonth();
+
+        string before = inputManager.GetSelectedMonthString();
+
+        inputManager.PreviousMonth();
+        inputManager.PreviousMonth();
+
+        string after = inputManager.GetSelectedMonthString();
+
+        Assert.That(after, Is.Not.EqualTo(before));
+    }
+
+    [Test]
+    public void SetNewSavePath_UpdatesPathToTodoesJson()
+    {
+        string newPath = TEST_FOLDER_PATH + "CoverageTest";
+
+        Directory.CreateDirectory(newPath);
+
+        inputManager.SetNewSavePath(newPath);
+
+        Assert.That(
+            dataHandler.Path,
+            Is.EqualTo($"{newPath}\\todoes.json"));
+    }
+
+    [Test]
+    public void SetNewSavePath_CanBeCalledMoreThanOnce()
+    {
+        string path1 = TEST_FOLDER_PATH + "Path1";
+        string path2 = TEST_FOLDER_PATH + "Path2";
+
+        Directory.CreateDirectory(path1);
+        Directory.CreateDirectory(path2);
+
+        inputManager.SetNewSavePath(path1);
+        inputManager.SetNewSavePath(path2);
+
+        Assert.That(
+            dataHandler.Path,
+            Is.EqualTo($"{path2}\\todoes.json"));
+    }
+
+    [Test]
+    public void UpdateToDo_RemoveDeadline_TakesPriorityOverDeadline()
+    {
+        ToDo todo = new ToDo();
+        todo.Deadline = DateTime.Today;
+
+        inputManager.ToDos = new List<ToDo> { todo };
+
+        inputManager.UpdateToDo(
+            todo.Id,
+            deadline: DateTime.Today.AddDays(10),
+            removeDeadline: true);
+
+        Assert.That(todo.Deadline, Is.Null);
+    }
+
+    [Test]
+    public void UpdateToDo_StatusNotDone_ChangesStatus()
+    {
+        ToDo todo = new ToDo();
+
+        inputManager.ToDos = new List<ToDo> { todo };
+
+        inputManager.UpdateToDo(
+            todo.Id,
+            status: ToDoStatus.NotDone);
+
+        Assert.That(todo.Status,
+            Is.EqualTo(ToDoStatus.NotDone));
+    }
+
+    [Test]
+    public void UpdateToDo_EmptyDescription_IsApplied()
+    {
+        ToDo todo = new ToDo
+        {
+            Description = "Old"
+        };
+
+        inputManager.ToDos = new List<ToDo> { todo };
+
+        inputManager.UpdateToDo(
+            todo.Id,
+            description: "");
+
+        Assert.That(todo.Description,
+            Is.EqualTo(""));
+    }
+
 }
