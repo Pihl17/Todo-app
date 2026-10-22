@@ -64,7 +64,7 @@ namespace ToDo_App_test.Frontend
                 calendarUI.Dispose();
             }
         }
-        /*
+        
         [Test]
         public void CalendarUI_ClickTwelveMonthButtons()
         {
@@ -81,7 +81,7 @@ namespace ToDo_App_test.Frontend
             {
                 calendarUI.Dispose();
             }
-        }*/
+        }
         [Test]
         public void MonthSelectorButton_TogglesPanelVisibilityTest()
         {
