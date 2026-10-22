@@ -22,9 +22,6 @@ public class ToDoHandler
         if (choosenDeadLine != null)
         {
             toDo.Deadline = choosenDeadLine;
-        } else
-        {
-            toDo.Deadline = DateTime.Now;
         }
         toDo.Repeat = repeat;
         if (checklist != null)

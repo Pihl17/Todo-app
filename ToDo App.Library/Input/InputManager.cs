@@ -56,7 +56,7 @@ public class InputManager : IInputHandling
     public ToDo CreateNewToDo(string? titel = "Insert title", DateTime? choosenDeadLine = null, RepeatInterval? repeat = RepeatInterval.None, int? priority = null, string? description ="", List<string>? tags=null)
     {
         if(priority == null) priority = 0;
-        ToDo createdToDo = toDoHandler.Create(titel, null , priority.Value, description, choosenDeadLine.Value, repeat.Value, tags);
+        ToDo createdToDo = toDoHandler.Create(titel, null , priority.Value, description, choosenDeadLine, repeat.Value, tags);
         ToDos.Add(createdToDo);
         dataHandler.UpdateList(ToDos);
         return createdToDo;

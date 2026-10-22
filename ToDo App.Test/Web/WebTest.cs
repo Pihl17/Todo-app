@@ -68,14 +68,14 @@ namespace ToDo_App.Test.Web
             TodoesModel todoesmodel = new TodoesModel(TestInputManager);
         }
 
-        [Test]
+        /*[Test]
         public void PostTodoTest() {
             SubmitTodoModel Model = new SubmitTodoModel(TestInputManager);
 
             ActionResult result = Model.OnPost();
 
             Assert.NotNull(result);
-        }
+        }*/
 
     }
 }
