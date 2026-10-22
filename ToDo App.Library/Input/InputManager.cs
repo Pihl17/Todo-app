@@ -20,8 +20,6 @@ public class InputManager : IInputHandling
     ToDoListSort listSorter;
     CalendarManager calendar;
     TagFilter tagFilter;
-
-    public List<ToDo> ToDos { get; set; } = new List<ToDo>();
     
     /// <summary>
     /// Constructs the InputManager with all the needed dependencies.
@@ -39,36 +37,31 @@ public class InputManager : IInputHandling
         this.calendar = calendar;
         listSorter = toDoListSort;
         this.tagFilter = tagFilter;
-        DataQueryResult result = this.dataHandler.LoadTodoList(out List<ToDo> toDos);
-        ToDos = toDos;
     }
 
     public List<string> GetAllTags(){
-        tagFilter.GenerateLibrary(ToDos);
+        dataHandler.LoadTodoList(out List<ToDo> toDos);
+        tagFilter.GenerateLibrary(toDos);
         return tagFilter.TagLibrary;
     }
 
     public List<ToDo> GetToDoList()
     {
-        ToDos = listSorter.SortList(ToDos);
-        return ToDos;
+        dataHandler.LoadTodoList(out List<ToDo> toDos);
+        toDos = listSorter.SortList(toDos);
+        return toDos;
     }
 
     public ToDo CreateNewToDo()
     {
         ToDo createdToDo = toDoHandler.Create("Insert title");
-        ToDos.Add(createdToDo);
         dataHandler.AddTodo(createdToDo);
         return createdToDo;
     }
 
     public void DeleteToDo(ToDo todo)
     {
-        if (ToDos.Contains(todo))
-        {
-            ToDos.Remove(todo);
-            dataHandler.RemoveTodo(todo.Id);
-        }
+        dataHandler.RemoveTodo(todo.Id);
     }
 
     public void SetNewSavePath(string path)
@@ -121,11 +114,10 @@ public class InputManager : IInputHandling
 
     public ToDo? GetToDo(Guid toDoId)
     {
-        for (int i = 0; i < ToDos.Count; i++)
-        {
-            if (ToDos[i].Id == toDoId)
-                return ToDos[i];
-        }
+        DataQueryResult result = dataHandler.LoadTodo(toDoId, out ToDo todo);
+        if (result.IsSuccess)
+            return todo;
+
         return null;
     }
 

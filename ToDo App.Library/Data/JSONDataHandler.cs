@@ -10,6 +10,8 @@ public class JSONDataHandler : IDataHandler {
     public string Path { get; set; } = "../../../Files/Todoes.json";
     public string UserPreferences { get; set; } = "../../../Files/UserPreferences.json";
 
+    public List<ToDo> ToDos { get; set; } = new List<ToDo>();
+
     /// <summary>
     /// Get the file path for the useres todo list json file
     /// </summary>
@@ -52,7 +54,8 @@ public class JSONDataHandler : IDataHandler {
             var jsondata = File.ReadAllText(Path);
             try
             {
-                todoList = JsonSerializer.Deserialize<List<ToDo>>(jsondata);
+                ToDos = JsonSerializer.Deserialize<List<ToDo>>(jsondata);
+                todoList = ToDos;
                 return new DataQueryResult(true);
             } catch (Exception e)
             {
