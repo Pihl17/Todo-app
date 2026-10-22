@@ -3,6 +3,7 @@ using System.Formats.Tar;
 
 using ToDo_App.Library.Models;
 using ToDo_App.Library.Data;
+using System.Text.Json;
 
 namespace ToDo_App.Test.Data
 {
@@ -190,6 +191,17 @@ namespace ToDo_App.Test.Data
 
             Assert.That(result.IsSuccess, Is.EqualTo(false));
             Assert.That(result.Exception, Is.Not.Null);
+        }
+
+        [Test]
+        public void LoadToDoList_UnableToDeserializeJSONString_ReturnsException()
+        {
+            File.WriteAllText(TestHandler.Path, "this isn't a JSON!");
+
+            DataQueryResult result = TestHandler.LoadTodoList(out List<ToDo> todos);
+
+            Assert.That(result.IsSuccess, Is.EqualTo(false));
+            Assert.That(result.Exception, Is.InstanceOf<JsonException>());
         }
         
         //cleanup after test
