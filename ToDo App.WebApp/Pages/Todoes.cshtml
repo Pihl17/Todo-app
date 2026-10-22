@@ -10,8 +10,13 @@
     {
         <h2>@todo.Title</h2>
         <p>creation date @todo.CreationDate</p>
+        <a class="nav-link text-dark" asp-page="/Todo" asp-route-id="@todo.Id">View</a>
         <a class="nav-link text-dark" asp-page="/Update" asp-route-id="@todo.Id">Edit</a>
-        <button>Delete</button>
+        <form method="post">
+            <label for="id">id:</label>
+            <input type="text" id="id" name="id" value="@todo.Id" required />
+            <button>Delete</button>
+        </form>
     }
 
 </section>

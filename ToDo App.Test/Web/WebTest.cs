@@ -55,9 +55,21 @@ namespace ToDo_App.Test.Web
         }
 
         [Test]
-        public void TodoesTest()
+        public void TodoesGetTest()
         {
             TodoesModel todoesmodel = new TodoesModel(TestInputManager);
+        }
+        [Test]
+        public void TodoesPostTest()
+        {
+            ToDo toDo = new ToDo();
+            TestInputManager.ToDos = new List<ToDo>() { toDo };
+            Assert.IsNotEmpty(TestInputManager.ToDos);
+
+            TodoesModel Model = new TodoesModel(TestInputManager);
+
+            Model.OnPost(toDo.Id);
+            Assert.IsEmpty(TestInputManager.ToDos);
         }
 
         [Test]

@@ -9,5 +9,11 @@ namespace ToDo_App.WebApp.Pages
 
         public List<ToDo> ToDoList { get; set; } = inputHandler.GetToDoList();
 
+
+        public void OnPost(Guid id) {
+            ToDo toDo = inputHandler.GetToDo(id);
+            inputHandler.DeleteToDo(toDo);
+      
+        }
     }
 }
