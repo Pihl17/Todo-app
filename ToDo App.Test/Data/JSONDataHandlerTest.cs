@@ -26,6 +26,7 @@ namespace ToDo_App.Test.Data
         [Test]
         public void Load_And_Update_List_Test(){
             TestHandler.LoadTodoList(out List<ToDo> Testlist);
+            int expected = Testlist.Count + 1;
             ToDo toDo = new ToDo();
             Testlist.Add(toDo);
 
@@ -34,7 +35,7 @@ namespace ToDo_App.Test.Data
             Assert.True(File.Exists(TestHandler.Path));
 
             TestHandler.LoadTodoList(out List<ToDo> UpdatedTestlist);
-            Assert.AreEqual(1, UpdatedTestlist.Count);
+            Assert.AreEqual(expected, UpdatedTestlist.Count);
         }
 
         [Test]
@@ -57,21 +58,40 @@ namespace ToDo_App.Test.Data
         [Test]
         public void AddToDo_AddsToDoToList()
         {
-            Assert.Fail();
+            TestHandler.ToDos = new List<ToDo>();
+            ToDo toDo = new ToDo();
+            List<ToDo> expected = new List<ToDo>() { toDo };
+
+            TestHandler.AddTodo(toDo);
+
+            Assert.That(TestHandler.ToDos, Is.EquivalentTo(expected));
         }
 
         [Test]
         public void AddToDo_SavesToDoToJsonFile()
         {
-            Assert.Fail();
+            TestHandler.ToDos = new List<ToDo>();
+            ToDo toDo = new ToDo();
+            string expected = $"\"Id\": \"{toDo.Id}\"";
+
+            TestHandler.AddTodo(toDo);
+
+            string jsonDataString = File.ReadAllText(TestHandler.Path);
+            Assert.That(jsonDataString, Contains.Substring(expected));
         }
 
         [Test]
         public void AddToDo_ToDoAlreadyExists_DoesNotAdd()
         {
-            Assert.Fail();
-        }
+            ToDo toDo = new ToDo();
+            TestHandler.ToDos = new List<ToDo>() { toDo };
+            List<ToDo> expected = new List<ToDo>() { toDo };
 
+            TestHandler.AddTodo(toDo);
+
+            Assert.That(TestHandler.ToDos, Is.EquivalentTo(expected));
+        }
+        
         [Test]
         public void RemoveToDo_RemovesToDoFromListAndJSON()
         {
@@ -96,16 +116,18 @@ namespace ToDo_App.Test.Data
             Assert.Fail();
         }
 
+        [Test]
         public void LoadToDo_ReturnsToDo()
         {
             Assert.Fail();
         }
 
+        [Test]
         public void LoadToDo_ToDoCannotBeFound_ReturnsFailure()
         {
             Assert.Fail();
         }
-
+        
         //cleanup after test
         [OneTimeTearDown]
         public void Cleanup() {

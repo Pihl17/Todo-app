@@ -84,7 +84,13 @@ public class JSONDataHandler : IDataHandler {
     // Check Interface for summary
     public DataQueryResult AddTodo(ToDo todo)
     {
-        throw new NotImplementedException();
+        if (ToDos.Contains(todo))
+        {
+            return new DataQueryResult(false, new Exception("ToDo already exists, cannot add dublicate"));
+        }
+        ToDos.Add(todo);
+        UpdateList(ToDos);
+        return new DataQueryResult(true);
     }
 
     // Check Interface for summary
