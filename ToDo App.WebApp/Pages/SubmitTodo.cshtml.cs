@@ -8,7 +8,7 @@ namespace ToDo_App.WebApp.Pages
 {
     public class SubmitTodoModel(IInputHandling inputHandler) : PageModel
     {
-        public List<String> TagLibrary = new List<String>();
+        public List<string> TagLibrary = new List<string>();
 
         public void OnGet() {
 
@@ -26,7 +26,7 @@ namespace ToDo_App.WebApp.Pages
         public ActionResult OnPost(string Title, string Description, DateTime Deadline, RepeatInterval Repeat, int Priority, List<string> Tags)
         {
 
-            inputHandler.CreateNewToDo(Title, Description, Deadline, Repeat, Priority, Tags);
+            inputHandler.CreateNewToDo(Title, Deadline, Repeat, Priority, Description, Tags);
             return RedirectToPage("./Todoes");
         }
     }

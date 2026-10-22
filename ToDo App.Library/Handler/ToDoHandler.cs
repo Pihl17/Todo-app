@@ -19,7 +19,13 @@ public class ToDoHandler
         var toDo = new ToDo();
         toDo.Title = name;
         toDo.Description = desc;
-        toDo.Deadline = choosenDeadLine;
+        if (choosenDeadLine != null)
+        {
+            toDo.Deadline = choosenDeadLine;
+        } else
+        {
+            toDo.Deadline = DateTime.Now;
+        }
         toDo.Repeat = repeat;
         if (checklist != null)
         {

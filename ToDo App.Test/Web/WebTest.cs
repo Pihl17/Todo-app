@@ -61,11 +61,11 @@ namespace ToDo_App.Test.Web
         }
 
         [Test]
-        public void TodoViewTest()
+        public void TodoesTest()
         {
-            
 
-            TodoViewsModel todoviewsmodel = new TodoViewsModel(TestInputManager);
+
+            TodoesModel todoesmodel = new TodoesModel(TestInputManager);
         }
 
         [Test]

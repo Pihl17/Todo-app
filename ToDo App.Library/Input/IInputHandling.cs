@@ -16,7 +16,7 @@ public interface IInputHandling
     /// Creates a new todo and adds it to the list.
     /// </summary>
     /// <returns>The newly created todo</returns>
-    ToDo CreateNewToDo(string titel, string description, DateTime choosenDeadLine, RepeatInterval repeat, int priority, List<string> tags);
+    ToDo CreateNewToDo(string? titel = "Insert title", DateTime? choosenDeadLine = null, RepeatInterval? repeat = RepeatInterval.None, int? priority = null, string? description = "", List<string>? tags = null);
 
     /// <summary>
     /// Deletes a todo from the list.
