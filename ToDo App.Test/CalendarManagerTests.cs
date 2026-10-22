@@ -363,6 +363,11 @@ namespace ToDo_App.Test
             calendar.InitializeSelectedMonth();
             Assert.That(calendar.selectedMonth.Month, Is.EqualTo(DateTime.Today.Month));
         }
-
+        [Test]
+        public void ChangeToMonthTest()
+        {
+            calendar.ChangeToMonth(12);
+            Assert.That(calendar.selectedMonth.Month, Is.EqualTo(12));
+        }
     }
 }

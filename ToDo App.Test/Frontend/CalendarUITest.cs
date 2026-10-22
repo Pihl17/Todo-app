@@ -1,6 +1,7 @@
 ﻿using Moq;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using ToDo_App.Library.Calendar;
@@ -36,8 +37,17 @@ namespace ToDo_App_test.Frontend
             inputMock.Setup(x => x.PreviousMonth())
                 .Callback(() => currentMonth = currentMonth.AddMonths(-1));
 
+            inputMock.Setup(x => x.NextYear())
+                .Callback(() => currentMonth = currentMonth.AddYears(1));
+
+            inputMock.Setup(x => x.PreviousYear())
+                .Callback(() => currentMonth = currentMonth.AddYears(-1));
+
             inputMock.Setup(x => x.GetToDoList())
                 .Returns(new List<ToDo>());
+
+            inputMock.Setup(x => x.GetToDosOnDate(It.IsAny<List<ToDo>>(),It.IsAny<DateTime>())).Returns(new List<ToDo>());
+
 
             inputMock.Setup(x => x.GetToDosInGivenMonth(It.IsAny<List<ToDo>>()))
                 .Returns(() =>
@@ -119,10 +129,10 @@ namespace ToDo_App_test.Frontend
         [Test]
         public void MonthButton_Click_NoSubscribers_DoesNotThrow()
         {
+            var button = new Button { Text = "January" };
+
             Assert.DoesNotThrow(() =>
-                calendarUI.MonthButton_Click(
-                    calendarUI.MonthButtons[0],
-                    EventArgs.Empty));
+                calendarUI.MonthButton_Click(button, EventArgs.Empty));
         }
         [Test]
         public void NextMonthButton_GivesNextMonthTest()
@@ -139,6 +149,27 @@ namespace ToDo_App_test.Frontend
             calendarUI.PreviousMonthButton.PerformClick();
             DateTime previousMonth = DateTime.Parse(calendarUI.MonthSelectorButton.Text);
             Assert.That(previousMonth, Is.EqualTo(initialMonth.AddMonths(-1)));
+        }
+        [Test]
+        public void NextYearButton_GivesNextYearTest()
+        {
+            bool initialVisibility = calendarUI.MonthPanelVisible;
+            calendarUI.MonthSelectorButton.PerformClick();
+            DateTime initialYear = DateTime.Parse(calendarUI.MonthSelectorButton.Text);
+            calendarUI.NextYearButton.PerformClick();
+            inputMock.Verify(x => x.NextYear(), Times.Once);
+            DateTime nextYear = DateTime.Parse(calendarUI.MonthSelectorButton.Text);
+            Assert.That(nextYear, Is.EqualTo(initialYear.AddYears(1)));
+        }
+        [Test]
+        public void PreviousYearButton_GivesPreviousYearTest()
+        {
+            bool initialVisibility = calendarUI.MonthPanelVisible;
+            calendarUI.MonthSelectorButton.PerformClick();
+            DateTime initialYear = DateTime.Parse(calendarUI.MonthSelectorButton.Text);
+            calendarUI.PreviousYearButton.PerformClick();
+            DateTime previousYear = DateTime.Parse(calendarUI.MonthSelectorButton.Text);
+            Assert.That(previousYear, Is.EqualTo(initialYear.AddYears(-1)));
         }
         [Test]
         public void DisplayedMonth_UpdatesSelectedMonthButtonTextTest()
@@ -160,18 +191,103 @@ namespace ToDo_App_test.Frontend
                 selectedMonth = month;
             };
 
+            calendarUI.MonthButtons[3].Text = "January";
+
             calendarUI.MonthButton_Click(
-                calendarUI.MonthButtons[0],
+                calendarUI.MonthButtons[3],
                 EventArgs.Empty);
 
             Assert.That(eventRaised, Is.True);
-            Assert.That(selectedMonth, Is.EqualTo("2026"));
+            Assert.That(selectedMonth, Is.EqualTo("January"));
         }
 
         [Test]
         public void CalendarUI_Dispose_DisposesControl()
         {
             Assert.DoesNotThrow(() => calendarUI.Dispose());
+        }
+        [Test]
+        public void PopulateCalendarDisplayPanel_DayHasToDos_DisplaysToDoCount()
+        {
+            // Arrange
+            var days = inputMock.Object.GetToDosInGivenMonth(
+                inputMock.Object.GetToDoList());
+
+            days[0].ToDosOfTheDay.Add(new ToDo());
+            days[0].ToDosOfTheDay.Add(new ToDo());
+
+            inputMock.Setup(x => x.GetToDosInGivenMonth(It.IsAny<List<ToDo>>()))
+                .Returns(days);
+
+            // Act
+            calendarUI.PopulateCalendarDisplayPanel();
+
+            // Assert
+            Button firstDayButton = calendarUI.CalendarDayButtons.First();
+
+            Assert.That(firstDayButton.Text, Does.Contain("To Dos today: 2"));
+        }
+        [Test]
+        public void PopulateMonthPanel_CreatesMonthButtons()
+        {
+            var method = typeof(CalendarUI).GetMethod(
+                "PopulateMonthPanel",
+                System.Reflection.BindingFlags.NonPublic |
+                System.Reflection.BindingFlags.Instance);
+
+            Assert.That(method, Is.Not.Null);
+
+            method.Invoke(calendarUI, null);
+            Assert.That(calendarUI.MonthButtons.Count(), Is.EqualTo(15));
+            Assert.That(
+                calendarUI.MonthButtons.All(b => !string.IsNullOrWhiteSpace(b.Text)),
+                Is.True);
+        }
+        [Test]
+        public void CalendarDayButton_Click_CreatesDisplayForSelectedDate()
+        {
+
+            var button = new Button { Text = "15" };
+
+            calendarUI.CalendarDayButton_Click(button, EventArgs.Empty);
+
+            Assert.That(calendarUI.DayDisplay, Is.Not.Null);
+            Assert.That(calendarUI.DayDisplay.Dock, Is.EqualTo(DockStyle.Fill));
+        }
+        [Test]
+        public void CalendarDayButton_Click_RaisesMonthSelectedEvent()
+        {
+            // Arrange
+            bool eventRaised = false;
+            string selectedDay = null;
+
+            calendarUI.MonthSelected += value =>
+            {
+                eventRaised = true;
+                selectedDay = value;
+            };
+
+            var button = new Button { Text = "15" };
+
+            // Act
+            calendarUI.CalendarDayButton_Click(button, EventArgs.Empty);
+
+            // Assert
+            Assert.That(eventRaised, Is.True);
+            Assert.That(selectedDay, Is.EqualTo("15"));
+        }
+        [Test]
+        public void CalendarUI_Click_Test()
+        {
+            bool initialVisibility = calendarUI.MonthPanelVisible;
+
+            calendarUI.MonthSelectorButton.PerformClick();
+            Assert.That(calendarUI.MonthPanelVisible, Is.EqualTo(!initialVisibility));
+
+            typeof(Control)
+                .GetMethod("OnClick", BindingFlags.Instance | BindingFlags.NonPublic)!
+                .Invoke(calendarUI, new object[] { EventArgs.Empty });
+            Assert.That(calendarUI.MonthPanelVisible, Is.EqualTo(initialVisibility));
         }
 
         [TearDown]

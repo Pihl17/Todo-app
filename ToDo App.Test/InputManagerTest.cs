@@ -3,6 +3,7 @@ using ToDo_App.Library.Calendar;
 using ToDo_App.Library.Handler;
 using ToDo_App.Library.Input;
 using ToDo_App.Library.Models;
+using ToDo_App.UI;
 
 namespace ToDo_App.Test;
 
@@ -351,7 +352,7 @@ public class InputManagerTest
         return toDo;
     }
     [Test]
-    public void GetToDosInGivenMonthTest_Test()
+    public void GetToDosInGivenMonthTest()
     {
         var toDos = new List<ToDo>
             {
@@ -369,4 +370,25 @@ public class InputManagerTest
 
         Assert.That(count, Is.EqualTo(2));
     }
+    [Test]
+    public void ChangeToMonthTest()
+    {
+        inputManager.ChangeToMonth(12);
+        Assert.That(inputManager.GetSelectedMonth().Month, Is.EqualTo(12));
+    }
+    [Test]
+    public void GetToDosOnDate_ReturnsOnlyToDosWithDeadlineThatDay()
+    {
+        ToDo onDay = CreateToDo(new DateTime(2026, 10, 12), RepeatInterval.None);
+        ToDo otherDay = CreateToDo(new DateTime(2026, 10, 13), RepeatInterval.None);
+        var toDos = new List<ToDo>
+            {
+                onDay,
+                otherDay
+            };
+        List<ToDo> result = inputManager.GetToDosOnDate(toDos, new DateTime(2026, 10, 12));
+
+        Assert.That(result, Is.EqualTo(new List<ToDo> { onDay }));
+    }
+
 }

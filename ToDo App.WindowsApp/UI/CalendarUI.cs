@@ -18,12 +18,18 @@ namespace ToDo_App.UI
         private DayAllTaskDisplay datDisplay;
         public event Action<string> MonthSelected;
         public Button[] MonthButtons => monthSelectPanel.Controls.OfType<Button>().ToArray();
+        public IEnumerable<Button> CalendarDayButtons => calendarDisplayPanel.Controls.OfType<Button>().Skip(7);
         public bool MonthPanelVisible => monthSelectPanel.Visible;
         public int MonthButtonCount => monthSelectPanel.Controls.Count;
         public Button NextMonthButton => nextMonth;
         public Button PreviousMonthButton => previousMonth;
         public Button MonthSelectorButton => selectedMonth;
+        public Button PreviousYearButton => previousYearBtn;
+        public Button NextYearButton => nextYearBtn;
+        public DayAllTaskDisplay DayDisplay => datDisplay;
+
         private IInputHandling inputHandler;
+        private readonly List<Button> generatedMonthButtons = new();
         /// <summary>
         /// UI for the calendar, allowing users to view and select months.
         /// </summary>
@@ -39,7 +45,7 @@ namespace ToDo_App.UI
             InitializeComponent();
             this.components = new System.ComponentModel.Container();
             this.inputHandler = inputHandler;
-
+            this.Click += CalendarUI_Click;
             inputHandler.InitializeSelectedMonth();
 
             PopulateMonthPanel();
@@ -90,7 +96,10 @@ namespace ToDo_App.UI
         /// </summary>
         private void PopulateMonthPanel()
         {
+            foreach (Button button in generatedMonthButtons)
+                monthSelectPanel.Controls.Remove(button);
 
+            generatedMonthButtons.Clear();
 
             int columns = 3;
             int spacing = 3;
@@ -105,20 +114,25 @@ namespace ToDo_App.UI
                 int row = i / columns;
 
                 Button button = new Button();
-                string month = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(i + 1);
-                month = string.Create(month.Length, month, static (chars, str) => { chars[0] = char.ToUpperInvariant(str[0]); str.AsSpan(1).CopyTo(chars[1..]); });
-                button.Text = $"{month}";
+                string month = CultureInfo.CurrentCulture.DateTimeFormat
+                    .GetMonthName(i + 1);
+
+                month = string.Create(month.Length, month, static (chars, str) =>
+                {
+                    chars[0] = char.ToUpperInvariant(str[0]);
+                    str.AsSpan(1).CopyTo(chars[1..]);
+                });
+
+                button.Text = month;
                 button.Width = buttonWidth;
                 button.Height = 40;
-
                 button.Left = column * (buttonWidth + spacing);
                 button.Top = (row + 1) * (button.Height + spacing);
-
                 button.Click += MonthButton_Click;
 
                 monthSelectPanel.Controls.Add(button);
+                generatedMonthButtons.Add(button);
             }
-
         }
 
         public void MonthButton_Click(object sender, EventArgs e)
