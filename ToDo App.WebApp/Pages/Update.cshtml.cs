@@ -11,13 +11,17 @@ namespace ToDo_App.WebApp.Pages
     {
         public ToDo? ToDo { get; set; }
         public List<string> TagLibrary = new List<string>();
-
-        public string htmlDateTime {  get; set; }
+        public string? HtmlDateTime {  get; set; }
+        public string? ErrorMessage { get; set; }
 
         public void OnGet(Guid id)
         {
             ToDo = inputHandler.GetToDo(id);
-            htmlDateTime = Convert.ToDateTime(ToDo.Deadline).ToString("yyyy-MM-ddTHH:mm");
+            if(ToDo == null) {
+                ErrorMessage = "No todo found";
+            } else {
+                HtmlDateTime = Convert.ToDateTime(ToDo.Deadline).ToString("yyyy-MM-ddTHH:mm");
+            }
         }
 
         /// <summary>
