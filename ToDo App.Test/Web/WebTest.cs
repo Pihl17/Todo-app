@@ -85,6 +85,20 @@ namespace ToDo_App.Test.Web
         }
 
         [Test]
+        public void OnGetUpdateTodoTest()
+        {
+            ToDo toDo = new ToDo()
+            {
+                Deadline = new DateTime(2026, 3, 1),
+            };
+            TestInputManager.ToDos = new List<ToDo>() { toDo };
+
+            UpdateModel Model = new UpdateModel(TestInputManager);
+            Model.OnGet(toDo.Id);
+
+            Assert.AreEqual("2026-03-01T00:00", Model.htmlDateTime);
+        }
+        [Test]
         public void UpdateTodoTest()
         {
             ToDo toDo = new ToDo();
