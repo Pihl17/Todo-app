@@ -96,19 +96,38 @@ public class JSONDataHandler : IDataHandler {
     // Check Interface for summary
     public DataQueryResult RemoveTodo(Guid todoId)
     {
-        throw new NotImplementedException();
+        ToDo? todoToRemove = ToDos.Find(x => x.Id == todoId);
+        if (todoToRemove == null)
+        {
+            return new DataQueryResult(false, new Exception("ToDo doesn't exist and therefore cannot be deleted"));
+        }
+        ToDos.Remove(todoToRemove);
+        UpdateList(ToDos);
+        return new DataQueryResult(true);
     }
 
     // Check Interface for summary
     public DataQueryResult UpdateTodo(ToDo updatedTodo)
     {
-        throw new NotImplementedException();
+        int indexToUpdate = ToDos.FindIndex(x => x.Id == updatedTodo.Id);
+        if (indexToUpdate == -1)
+        {
+            return new DataQueryResult(false, new Exception("ToDo could not be found in the list"));
+        }
+        ToDos[indexToUpdate] = updatedTodo;
+        UpdateList(ToDos);
+        return new DataQueryResult(true);
     }
 
     // Check Interface for summary
     public DataQueryResult LoadTodo(Guid todoId, out ToDo todo)
     {
-        throw new NotImplementedException();
+        todo = ToDos.Find(x => x.Id == todoId);
+        if (todo == null)
+        {
+            return new DataQueryResult(false, new Exception("ToDo could not be found in the list"));
+        }
+        return new DataQueryResult(true);
     }
 
 }

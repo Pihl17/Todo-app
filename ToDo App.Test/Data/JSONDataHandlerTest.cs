@@ -138,7 +138,7 @@ namespace ToDo_App.Test.Data
         [Test]
         public void UpdateToDo_ReplacesToDoValuesWithNewValues()
         {
-            string expectedPriority = $"\"Status\": \"7\"";
+            string expectedPriority = $"\"Priority\": 7";
             string expectedTitle = $"\"Title\": \"Updated ToDo Title\"";
             ToDo toDo = new ToDo();
             TestHandler.ToDos = new List<ToDo>() { toDo };
@@ -158,12 +158,12 @@ namespace ToDo_App.Test.Data
         }
 
         [Test]
-        public void UpdateToDo_ToDoCannotBeFound_ReturnsError()
+        public void UpdateToDo_ToDoCannotBeFound_ReturnsFailure()
         {
             ToDo toDo = new ToDo();
             TestHandler.ToDos = new List<ToDo>();
 
-            DataQueryResult result = TestHandler.RemoveTodo(toDo.Id);
+            DataQueryResult result = TestHandler.UpdateTodo(toDo);
 
             Assert.That(result.IsSuccess, Is.EqualTo(false));
             Assert.That(result.Exception, Is.Not.Null);
