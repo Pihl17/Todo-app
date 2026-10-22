@@ -95,37 +95,101 @@ namespace ToDo_App.Test.Data
         [Test]
         public void RemoveToDo_RemovesToDoFromListAndJSON()
         {
-            Assert.Fail();
+            ToDo toDo1 = new ToDo();
+            ToDo toDo2 = new ToDo();
+            TestHandler.ToDos = new List<ToDo>() { toDo1, toDo2 };
+            int expectedCount = 1;
+            List<ToDo> expectedList = new List<ToDo>() { toDo1 };
+
+            TestHandler.RemoveTodo(toDo2.Id);
+
+            Assert.That(TestHandler.ToDos.Count, Is.EqualTo(expectedCount));
+            Assert.That(TestHandler.ToDos, Is.EquivalentTo(expectedList));
+        }
+
+        [Test]
+        public void RemoveToDo_ToDoDoesNotExist_DoesNotRemoveAnyOtherToDos()
+        {
+            ToDo toDo1 = new ToDo();
+            ToDo toDo2 = new ToDo();
+            TestHandler.ToDos = new List<ToDo>() { toDo1 };
+            int expectedCount = 1;
+            List<ToDo> expectedList = new List<ToDo>() { toDo1 };
+
+            TestHandler.RemoveTodo(toDo2.Id);
+
+            Assert.That(TestHandler.ToDos.Count, Is.EqualTo(expectedCount));
+            Assert.That(TestHandler.ToDos, Is.EquivalentTo(expectedList));
         }
 
         [Test]
         public void RemoveToDo_ToDoDoesNotExist_ReturnsError()
         {
-            Assert.Fail();
+            ToDo toDo1 = new ToDo();
+            ToDo toDo2 = new ToDo();
+            TestHandler.ToDos = new List<ToDo>() { toDo1 };
+
+            DataQueryResult result = TestHandler.RemoveTodo(toDo2.Id);
+
+            Assert.That(result.IsSuccess, Is.EqualTo(false));
+            Assert.That(result.Exception, Is.Not.Null);
         }
 
         [Test]
         public void UpdateToDo_ReplacesToDoValuesWithNewValues()
         {
-            Assert.Fail();
+            string expectedPriority = $"\"Status\": \"7\"";
+            string expectedTitle = $"\"Title\": \"Updated ToDo Title\"";
+            ToDo toDo = new ToDo();
+            TestHandler.ToDos = new List<ToDo>() { toDo };
+            TestHandler.UpdateList(TestHandler.ToDos);
+            ToDo updatedToDo = new ToDo()
+            {
+                Id = toDo.Id,
+                Priority = 7,
+                Title = "Updated ToDo Title"
+            };
+
+            TestHandler.UpdateTodo(updatedToDo);
+
+            string jsonDataString = File.ReadAllText(TestHandler.Path);
+            Assert.That(jsonDataString, Contains.Substring(expectedPriority));
+            Assert.That(jsonDataString, Contains.Substring(expectedTitle));
         }
 
         [Test]
         public void UpdateToDo_ToDoCannotBeFound_ReturnsError()
         {
-            Assert.Fail();
+            ToDo toDo = new ToDo();
+            TestHandler.ToDos = new List<ToDo>();
+
+            DataQueryResult result = TestHandler.RemoveTodo(toDo.Id);
+
+            Assert.That(result.IsSuccess, Is.EqualTo(false));
+            Assert.That(result.Exception, Is.Not.Null);
         }
 
         [Test]
         public void LoadToDo_ReturnsToDo()
         {
-            Assert.Fail();
+            ToDo toDo = new ToDo();
+            TestHandler.ToDos = new List<ToDo>() { toDo };
+
+            TestHandler.LoadTodo(toDo.Id, out ToDo actualToDo);
+
+            Assert.That(actualToDo, Is.EqualTo(toDo));
         }
 
         [Test]
         public void LoadToDo_ToDoCannotBeFound_ReturnsFailure()
         {
-            Assert.Fail();
+            ToDo toDo = new ToDo();
+            TestHandler.ToDos = new List<ToDo>();
+
+            DataQueryResult result = TestHandler.LoadTodo(toDo.Id, out ToDo actualToDo);
+
+            Assert.That(result.IsSuccess, Is.EqualTo(false));
+            Assert.That(result.Exception, Is.Not.Null);
         }
         
         //cleanup after test
