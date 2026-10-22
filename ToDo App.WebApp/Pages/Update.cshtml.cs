@@ -14,6 +14,10 @@ namespace ToDo_App.WebApp.Pages
         public string? HtmlDateTime {  get; set; }
         public string? ErrorMessage { get; set; }
 
+        /// <summary>
+        /// Onget get the todo, if it returns null set an error message, otherwise convert datetime to datetime.local for HTML
+        /// </summary>
+        /// <param name="id"></param>
         public void OnGet(Guid id)
         {
             ToDo = inputHandler.GetToDo(id);

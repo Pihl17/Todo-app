@@ -10,6 +10,10 @@ namespace ToDo_App.WebApp.Pages
         public ToDo? ToDo { get; set; }
         public string? ErrorMessage { get; set; }
 
+        /// <summary>
+        /// OnGet get the selected Todo, if it returns null set a Errormessage
+        /// </summary>
+        /// <param name="id"></param>
         public void OnGet(Guid id)
         {
             ToDo = inputHandler.GetToDo(id);
