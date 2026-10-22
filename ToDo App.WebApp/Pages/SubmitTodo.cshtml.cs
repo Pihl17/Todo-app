@@ -10,10 +10,6 @@ namespace ToDo_App.WebApp.Pages
     {
         public List<string> TagLibrary = new List<string>();
 
-        public void OnGet() {
-
-        }
-
         /// <summary>
         /// on post call CreateNewToDo and then redirect back to the Todoes page
         /// </summary>

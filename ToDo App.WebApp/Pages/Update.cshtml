@@ -15,7 +15,7 @@
 	</div>
 	<div>
 		<label for="Deadline">Deadline:</label>
-		<input type="datetime" id="Deadline" name="Deadline" value="@Model.ToDo.Deadline" required />
+		<input type="datetime-local" id="Deadline" name="Deadline" value="@Model.htmlDateTime" required />
 	</div>
 	<div>
 		<label for="Repeat">Repeat:</label>
@@ -50,7 +50,7 @@
 			}
 		</select>
 	</div>
-	<button class="btn btn-default submit-btn">create todo</button>
+	<button class="btn btn-default submit-btn">update todo</button>
 </form>
 
 <style>
