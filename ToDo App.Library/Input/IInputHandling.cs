@@ -70,18 +70,35 @@ public interface IInputHandling
     /// </summary>
     /// <returns></returns>
     public string GetSelectedMonthString();
-    /// <summary>
-    /// Updates the selected month to the previous month and updates the selectedMonth accordingly.
+  /// <summary>
+    /// Updates the selected month to the next month and updates the selectedMonth accordingly.
     /// </summary>
     public void NextMonth();
     /// <summary>
-    /// Updates the selected month to the next month and updates the selectedMonth accordingly.
+    /// Updates the selected month to the previous month and updates the selectedMonth accordingly.
     /// </summary>
     public void PreviousMonth();
+    /// <summary>
+    /// Updates the selected month to the previous month and updates the selectedMonth accordingly.
+    /// </summary>
+    public void NextYear();
+    /// <summary>
+    /// Updates the selected month to the previous month and updates the selectedMonth accordingly.
+    /// </summary>
+    public void PreviousYear();
     /// <summary>
     /// Returns a list of CalendarDay objects for the given month and year, each containing the date and the ToDos that have a deadline or repeat on that date.
     /// </summary>
     /// <param name="toDos"></param>
     /// <returns></returns>
-    public List<CalendarDay> GetToDosInGivenMonth(List<ToDo> toDos);
+    public List<CalendarDay> GetToDosInGivenMonth();
+    /// <summary>
+    /// Updates the selected month to a specific month.
+    /// </summary>
+    /// <param name="m"></param>
+    public void ChangeToMonth(int m);
+    /// <summary>
+    /// Returns the ToDos that have a deadline or repeat on the given date.
+    /// </summary>
+    public List<ToDo> GetToDosOnDate(DateTime date);
 }

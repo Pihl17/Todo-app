@@ -142,16 +142,40 @@ public class InputManager : IInputHandling
     {
         return calendar.selectedMonthString;
     }
+    public DateTime GetSelectedMonth()
+    {
+        return calendar.selectedMonth;
+    }
+    public void SetSelectedMonth(DateTime dt)
+    {
+        calendar.selectedMonth = dt;
+    }
     public void NextMonth()
     {
-        calendar.NextMonth();
+        calendar.ChangeByMonths(1);
     }
     public void PreviousMonth()
     {
-        calendar.PreviousMonth();
+        calendar.ChangeByMonths(-1);
     }
-    public List<CalendarDay> GetToDosInGivenMonth(List<ToDo> toDos)
+    public void NextYear()
     {
-        return calendar.GetToDosInGivenMonth(toDos);
+        calendar.ChangeByMonths(12);
+    }
+    public void PreviousYear()
+    {
+        calendar.ChangeByMonths(-12);
+    }
+    public List<CalendarDay> GetToDosInGivenMonth()
+    {
+        return calendar.GetToDosInGivenMonth(ToDos);
+    }
+    public void ChangeToMonth(int m)
+    {
+        calendar.ChangeToMonth(m);
+    }
+    public List<ToDo> GetToDosOnDate(DateTime date)
+    {
+        return calendar.GetToDosOnDate(ToDos, date);
     }
 }
