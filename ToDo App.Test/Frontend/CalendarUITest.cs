@@ -47,10 +47,10 @@ namespace ToDo_App.Test.Frontend
             inputMock.Setup(x => x.GetToDoList())
                 .Returns(new List<ToDo>());
 
-            inputMock.Setup(x => x.GetToDosOnDate(It.IsAny<List<ToDo>>(),It.IsAny<DateTime>())).Returns(new List<ToDo>());
+            inputMock.Setup(x => x.GetToDosOnDate(It.IsAny<DateTime>())).Returns(new List<ToDo>());
 
 
-            inputMock.Setup(x => x.GetToDosInGivenMonth(It.IsAny<List<ToDo>>()))
+            inputMock.Setup(x => x.GetToDosInGivenMonth())
                 .Returns(() =>
                 {
                     int days = DateTime.DaysInMonth(
@@ -212,13 +212,12 @@ namespace ToDo_App.Test.Frontend
         public void PopulateCalendarDisplayPanel_DayHasToDos_DisplaysToDoCount()
         {
             // Arrange
-            var days = inputMock.Object.GetToDosInGivenMonth(
-                inputMock.Object.GetToDoList());
+            var days = inputMock.Object.GetToDosInGivenMonth();
 
             days[0].ToDosOfTheDay.Add(new ToDo());
             days[0].ToDosOfTheDay.Add(new ToDo());
 
-            inputMock.Setup(x => x.GetToDosInGivenMonth(It.IsAny<List<ToDo>>()))
+            inputMock.Setup(x => x.GetToDosInGivenMonth())
                 .Returns(days);
 
             // Act

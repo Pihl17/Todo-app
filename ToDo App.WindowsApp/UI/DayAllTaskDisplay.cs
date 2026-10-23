@@ -38,7 +38,6 @@ namespace ToDo_App.UI
         public void DisplayToDosOfDay()
         {
             var relevantToDos = inputHandler.GetToDosOnDate(
-                inputHandler.GetToDoList(),
                 clickedDay
             );
 

@@ -203,7 +203,7 @@ namespace ToDo_App.UI
                 (calendarDisplayPanel.ClientSize.Width
                 - (columns - 1) * spacing) / columns;
 
-            var relevantToDos = inputHandler.GetToDosInGivenMonth(inputHandler.GetToDoList());
+            var relevantToDos = inputHandler.GetToDosInGivenMonth();
 
             calendarDisplayPanel.Controls.Clear();
 

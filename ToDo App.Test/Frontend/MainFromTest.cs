@@ -17,7 +17,7 @@ public class MainFromTest
         mock.Setup(x => x.GetToDoList()).Returns(new List<ToDo>());
         mock.Setup(x => x.InitializeSelectedMonth());
         mock.Setup(x => x.GetSelectedMonthString()).Returns("October 2026");
-        mock.Setup(x => x.GetToDosInGivenMonth(It.IsAny<List<ToDo>>()))
+        mock.Setup(x => x.GetToDosInGivenMonth())
     .Returns(() => Enumerable.Range(1, DateTime.DaysInMonth(2026, 10))
     .Select(day => new CalendarDay
     {
@@ -41,7 +41,7 @@ public class MainFromTest
         mock.Setup(x => x.GetToDoList()).Returns(new List<ToDo>());
         mock.Setup(x => x.InitializeSelectedMonth());
         mock.Setup(x => x.GetSelectedMonthString()).Returns("October 2026");
-        mock.Setup(x => x.GetToDosInGivenMonth(It.IsAny<List<ToDo>>()))
+        mock.Setup(x => x.GetToDosInGivenMonth())
     .Returns(() => Enumerable.Range(1, DateTime.DaysInMonth(2026, 10))
     .Select(day => new CalendarDay
     {

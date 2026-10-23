@@ -29,7 +29,6 @@ public class DayAllTaskDisplayTest
 
         inputMock
             .Setup(x => x.GetToDosOnDate(
-                It.IsAny<List<ToDo>>(),
                 It.IsAny<DateTime>()))
             .Returns(new List<ToDo>());
 
@@ -46,7 +45,6 @@ public class DayAllTaskDisplayTest
 
         inputMock.Verify(
             x => x.GetToDosOnDate(
-                It.IsAny<List<ToDo>>(),
                 clickedDay),
             Times.Exactly(2));
     }
@@ -71,7 +69,6 @@ public class DayAllTaskDisplayTest
 
         inputMock.Verify(
             x => x.GetToDosOnDate(
-                It.IsAny<List<ToDo>>(),
                 clickedDay),
             Times.Exactly(2));
     }
@@ -87,7 +84,6 @@ public class DayAllTaskDisplayTest
     {
         inputMock
             .Setup(x => x.GetToDosOnDate(
-                It.IsAny<List<ToDo>>(),
                 It.IsAny<DateTime>()))
             .Returns(new List<ToDo>
             {
@@ -110,7 +106,6 @@ public class DayAllTaskDisplayTest
     {
         inputMock
             .Setup(x => x.GetToDosOnDate(
-                It.IsAny<List<ToDo>>(),
                 It.IsAny<DateTime>()))
             .Returns(new List<ToDo>
             {

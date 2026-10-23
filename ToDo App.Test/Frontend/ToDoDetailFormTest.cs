@@ -67,11 +67,11 @@ public class ToDoDetailFormTest
         {
             throw new NotImplementedException();
         }
-        public List<CalendarDay> GetToDosInGivenMonth(List<ToDo> toDos)
+        public List<CalendarDay> GetToDosInGivenMonth()
         {
             return new List<CalendarDay>();
         }
-        public List<ToDo> GetToDosOnDate(List<ToDo> toDos, DateTime dt)
+        public List<ToDo> GetToDosOnDate(DateTime dt)
         {
             return new List<ToDo>();
         }

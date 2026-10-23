@@ -172,16 +172,16 @@ public class InputManager : IInputHandling
     {
         calendar.ChangeByMonths(-12);
     }
-    public List<CalendarDay> GetToDosInGivenMonth(List<ToDo> toDos)
+    public List<CalendarDay> GetToDosInGivenMonth()
     {
-        return calendar.GetToDosInGivenMonth(toDos);
+        return calendar.GetToDosInGivenMonth(ToDos);
     }
     public void ChangeToMonth(int m)
     {
         calendar.ChangeToMonth(m);
     }
-    public List<ToDo> GetToDosOnDate(List<ToDo> toDos, DateTime date)
+    public List<ToDo> GetToDosOnDate(DateTime date)
     {
-        return calendar.GetToDosOnDate(toDos,date);
+        return calendar.GetToDosOnDate(ToDos, date);
     }
 }

@@ -143,7 +143,6 @@ namespace ToDo_App.Library.Calendar
         /// <returns></returns>
         public List<CalendarDay> GetToDosInGivenMonth(List<ToDo> toDos)
         {
-
             var days = new List<CalendarDay>();
             for (int day = 1; day <= DateTime.DaysInMonth(selectedMonth.Year, selectedMonth.Month); day++)
             {
