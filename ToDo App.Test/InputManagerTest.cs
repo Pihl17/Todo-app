@@ -604,7 +604,7 @@ public class InputManagerTest
     {
         DateTime deadline = new DateTime(2026, 11, 1);
 
-        ToDo created = inputManager.CreateNewToDo("Buy milk", null, 7, "2 liters", deadline, RepeatInterval.Weekly);
+        ToDo created = inputManager.CreateNewToDo("Buy milk", priority: 7, description: "2 liters", choosenDeadLine: deadline, repeat: RepeatInterval.Weekly);
 
         Assert.That(created.Title, Is.EqualTo("Buy milk"));
         Assert.That(created.Priority, Is.EqualTo(7));
@@ -619,7 +619,7 @@ public class InputManagerTest
     {
         List<ChecklistItem> items = new List<ChecklistItem> { new ChecklistItem { Description = "Item 1" } };
 
-        ToDo created = inputManager.CreateNewToDo("Test", items);
+        ToDo created = inputManager.CreateNewToDo("Test", checklist: items);
 
         Assert.That(created.Checklist, Has.Count.EqualTo(1));
     }

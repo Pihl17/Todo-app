@@ -54,22 +54,18 @@ public class InputManager : IInputHandling
         return ToDos;
     }
 
-    public ToDo CreateNewToDo(string title = "Insert title", List<ChecklistItem>? checklist = null,
-        int? priority = null, string description = "", DateTime? deadline = null,
-        RepeatInterval repeat = RepeatInterval.None)
+    public ToDo CreateNewToDo(string? title = "Insert title", DateTime? choosenDeadLine = null, RepeatInterval repeat = RepeatInterval.None, int? priority = null, string? description ="", List<string>? tags=null, List<ChecklistItem>? checklist = null)
     {
         if (title.IsWhiteSpace())
             title = "Insert title";
 
         List<ChecklistItem> items = checklist ?? new List<ChecklistItem>();
-
-        ToDo createdToDo;
-        if (priority == null)
-            createdToDo = toDoHandler.Create(title, items, desc: description,
-                choosenDeadLine: deadline, repeat: repeat);
-        else
-            createdToDo = toDoHandler.Create(title, items, priority: priority.Value,
-                desc: description, choosenDeadLine: deadline, repeat: repeat);
+        tags = tags ?? new List<string>();
+        
+        if(priority == null) priority = 0;
+        
+        ToDo createdToDo = toDoHandler.Create(title, items, priority: priority.Value,
+            desc: description, choosenDeadLine: choosenDeadLine, repeat: repeat, tags: tags);
 
         ToDos.Add(createdToDo);
         dataHandler.UpdateList(ToDos);
@@ -90,9 +86,9 @@ public class InputManager : IInputHandling
         dataHandler.SelectSavePath($"{path}\\todoes.json");
     }
 
-    public ToDo? UpdateToDo(Guid toDoId, string? title = null, string? description = null, 
+    public ToDo? UpdateToDo(Guid toDoId, string? title = null, string? description = null,
         DateTime? deadline = null, ToDoStatus? status = null, RepeatInterval? repeat = null, 
-        List<ChecklistItem>? checklist = null, int? priority = null, bool removeDeadline = false)
+        List<ChecklistItem>? checklist = null, int? priority = null, List<string>? tags = null, bool removeDeadline = false)
     {
         ToDo? toDo = GetToDo(toDoId);
         if (toDo == null)
@@ -125,6 +121,8 @@ public class InputManager : IInputHandling
             toDoHandler.EditRepeat(toDo, (RepeatInterval)repeat);
         if (checklist != null)
             toDoHandler.EditChecklist(toDo, checklist);
+        if (tags != null)
+            toDoHandler.EditTagList(toDo, tags);
         if (priority != null)
             toDoHandler.EditPriority(toDo, (int)priority);
 
