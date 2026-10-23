@@ -5,7 +5,7 @@ using ToDo_App.Library.Input;
 using ToDo_App.Library.Models;
 using ToDo_App.UI;
 
-namespace ToDo_App_test.Frontend;
+namespace ToDo_App.Test.Frontend;
 
 public class ToDoDetailFormTest
 {
@@ -59,9 +59,25 @@ public class ToDoDetailFormTest
         {
             throw new NotImplementedException();
         }
-        public List<CalendarDay> GetToDosInGivenMonth(List<ToDo> toDos)
+        public void NextYear()
+        {
+            throw new NotImplementedException();
+        }
+        public void PreviousYear()
+        {
+            throw new NotImplementedException();
+        }
+        public List<CalendarDay> GetToDosInGivenMonth()
         {
             return new List<CalendarDay>();
+        }
+        public List<ToDo> GetToDosOnDate(DateTime dt)
+        {
+            return new List<ToDo>();
+        }
+        public void ChangeToMonth(int i)
+        {
+            throw new NotImplementedException();
         }
     }
     // The form with ShowMessage replaced, so no dialog opens during tests.

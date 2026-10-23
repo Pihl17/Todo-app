@@ -343,7 +343,7 @@ namespace ToDo_App.Test
         public void NextMonthTest()
         {
             calendar.selectedMonth = new DateTime(2026, 10, 1);
-            calendar.NextMonth();
+            calendar.ChangeByMonths(1);
             DateTime expectedNextMonth = new DateTime(2026, 11, 1);
             Assert.That(calendar.selectedMonth, Is.EqualTo(expectedNextMonth));
         }
@@ -352,7 +352,7 @@ namespace ToDo_App.Test
         public void PreviousMonthTest()
         {
             calendar.selectedMonth = new DateTime(2026, 10, 1);
-            calendar.PreviousMonth();
+            calendar.ChangeByMonths(-1);
             DateTime expectedPreviousMonth = new DateTime(2026, 9, 1);
             Assert.That(calendar.selectedMonth, Is.EqualTo(expectedPreviousMonth));
         }
@@ -363,6 +363,11 @@ namespace ToDo_App.Test
             calendar.InitializeSelectedMonth();
             Assert.That(calendar.selectedMonth.Month, Is.EqualTo(DateTime.Today.Month));
         }
-
+        [Test]
+        public void ChangeToMonthTest()
+        {
+            calendar.ChangeToMonth(12);
+            Assert.That(calendar.selectedMonth.Month, Is.EqualTo(12));
+        }
     }
 }
