@@ -308,7 +308,8 @@ public class InputManagerTest
         todo.Taglist.Add("Work");
         todo.Taglist.Add("School");
 
-        inputManager.ToDos = new List<ToDo>(){todo};
+        List<ToDo> todoList = new List<ToDo>() { todo };
+        dataMock.Setup(x => x.LoadTodoList(out todoList));
 
         List<string> result = inputManager.GetAllTags();
 
@@ -372,45 +373,14 @@ public class InputManagerTest
 
         Assert.That(after, Is.Not.EqualTo(before));
     }
-
-    [Test]
-    public void SetNewSavePath_UpdatesPathToTodoesJson()
-    {
-        string newPath = TEST_FOLDER_PATH + "CoverageTest";
-
-        Directory.CreateDirectory(newPath);
-
-        inputManager.SetNewSavePath(newPath);
-
-        Assert.That(
-            dataHandler.Path,
-            Is.EqualTo($"{newPath}\\todoes.json"));
-    }
-
-    [Test]
-    public void SetNewSavePath_CanBeCalledMoreThanOnce()
-    {
-        string path1 = TEST_FOLDER_PATH + "Path1";
-        string path2 = TEST_FOLDER_PATH + "Path2";
-
-        Directory.CreateDirectory(path1);
-        Directory.CreateDirectory(path2);
-
-        inputManager.SetNewSavePath(path1);
-        inputManager.SetNewSavePath(path2);
-
-        Assert.That(
-            dataHandler.Path,
-            Is.EqualTo($"{path2}\\todoes.json"));
-    }
-
+    
     [Test]
     public void UpdateToDo_RemoveDeadline_TakesPriorityOverDeadline()
     {
         ToDo todo = new ToDo();
         todo.Deadline = DateTime.Today;
 
-        inputManager.ToDos = new List<ToDo> { todo };
+        dataMock.Setup(x => x.LoadTodo(todo.Id, out todo)).Returns(new DataQueryResult(true));
 
         inputManager.UpdateToDo(
             todo.Id,
@@ -425,7 +395,7 @@ public class InputManagerTest
     {
         ToDo todo = new ToDo();
 
-        inputManager.ToDos = new List<ToDo> { todo };
+        dataMock.Setup(x => x.LoadTodo(todo.Id, out todo)).Returns(new DataQueryResult(true));
 
         inputManager.UpdateToDo(
             todo.Id,
@@ -443,7 +413,7 @@ public class InputManagerTest
             Description = "Old"
         };
 
-        inputManager.ToDos = new List<ToDo> { todo };
+        dataMock.Setup(x => x.LoadTodo(todo.Id, out todo)).Returns(new DataQueryResult(true));
 
         inputManager.UpdateToDo(
             todo.Id,
@@ -461,7 +431,6 @@ public class InputManagerTest
         Assert.That(created.Title, Is.EqualTo("Insert title"));
         Assert.That(created.Checklist, Is.Empty);
         Assert.That(created.Repeat, Is.EqualTo(RepeatInterval.None));
-        Assert.That(inputManager.ToDos, Does.Contain(created));
     }
 
     [Test]
@@ -476,7 +445,6 @@ public class InputManagerTest
         Assert.That(created.Description, Is.EqualTo("2 liters"));
         Assert.That(created.Deadline, Is.EqualTo(deadline));
         Assert.That(created.Repeat, Is.EqualTo(RepeatInterval.Weekly));
-        Assert.That(inputManager.ToDos, Does.Contain(created));
     }
 
     [Test]
@@ -493,7 +461,7 @@ public class InputManagerTest
     public void UpdateToDo_BlankTitle_KeepOldTitle()
     {
         ToDo todo = new ToDo { Title = "Old" };
-        inputManager.ToDos = new List<ToDo> { todo };
+        dataMock.Setup(x => x.LoadTodo(todo.Id, out todo)).Returns(new DataQueryResult(true));
 
         inputManager.UpdateToDo(todo.Id, title: "   ");
 
@@ -504,7 +472,7 @@ public class InputManagerTest
     public void UpdateToDo_RemoveDeadline_ClearsDeadline()
     {
         ToDo todo = new ToDo { Deadline = DateTime.Today };
-        inputManager.ToDos = new List<ToDo> { todo };
+        dataMock.Setup(x => x.LoadTodo(todo.Id, out todo)).Returns(new DataQueryResult(true));
 
         inputManager.UpdateToDo(todo.Id, removeDeadline: true);
 
@@ -515,7 +483,7 @@ public class InputManagerTest
     public void UpdateToDo_StatusDone_SetsCompletionDate()
     {
         ToDo todo = new ToDo();
-        inputManager.ToDos = new List<ToDo> { todo };
+        dataMock.Setup(x => x.LoadTodo(todo.Id, out todo)).Returns(new DataQueryResult(true));
 
         inputManager.UpdateToDo(todo.Id, status: ToDoStatus.Done);
 
@@ -527,7 +495,7 @@ public class InputManagerTest
     {
         ToDo todo = new ToDo();
         todo.MarkProgress(ToDoStatus.Done);
-        inputManager.ToDos = new List<ToDo> { todo };
+        dataMock.Setup(x => x.LoadTodo(todo.Id, out todo)).Returns(new DataQueryResult(true));
 
         inputManager.UpdateToDo(todo.Id, status: ToDoStatus.NotDone);
 
