@@ -28,8 +28,9 @@ public class InputManager : IInputHandling
     /// <param name="toDoHandler">Object for handling creating and changing todos</param>
     /// <param name="dataHandler">Object for handling the saving and loading of todo list</param>
     /// <param name="toDoListSort">Object for handling the sorting of the todo list</param>
+    /// <param name="tagFilter">Object for handling creating a sorted list of tags</param>
     /// <param name="calendar">Object for handling calendar-related operations</param>
-    /// <param name="toDoListSort">Object for handling creating a sorted list of tags</param>
+    
 
     public InputManager(ToDoHandler toDoHandler, DataHandler dataHandler, ToDoListSort toDoListSort, TagFilter tagFilter, CalendarManager calendar)
 
@@ -53,9 +54,23 @@ public class InputManager : IInputHandling
         return ToDos;
     }
 
-    public ToDo CreateNewToDo()
+    public ToDo CreateNewToDo(string title = "Insert title", List<ChecklistItem>? checklist = null,
+        int? priority = null, string description = "", DateTime? deadline = null,
+        RepeatInterval repeat = RepeatInterval.None)
     {
-        ToDo createdToDo = toDoHandler.Create("Insert title");
+        if (title.IsWhiteSpace())
+            title = "Insert title";
+
+        List<ChecklistItem> items = checklist ?? new List<ChecklistItem>();
+
+        ToDo createdToDo;
+        if (priority == null)
+            createdToDo = toDoHandler.Create(title, items, desc: description,
+                choosenDeadLine: deadline, repeat: repeat);
+        else
+            createdToDo = toDoHandler.Create(title, items, priority: priority.Value,
+                desc: description, choosenDeadLine: deadline, repeat: repeat);
+
         ToDos.Add(createdToDo);
         dataHandler.UpdateList(ToDos);
         return createdToDo;
@@ -85,7 +100,7 @@ public class InputManager : IInputHandling
 
         if (title != null && !title.IsWhiteSpace())
             toDoHandler.EditName(toDo, title);
-        if (description != null && !description.IsWhiteSpace())
+        if (description != null)
             toDoHandler.EditDescription(toDo, description);
         if (removeDeadline)
             toDoHandler.EditDeadline(toDo, null);
