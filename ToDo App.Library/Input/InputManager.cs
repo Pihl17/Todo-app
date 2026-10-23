@@ -54,18 +54,19 @@ public class InputManager : IInputHandling
         return ToDos;
     }
 
-    public ToDo CreateNewToDo(string? titel = "Insert title", DateTime? choosenDeadLine = null, RepeatInterval? repeat = RepeatInterval.None, int? priority = null, string? description ="", List<string>? tags=null, List<ChecklistItem>? checklist = null)
+    public ToDo CreateNewToDo(string? title = "Insert title", DateTime? choosenDeadLine = null, RepeatInterval repeat = RepeatInterval.None, int? priority = null, string? description ="", List<string>? tags=null, List<ChecklistItem>? checklist = null)
     {
         if(priority == null) priority = 0;
         if (title.IsWhiteSpace())
             title = "Insert title";
 
         List<ChecklistItem> items = checklist ?? new List<ChecklistItem>();
+        tags = tags ?? new List<string>();
         
         if(priority == null) priority = 0;
         
-        createdToDo = toDoHandler.Create(title, items, priority: priority.Value,
-            desc: description, choosenDeadLine: deadline, repeat: repeat, tags: tags);
+        ToDo createdToDo = toDoHandler.Create(title, items, priority: priority.Value,
+            desc: description, choosenDeadLine: choosenDeadLine, repeat: repeat, tags: tags);
 
         ToDos.Add(createdToDo);
         dataHandler.UpdateList(ToDos);
@@ -88,7 +89,7 @@ public class InputManager : IInputHandling
 
     public ToDo? UpdateToDo(Guid toDoId, string? title = null, string? description = null,
         DateTime? deadline = null, ToDoStatus? status = null, RepeatInterval? repeat = null, 
-        List<ChecklistItem>? checklist = null, int? priority = null, List<string>? tags = null)
+        List<ChecklistItem>? checklist = null, int? priority = null, List<string>? tags = null, bool removeDeadline = false)
     {
         ToDo? toDo = GetToDo(toDoId);
         if (toDo == null)
@@ -98,12 +99,17 @@ public class InputManager : IInputHandling
             toDoHandler.EditName(toDo, title);
         if (description != null)
             toDoHandler.EditDescription(toDo, description);
-        if (deadline != null)
+        if (removeDeadline)
+            toDoHandler.EditDeadline(toDo, null);
+        else if (deadline != null)
             toDoHandler.EditDeadline(toDo, deadline);
         if (status != null)
         {
             switch (status)
             {
+                case ToDoStatus.NotDone:
+                    toDo.MarkProgress(ToDoStatus.NotDone);
+                    break;
                 case ToDoStatus.InProgress:
                     toDoHandler.MarkInProgress(toDo);
                     break;
@@ -151,5 +157,8 @@ public class InputManager : IInputHandling
     {
         calendar.PreviousMonth();
     }
-
+    public List<CalendarDay> GetToDosInGivenMonth(List<ToDo> toDos)
+    {
+        return calendar.GetToDosInGivenMonth(toDos);
+    }
 }
