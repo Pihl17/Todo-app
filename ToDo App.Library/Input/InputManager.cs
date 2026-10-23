@@ -28,8 +28,9 @@ public class InputManager : IInputHandling
     /// <param name="toDoHandler">Object for handling creating and changing todos</param>
     /// <param name="dataHandler">Object for handling the saving and loading of todo list</param>
     /// <param name="toDoListSort">Object for handling the sorting of the todo list</param>
+    /// <param name="tagFilter">Object for handling creating a sorted list of tags</param>
     /// <param name="calendar">Object for handling calendar-related operations</param>
-    /// <param name="toDoListSort">Object for handling creating a sorted list of tags</param>
+    
 
     public InputManager(ToDoHandler toDoHandler, DataHandler dataHandler, ToDoListSort toDoListSort, TagFilter tagFilter, CalendarManager calendar)
 
@@ -53,10 +54,19 @@ public class InputManager : IInputHandling
         return ToDos;
     }
 
-    public ToDo CreateNewToDo(string? titel = "Insert title", DateTime? choosenDeadLine = null, RepeatInterval? repeat = RepeatInterval.None, int? priority = null, string? description ="", List<string>? tags=null)
+    public ToDo CreateNewToDo(string? titel = "Insert title", DateTime? choosenDeadLine = null, RepeatInterval? repeat = RepeatInterval.None, int? priority = null, string? description ="", List<string>? tags=null, List<ChecklistItem>? checklist = null)
     {
         if(priority == null) priority = 0;
-        ToDo createdToDo = toDoHandler.Create(titel, null , priority.Value, description, choosenDeadLine, repeat.Value, tags);
+        if (title.IsWhiteSpace())
+            title = "Insert title";
+
+        List<ChecklistItem> items = checklist ?? new List<ChecklistItem>();
+        
+        if(priority == null) priority = 0;
+        
+        createdToDo = toDoHandler.Create(title, items, priority: priority.Value,
+            desc: description, choosenDeadLine: deadline, repeat: repeat, tags: tags);
+
         ToDos.Add(createdToDo);
         dataHandler.UpdateList(ToDos);
         return createdToDo;
@@ -86,7 +96,7 @@ public class InputManager : IInputHandling
 
         if (title != null && !title.IsWhiteSpace())
             toDoHandler.EditName(toDo, title);
-        if (description != null && !description.IsWhiteSpace())
+        if (description != null)
             toDoHandler.EditDescription(toDo, description);
         if (deadline != null)
             toDoHandler.EditDeadline(toDo, deadline);
