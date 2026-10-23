@@ -328,6 +328,7 @@ public class InputManagerTest
     [Test]
     public void PreviousMonth_DoesNotThrow()
     {
+        inputManager.InitializeSelectedMonth();
         Assert.DoesNotThrow(() => inputManager.PreviousMonth());
     }
 
@@ -484,4 +485,85 @@ public class InputManagerTest
             Is.EqualTo(""));
     }
 
+    [Test]
+    public void CreateNewToDo_NoArguments_CreatesToDoWithDefaults()
+    {
+        ToDo created = inputManager.CreateNewToDo();
+
+        Assert.That(created.Title, Is.EqualTo("Insert title"));
+        Assert.That(created.Checklist, Is.Empty);
+        Assert.That(created.Repeat, Is.EqualTo(RepeatInterval.None));
+        Assert.That(inputManager.ToDos, Does.Contain(created));
+    }
+
+    [Test]
+    public void CreateNewToDo_WithValues_CreatesToDoWithThoseValues()
+    {
+        DateTime deadline = new DateTime(2026, 11, 1);
+
+        ToDo created = inputManager.CreateNewToDo("Buy milk", null, 7, "2 liters", deadline, RepeatInterval.Weekly);
+
+        Assert.That(created.Title, Is.EqualTo("Buy milk"));
+        Assert.That(created.Priority, Is.EqualTo(7));
+        Assert.That(created.Description, Is.EqualTo("2 liters"));
+        Assert.That(created.Deadline, Is.EqualTo(deadline));
+        Assert.That(created.Repeat, Is.EqualTo(RepeatInterval.Weekly));
+        Assert.That(inputManager.ToDos, Does.Contain(created));
+    }
+
+    [Test]
+    public void CreateNewToDo_WithChecklist_KeepsChecklist()
+    {
+        List<ChecklistItem> items = new List<ChecklistItem> { new ChecklistItem { Description = "Item 1" } };
+
+        ToDo created = inputManager.CreateNewToDo("Test", items);
+
+        Assert.That(created.Checklist, Has.Count.EqualTo(1));
+    }
+
+    [Test]
+    public void UpdateToDo_BlankTitle_KeepOldTitle()
+    {
+        ToDo todo = new ToDo { Title = "Old" };
+        inputManager.ToDos = new List<ToDo> { todo };
+
+        inputManager.UpdateToDo(todo.Id, title: "   ");
+
+        Assert.That(todo.Title, Is.EqualTo("Old"));
+    }
+
+    [Test]
+    public void UpdateToDo_RemoveDeadline_ClearsDeadline()
+    {
+        ToDo todo = new ToDo { Deadline = DateTime.Today };
+        inputManager.ToDos = new List<ToDo> { todo };
+
+        inputManager.UpdateToDo(todo.Id, removeDeadline: true);
+
+        Assert.That(todo.Deadline, Is.Null);
+    }
+
+    [Test]
+    public void UpdateToDo_StatusDone_SetsCompletionDate()
+    {
+        ToDo todo = new ToDo();
+        inputManager.ToDos = new List<ToDo> { todo };
+
+        inputManager.UpdateToDo(todo.Id, status: ToDoStatus.Done);
+
+        Assert.That(todo.CompletionDate, Is.Not.Null);
+    }
+
+    [Test]
+    public void UpdateToDo_StatusNotDone_SetsDoneToDoBack()
+    {
+        ToDo todo = new ToDo();
+        todo.MarkProgress(ToDoStatus.Done);
+        inputManager.ToDos = new List<ToDo> { todo };
+
+        inputManager.UpdateToDo(todo.Id, status: ToDoStatus.NotDone);
+
+        Assert.That(todo.Status, Is.EqualTo(ToDoStatus.NotDone));
+
+    }
 }
