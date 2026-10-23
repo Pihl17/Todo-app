@@ -9,7 +9,7 @@ using ToDo_App.Library.Input;
 using ToDo_App.UI;
 using System.Linq;
 
-namespace ToDo_App.WindowsApp.UI
+namespace ToDo_App.UI
 {
     public partial class DayAllTaskDisplay : UserControl
     {

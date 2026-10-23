@@ -6,9 +6,8 @@ using System.Linq;
 using ToDo_App.Library.Input;
 using ToDo_App.Library.Models;
 using ToDo_App.UI;
-using ToDo_App.WindowsApp.UI;
 
-namespace ToDo_App_test.Frontend;
+namespace ToDo_App.Test.Frontend;
 
 [TestFixture]
 public class DayAllTaskDisplayTest

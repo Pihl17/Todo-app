@@ -1,4 +1,4 @@
-﻿namespace ToDo_App.WindowsApp.UI
+﻿namespace ToDo_App.UI
 {
     partial class DayAllTaskDisplay
     {

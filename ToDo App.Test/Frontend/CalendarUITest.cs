@@ -1,6 +1,7 @@
 ﻿using Moq;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
@@ -9,7 +10,7 @@ using ToDo_App.Library.Input;
 using ToDo_App.Library.Models;
 using ToDo_App.UI;
 
-namespace ToDo_App_test.Frontend
+namespace ToDo_App.Test.Frontend
 {
     internal class CalendarUITest
     {
@@ -129,7 +130,7 @@ namespace ToDo_App_test.Frontend
         [Test]
         public void MonthButton_Click_NoSubscribers_DoesNotThrow()
         {
-            var button = new Button { Text = "January" };
+            var button = new Button { Text = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(1) };
 
             Assert.DoesNotThrow(() =>
                 calendarUI.MonthButton_Click(button, EventArgs.Empty));
@@ -190,15 +191,15 @@ namespace ToDo_App_test.Frontend
                 eventRaised = true;
                 selectedMonth = month;
             };
-
-            calendarUI.MonthButtons[3].Text = "January";
+            string firstMonth = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(1);
+            calendarUI.MonthButtons[3].Text = firstMonth;
 
             calendarUI.MonthButton_Click(
                 calendarUI.MonthButtons[3],
                 EventArgs.Empty);
 
             Assert.That(eventRaised, Is.True);
-            Assert.That(selectedMonth, Is.EqualTo("January"));
+            Assert.That(selectedMonth, Is.EqualTo(firstMonth));
         }
 
         [Test]
