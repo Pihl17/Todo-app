@@ -1,17 +1,19 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Moq;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using ToDo_App.Library.Calendar;
+using ToDo_App.Library.Data;
 using ToDo_App.Library.Handler;
 using ToDo_App.Library.Input;
 using ToDo_App.Library.Models;
 using ToDo_App.WebApp.Pages;
-using ToDo_App.Library.Data;
 
 
 namespace ToDo_App.Test.Web
@@ -74,17 +76,47 @@ namespace ToDo_App.Test.Web
 
             mock.Setup(x => x.GetToDoList()).Returns(new List<ToDo>() { toDo });
 
-            TodoModel Model = new TodoModel(mock.Object);
+            var modelMetadataProvider = new EmptyModelMetadataProvider();
+
+            //Creating View data instance
+            var viewData = new ViewDataDictionary(modelMetadataProvider, new ModelStateDictionary());
+
+            TodoModel Model = new TodoModel(mock.Object)
+            {
+                PageContext = new PageContext
+                {
+                    ViewData = viewData
+                },
+                MetadataProvider = modelMetadataProvider,
+            };
+
             Model.OnGet(toDo.Id);
 
             mock.Verify(x => x.GetToDo(toDo.Id));
+
+            
+
+
         }
 
         [Test]
         public void GetATodoTestError()
         {
             Guid test = new Guid("e7e64692-6ac4-4d8d-baa1-ab8be334fd6d");
-            TodoModel Model = new TodoModel(mock.Object);
+
+            var modelMetadataProvider = new EmptyModelMetadataProvider();
+
+            //Creating View data instance
+            var viewData = new ViewDataDictionary(modelMetadataProvider, new ModelStateDictionary());
+
+            TodoModel Model = new TodoModel(mock.Object)
+            {
+                PageContext = new PageContext
+                {
+                    ViewData = viewData
+                },
+                MetadataProvider = modelMetadataProvider,
+            };
 
             Model.OnGet(test);
 
