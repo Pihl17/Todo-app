@@ -86,7 +86,7 @@ public class JSONDataHandler : IDataHandler {
     {
         if (ToDos.Contains(todo))
         {
-            return new DataQueryResult(false, new Exception("ToDo already exists, cannot add dublicate"));
+            return new DataQueryResult(false, new Exception("ToDo already exists, cannot add duplicate"));
         }
         ToDos.Add(todo);
         UpdateList(ToDos);
