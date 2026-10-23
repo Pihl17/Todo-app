@@ -4,82 +4,35 @@ using ToDo_App.Library.Calendar;
 using ToDo_App.Library.Input;
 using ToDo_App.Library.Models;
 using ToDo_App.UI;
+using Moq;
 
 namespace ToDo_App.Test.Frontend;
 
 public class ToDoDetailFormTest
 {
-    // A stand-in for InputManager that records what the form sends to it.
-    private class FakeInputHandling : IInputHandling
+    private Mock<IInputHandling> inputMock = null!;
+
+    [SetUp]
+    public void Setup()
     {
-        public bool ToDoExists = true;
-        public int UpdateCalls;
-        public Guid? UpdatedId;
-        public string? UpdatedTitle;
-        public ToDoStatus? UpdatedStatus;
-        public bool? RemoveDeadlineValue;
+        inputMock = new Mock<IInputHandling>();
 
-        public List<ToDo> GetToDoList() { return new List<ToDo>(); }
-        public ToDo CreateNewToDo(string title = "Insert title", List<ChecklistItem>? checklist = null,
-            int? priority = null, string description = "", DateTime? deadline = null,
-            RepeatInterval repeat = RepeatInterval.None)
-        { return new ToDo(); }
-        public void DeleteToDo(ToDo todo) { }
-        public void SetNewSavePath(string path) { }
-        public ToDo? GetToDo(Guid toDoId) { return null; }
+        inputMock
+            .Setup(x => x.UpdateToDo(
+                It.IsAny<Guid>(),
+                It.IsAny<string?>(),
+                It.IsAny<string?>(),
+                It.IsAny<DateTime?>(),
+                It.IsAny<ToDoStatus?>(),
+                It.IsAny<RepeatInterval?>(),
+                It.IsAny<List<ChecklistItem>?>(),
+                It.IsAny<int?>(),
+                It.IsAny<List<string>?>(),
+                It.IsAny<bool>()))
+            .Returns(new ToDo());
 
-        public ToDo? UpdateToDo(Guid toDoId, string? title = null, string? description = null,
-           DateTime? deadline = null, ToDoStatus? status = null, RepeatInterval? repeat = null,
-           List<ChecklistItem>? checklist = null, int? priority = null, bool removeDeadline = false)
-        {
-            UpdateCalls++;
-            UpdatedId = toDoId;
-            UpdatedTitle = title;
-            UpdatedStatus = status;
-            RemoveDeadlineValue = removeDeadline;
-            return ToDoExists ? new ToDo() : null;
-        }
-
-        public void InitializeSelectedMonth()
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GetSelectedMonthString()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void NextMonth()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void PreviousMonth()
-        {
-            throw new NotImplementedException();
-        }
-        public void NextYear()
-        {
-            throw new NotImplementedException();
-        }
-        public void PreviousYear()
-        {
-            throw new NotImplementedException();
-        }
-        public List<CalendarDay> GetToDosInGivenMonth()
-        {
-            return new List<CalendarDay>();
-        }
-        public List<ToDo> GetToDosOnDate(DateTime dt)
-        {
-            return new List<ToDo>();
-        }
-        public void ChangeToMonth(int i)
-        {
-            throw new NotImplementedException();
-        }
     }
+
     // The form with ShowMessage replaced, so no dialog opens during tests.
     private class TestableForm : ToDoDetailForm
     {
@@ -113,7 +66,7 @@ public class ToDoDetailFormTest
         ToDo toDo = new ToDo { Title = "Buy milk", Description = "2 liters" };
         toDo.Priority = 7;
 
-        using TestableForm form = new TestableForm(toDo, new FakeInputHandling());
+        using TestableForm form = new TestableForm(toDo, inputMock.Object);
 
         Assert.That(FindControl<Label>(form, "idLabel").Text, Is.EqualTo(toDo.Id.ToString()));
         Assert.That(FindControl<TextBox>(form, "titleTextBox").Text, Is.EqualTo("Buy milk"));
@@ -126,7 +79,7 @@ public class ToDoDetailFormTest
     {
         ToDo toDo = new ToDo { Title = "Test" };
 
-        using TestableForm form = new TestableForm(toDo, new FakeInputHandling());
+        using TestableForm form = new TestableForm(toDo, inputMock.Object);
 
         Assert.That(FindControl<Label>(form, "completionDateLabel").Text, Is.EqualTo("N/A"));
     }
@@ -137,7 +90,7 @@ public class ToDoDetailFormTest
         ToDo toDo = new ToDo { Title = "Test" };
         toDo.CompletionDate = new DateTime(2026, 10, 10, 12, 0, 0);
 
-        using TestableForm form = new TestableForm(toDo, new FakeInputHandling());
+        using TestableForm form = new TestableForm(toDo, inputMock.Object);
 
         Assert.That(FindControl<Label>(form, "completionDateLabel").Text,
             Is.EqualTo(toDo.CompletionDate.Value.ToString("g")));
@@ -149,7 +102,7 @@ public class ToDoDetailFormTest
         ToDo toDo = new ToDo { Title = "Test", Repeat = RepeatInterval.Weekly };
         toDo.MarkProgress(ToDoStatus.InProgress);
 
-        using TestableForm form = new TestableForm(toDo, new FakeInputHandling());
+        using TestableForm form = new TestableForm(toDo, inputMock.Object);
 
         Assert.That(FindControl<ComboBox>(form, "statusComboBox").SelectedItem, Is.EqualTo(ToDoStatus.InProgress));
         Assert.That(FindControl<ComboBox>(form, "repeatComboBox").SelectedItem, Is.EqualTo(RepeatInterval.Weekly));
@@ -161,14 +114,29 @@ public class ToDoDetailFormTest
     public void Save_EmptyTitle_ShowsMessageAndDoesNotUpdate()
     {
         ToDo toDo = new ToDo { Title = "Old" };
-        FakeInputHandling fake = new FakeInputHandling();
-        using TestableForm form = new TestableForm(toDo, fake);
+
+        using TestableForm form =
+            new TestableForm(toDo, inputMock.Object);
+
         FindControl<TextBox>(form, "titleTextBox").Text = "   ";
 
         ClickSave(form);
 
         Assert.That(form.LastMessage, Does.Contain("title"));
-        Assert.That(fake.UpdateCalls, Is.EqualTo(0));
+
+        inputMock.Verify(x => x.UpdateToDo(
+            It.IsAny<Guid>(),
+            It.IsAny<string?>(),
+            It.IsAny<string?>(),
+            It.IsAny<DateTime?>(),
+            It.IsAny<ToDoStatus?>(),
+            It.IsAny<RepeatInterval?>(),
+            It.IsAny<List<ChecklistItem>?>(),
+            It.IsAny<int?>(),
+            It.IsAny<List<string>?>(),
+            It.IsAny<bool>()),
+            Times.Never);
+
         Assert.That(form.DialogResult, Is.Not.EqualTo(DialogResult.OK));
     }
 
@@ -176,14 +144,26 @@ public class ToDoDetailFormTest
     public void Save_ChangedTitle_SendsTitleAndAccepts()
     {
         ToDo toDo = new ToDo { Title = "Old" };
-        FakeInputHandling fake = new FakeInputHandling();
-        using TestableForm form = new TestableForm(toDo, fake);
+
+        using TestableForm form = new TestableForm(toDo, inputMock.Object);
+
         FindControl<TextBox>(form, "titleTextBox").Text = "New";
 
         ClickSave(form);
 
-        Assert.That(fake.UpdatedId, Is.EqualTo(toDo.Id));
-        Assert.That(fake.UpdatedTitle, Is.EqualTo("New"));
+        inputMock.Verify(x => x.UpdateToDo(
+            toDo.Id,
+            "New",
+            It.IsAny<string?>(),
+            It.IsAny<DateTime?>(),
+            It.IsAny<ToDoStatus?>(),
+            It.IsAny<RepeatInterval?>(),
+            It.IsAny<List<ChecklistItem>?>(),
+            It.IsAny<int?>(),
+            It.IsAny<List<string>?>(),
+            It.IsAny<bool>()),
+            Times.Once);
+
         Assert.That(form.DialogResult, Is.EqualTo(DialogResult.OK));
     }
 
@@ -191,84 +171,194 @@ public class ToDoDetailFormTest
     public void Save_ToDoNoLongerExists_ShowsMessageAndDoesNotAccept()
     {
         ToDo toDo = new ToDo { Title = "Test" };
-        FakeInputHandling fake = new FakeInputHandling { ToDoExists = false };
-        using TestableForm form = new TestableForm(toDo, fake);
+
+        inputMock
+            .Setup(x => x.UpdateToDo(
+                It.IsAny<Guid>(),
+                It.IsAny<string?>(),
+                It.IsAny<string?>(),
+                It.IsAny<DateTime?>(),
+                It.IsAny<ToDoStatus?>(),
+                It.IsAny<RepeatInterval?>(),
+                It.IsAny<List<ChecklistItem>?>(),
+                It.IsAny<int?>(),
+                It.IsAny<List<string>?>(),
+                It.IsAny<bool>()))
+            .Returns((ToDo?)null);
+
+        using TestableForm form =
+            new TestableForm(toDo, inputMock.Object);
 
         ClickSave(form);
 
-        Assert.That(form.LastMessage, Does.Contain("no longer exists"));
-        Assert.That(form.DialogResult, Is.Not.EqualTo(DialogResult.OK));
+        Assert.That(form.LastMessage,
+            Does.Contain("no longer exists"));
+
+        Assert.That(form.DialogResult,
+            Is.Not.EqualTo(DialogResult.OK));
     }
 
     [Test]
     public void Save_StatusChanged_SendsStatus()
     {
+        ToDoStatus? receivedStatus = null;
+
+        inputMock
+            .Setup(x => x.UpdateToDo(
+                It.IsAny<Guid>(),
+                It.IsAny<string?>(),
+                It.IsAny<string?>(),
+                It.IsAny<DateTime?>(),
+                It.IsAny<ToDoStatus?>(),
+                It.IsAny<RepeatInterval?>(),
+                It.IsAny<List<ChecklistItem>?>(),
+                It.IsAny<int?>(),
+                It.IsAny<List<string>?>(),
+                It.IsAny<bool>()))
+            .Callback<Guid, string?, string?, DateTime?, ToDoStatus?,
+                RepeatInterval?, List<ChecklistItem>?, int?, List<string>?, bool>(
+                (id, title, desc, deadline, status, repeat, checklist, priority, tags, removeDeadline) =>
+                {
+                    receivedStatus = status;
+                })
+            .Returns(new ToDo());
+
         ToDo toDo = new ToDo { Title = "Test" };
-        FakeInputHandling fake = new FakeInputHandling();
-        using TestableForm form = new TestableForm(toDo, fake);
-        FindControl<ComboBox>(form, "statusComboBox").SelectedItem = ToDoStatus.InProgress;
+
+        using TestableForm form =
+            new TestableForm(toDo, inputMock.Object);
+
+        FindControl<ComboBox>(form, "statusComboBox").SelectedItem =
+            ToDoStatus.InProgress;
 
         ClickSave(form);
 
-        Assert.That(fake.UpdatedStatus, Is.EqualTo(ToDoStatus.InProgress));
+        Assert.That(receivedStatus,
+            Is.EqualTo(ToDoStatus.InProgress));
     }
+
 
     [Test]
     public void Save_StatusUnchanged_SendsNoStatus()
     {
+        ToDoStatus? receivedStatus = ToDoStatus.Done;
+
+        inputMock
+            .Setup(x => x.UpdateToDo(
+                It.IsAny<Guid>(),
+                It.IsAny<string?>(),
+                It.IsAny<string?>(),
+                It.IsAny<DateTime?>(),
+                It.IsAny<ToDoStatus?>(),
+                It.IsAny<RepeatInterval?>(),
+                It.IsAny<List<ChecklistItem>?>(),
+                It.IsAny<int?>(),
+                It.IsAny<List<string>?>(),
+                It.IsAny<bool>()))
+            .Callback<Guid, string?, string?, DateTime?, ToDoStatus?,
+                RepeatInterval?, List<ChecklistItem>?, int?, List<string>?, bool>(
+                (id, title, description, deadline, status,
+                 repeat, checklist, priority, tags, removeDeadline) =>
+                {
+                    receivedStatus = status;
+                })
+            .Returns(new ToDo());
+
         ToDo toDo = new ToDo { Title = "Test" };
-        FakeInputHandling fake = new FakeInputHandling();
-        using TestableForm form = new TestableForm(toDo, fake);
+
+        using TestableForm form =
+            new TestableForm(toDo, inputMock.Object);
 
         ClickSave(form);
 
-        Assert.That(fake.UpdatedStatus, Is.Null);
+        Assert.That(receivedStatus, Is.Null);
     }
 
     // ---------- Deadline ----------
 
     [Test]
-    public void Save_DeadlineUnticked_AskaToRemoveDeadline()
+    public void Save_DeadlineUnticked_AsksToRemoveDeadline()
     {
-        ToDo toDo = new ToDo { Title = "Test", Deadline = new DateTime(2026, 10, 20) };
-        FakeInputHandling fake = new FakeInputHandling();
-        using TestableForm form = new TestableForm(toDo, fake);
+        bool removeDeadlineValue = false;
+
+        inputMock
+            .Setup(x => x.UpdateToDo(
+                It.IsAny<Guid>(),
+                It.IsAny<string?>(),
+                It.IsAny<string?>(),
+                It.IsAny<DateTime?>(),
+                It.IsAny<ToDoStatus?>(),
+                It.IsAny<RepeatInterval?>(),
+                It.IsAny<List<ChecklistItem>?>(),
+                It.IsAny<int?>(),
+                It.IsAny<List<string>?>(),
+                It.IsAny<bool>()))
+            .Callback<Guid, string?, string?, DateTime?,
+                ToDoStatus?, RepeatInterval?,
+                List<ChecklistItem>?, int?, List<string>?, bool>(
+                (id, title, description, deadline, status,
+                 repeat, checklist, priority, tags, removeDeadline) =>
+                {
+                    removeDeadlineValue = removeDeadline;
+                })
+            .Returns(new ToDo());
+
+        ToDo toDo = new ToDo
+        {
+            Title = "Test",
+            Deadline = new DateTime(2026, 10, 20)
+        };
+
+        using TestableForm form =
+            new TestableForm(toDo, inputMock.Object);
+
         FindControl<DateTimePicker>(form, "deadlinePicker").Checked = false;
 
         ClickSave(form);
 
-        Assert.That(fake.RemoveDeadlineValue, Is.True);
-    }
-
-    [Test]
-    public void Save_DeadlineKept_DoesNotRemoveDeadline()
-    {
-        ToDo toDo = new ToDo { Title = "Test", Deadline = new DateTime(2026, 10, 20) };
-        FakeInputHandling fake = new FakeInputHandling();
-        using TestableForm form = new TestableForm(toDo, fake);
-
-        ClickSave(form);
-
-        Assert.That(fake.RemoveDeadlineValue, Is.False);
+        Assert.That(removeDeadlineValue, Is.True);
     }
 
     [Test]
     public void Save_NoDeadlineAndUnticked_DoesNotRemoveDeadline()
     {
+        bool? removeDeadlineValue = null;
+
+        inputMock
+            .Setup(x => x.UpdateToDo(
+                It.IsAny<Guid>(),
+                It.IsAny<string?>(),
+                It.IsAny<string?>(),
+                It.IsAny<DateTime?>(),
+                It.IsAny<ToDoStatus?>(),
+                It.IsAny<RepeatInterval?>(),
+                It.IsAny<List<ChecklistItem>?>(),
+                It.IsAny<int?>(),
+                It.IsAny<List<string>?>(),
+                It.IsAny<bool>()))
+            .Callback<Guid, string?, string?, DateTime?, ToDoStatus?,
+                RepeatInterval?, List<ChecklistItem>?, int?, List<string>?, bool>(
+                (id, title, desc, deadline, status, repeat, checklist, priority, tags, removeDeadline) =>
+                {
+                    removeDeadlineValue = removeDeadline;
+                })
+            .Returns(new ToDo());
+
         ToDo toDo = new ToDo { Title = "Test" };
-        FakeInputHandling fake = new FakeInputHandling();
-        using TestableForm form = new TestableForm(toDo, fake);
+
+        using TestableForm form =
+            new TestableForm(toDo, inputMock.Object);
 
         ClickSave(form);
 
-        Assert.That(fake.RemoveDeadlineValue, Is.False);
+        Assert.That(removeDeadlineValue, Is.False);
     }
 
     [Test]
     public void Dispose_WithComponents_DisposesForm()
     {
         ToDo toDo = new ToDo { Title = "Test" };
-        TestableForm form = new TestableForm(toDo, new FakeInputHandling());
+        TestableForm form = new TestableForm(toDo, inputMock.Object);
         typeof(ToDoDetailForm)
             .GetField("components", BindingFlags.Instance | BindingFlags.NonPublic)!
             .SetValue(form, new System.ComponentModel.Container());
