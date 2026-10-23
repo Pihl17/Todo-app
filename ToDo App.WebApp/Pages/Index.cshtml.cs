@@ -9,8 +9,6 @@ namespace ToDo_App.WebApp.Pages
 {
     public class IndexModel : PageModel
     {
-        public void OnGet()
-        {
-        }
+
     }
 }

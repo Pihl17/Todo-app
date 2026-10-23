@@ -5,6 +5,7 @@ using System.Text;
 using ToDo_App.Library.Handler;
 using ToDo_App.Library.Models;
 using ToDo_App.Library.Calendar;
+using ToDo_App.Library.Data;
 
 namespace ToDo_App.Library.Input;
 
@@ -15,12 +16,10 @@ public class InputManager : IInputHandling
 {
 
     ToDoHandler toDoHandler;
-    DataHandler dataHandler;
+    IDataHandler dataHandler;
     ToDoListSort listSorter;
     CalendarManager calendar;
     TagFilter tagFilter;
-
-    public List<ToDo> ToDos { get; set; } = new List<ToDo>();
     
     /// <summary>
     /// Constructs the InputManager with all the needed dependencies.
@@ -28,56 +27,63 @@ public class InputManager : IInputHandling
     /// <param name="toDoHandler">Object for handling creating and changing todos</param>
     /// <param name="dataHandler">Object for handling the saving and loading of todo list</param>
     /// <param name="toDoListSort">Object for handling the sorting of the todo list</param>
+    /// <param name="tagFilter">Object for handling creating a sorted list of tags</param>
     /// <param name="calendar">Object for handling calendar-related operations</param>
-    /// <param name="toDoListSort">Object for handling creating a sorted list of tags</param>
+    
 
-    public InputManager(ToDoHandler toDoHandler, DataHandler dataHandler, ToDoListSort toDoListSort, TagFilter tagFilter, CalendarManager calendar)
-
+    public InputManager(ToDoHandler toDoHandler, IDataHandler dataHandler, ToDoListSort toDoListSort, TagFilter tagFilter, CalendarManager calendar)
     {
         this.toDoHandler = toDoHandler;
         this.dataHandler = dataHandler;
         this.calendar = calendar;
-        ToDos = this.dataHandler.LoadList();
         listSorter = toDoListSort;
         this.tagFilter = tagFilter;
     }
 
     public List<string> GetAllTags(){
-        tagFilter.GenerateLibrary(ToDos);
+        dataHandler.LoadTodoList(out List<ToDo> toDos);
+        tagFilter.GenerateLibrary(toDos);
         return tagFilter.TagLibrary;
     }
 
     public List<ToDo> GetToDoList()
     {
-        ToDos = listSorter.SortList(ToDos);
-        return ToDos;
+        dataHandler.LoadTodoList(out List<ToDo> toDos);
+        toDos = listSorter.SortList(toDos);
+        return toDos;
     }
 
-    public ToDo CreateNewToDo()
+    public ToDo CreateNewToDo(string? title = "Insert title", DateTime? choosenDeadLine = null, RepeatInterval repeat = RepeatInterval.None, int? priority = null, string? description ="", List<string>? tags=null, List<ChecklistItem>? checklist = null)
     {
-        ToDo createdToDo = toDoHandler.Create("Insert title");
-        ToDos.Add(createdToDo);
-        dataHandler.UpdateList(ToDos);
+        if (title.IsWhiteSpace())
+            title = "Insert title";
+
+        List<ChecklistItem> items = checklist ?? new List<ChecklistItem>();
+        tags = tags ?? new List<string>();
+        
+        if(priority == null) priority = 0;
+        
+        ToDo createdToDo = toDoHandler.Create(title, items, priority: priority.Value,
+            desc: description, choosenDeadLine: choosenDeadLine, repeat: repeat, tags: tags);
+
+        dataHandler.AddTodo(createdToDo);
         return createdToDo;
     }
 
     public void DeleteToDo(ToDo todo)
     {
-        if (ToDos.Contains(todo))
-        {
-            ToDos.Remove(todo);
-            dataHandler.UpdateList(ToDos);
-        }
+        dataHandler.RemoveTodo(todo.Id);
     }
 
     public void SetNewSavePath(string path)
     {
-        dataHandler.SelectSavePath($"{path}\\todoes.json");
+        if (dataHandler is JSONDataHandler jsonHandler)
+            jsonHandler.SelectSavePath($"{path}\\todoes.json");
     }
 
-    public ToDo? UpdateToDo(Guid toDoId, string? title = null, string? description = null, 
+    public ToDo? UpdateToDo(Guid toDoId, string? title = null, string? description = null,
         DateTime? deadline = null, ToDoStatus? status = null, RepeatInterval? repeat = null, 
-        List<ChecklistItem>? checklist = null, int? priority = null, bool removeDeadline = false)
+        List<ChecklistItem>? checklist = null, int? priority = null, List<string>? tags = null, bool removeDeadline = false)
     {
         ToDo? toDo = GetToDo(toDoId);
         if (toDo == null)
@@ -85,7 +91,7 @@ public class InputManager : IInputHandling
 
         if (title != null && !title.IsWhiteSpace())
             toDoHandler.EditName(toDo, title);
-        if (description != null && !description.IsWhiteSpace())
+        if (description != null)
             toDoHandler.EditDescription(toDo, description);
         if (removeDeadline)
             toDoHandler.EditDeadline(toDo, null);
@@ -110,20 +116,21 @@ public class InputManager : IInputHandling
             toDoHandler.EditRepeat(toDo, (RepeatInterval)repeat);
         if (checklist != null)
             toDoHandler.EditChecklist(toDo, checklist);
+        if (tags != null)
+            toDoHandler.EditTagList(toDo, tags);
         if (priority != null)
             toDoHandler.EditPriority(toDo, (int)priority);
 
-        dataHandler.UpdateList(ToDos);
+        dataHandler.UpdateTodo(toDo);
         return toDo;
     }
 
     public ToDo? GetToDo(Guid toDoId)
     {
-        for (int i = 0; i < ToDos.Count; i++)
-        {
-            if (ToDos[i].Id == toDoId)
-                return ToDos[i];
-        }
+        DataQueryResult result = dataHandler.LoadTodo(toDoId, out ToDo todo);
+        if (result.IsSuccess)
+            return todo;
+
         return null;
     }
 
@@ -135,17 +142,42 @@ public class InputManager : IInputHandling
     {
         return calendar.selectedMonthString;
     }
+    public DateTime GetSelectedMonth()
+    {
+        return calendar.selectedMonth;
+    }
+    public void SetSelectedMonth(DateTime dt)
+    {
+        calendar.selectedMonth = dt;
+    }
     public void NextMonth()
     {
-        calendar.NextMonth();
+        calendar.ChangeByMonths(1);
     }
     public void PreviousMonth()
     {
-        calendar.PreviousMonth();
+        calendar.ChangeByMonths(-1);
     }
-    public List<CalendarDay> GetToDosInGivenMonth(List<ToDo> toDos)
+    public void NextYear()
     {
-        return calendar.GetToDosInGivenMonth(toDos);
+        calendar.ChangeByMonths(12);
     }
-
+    public void PreviousYear()
+    {
+        calendar.ChangeByMonths(-12);
+    }
+    public List<CalendarDay> GetToDosInGivenMonth()
+    {
+        dataHandler.LoadTodoList(out List<ToDo> todos);
+        return calendar.GetToDosInGivenMonth(todos);
+    }
+    public void ChangeToMonth(int m)
+    {
+        calendar.ChangeToMonth(m);
+    }
+    public List<ToDo> GetToDosOnDate(DateTime date)
+    {
+        dataHandler.LoadTodoList(out List<ToDo> todos);
+        return calendar.GetToDosOnDate(todos, date);
+    }
 }

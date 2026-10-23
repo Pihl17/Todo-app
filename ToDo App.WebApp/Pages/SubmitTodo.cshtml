@@ -3,6 +3,88 @@
 @{
 }
 
-<section>
-	<form method="post"><button class="btn btn-default">create todo</button></form>
-</section>
+<form id="form" method="post">
+	<div>
+		<label for="Title">Title:</label>
+		<input type="text" id="Title" name="Title" placeholder="Enter Todo Titel" required>
+	</div>
+	<div>
+		<label for="Description">Description:</label>
+		<textarea id="Description" name="Description"></textarea>
+	</div>
+	<div>
+	<label for="Deadline">Deadline</label>
+	<input type="datetime-local" id="Deadline" name="Deadline" required/>
+	</div>
+	<div>
+	<label for="Repeat">Repeat:</label>
+	<select id="Repeat" name="Repeat" required>
+		<option value=0>None</option>
+		<option value=1>Daily</option>
+		<option value=2>Weekly</option>
+		<option value=3>Weekdays</option>
+		<option value=4>Monthly</option>
+		<option value=5>Yearly</option>
+	</select>
+	</div>
+	<div>
+		<label for="Priority">Priority:</label>
+		<select id="Priority" name="Priority" required>
+			@{
+					for (int i = 0; i < 10; i++)
+					{
+					<option value="@i">@i</option>
+
+					}
+				}
+		</select>
+	</div>
+	<div>
+	<label for="Tags">Tags:</label>
+	<select name="Tags" id="Tags" multiple="multiple">
+		@foreach(var tag in Model.TagLibrary) {
+				<option value="@tag">@tag</option>
+			}
+	</select>
+	</div>
+	<button class="btn btn-default submit-btn">create todo</button>
+</form>
+
+<style>
+	#form {
+		width:25%;
+		height: 80%;
+		display: flex;
+		flex-direction: column;
+		gap: 3%;
+	}
+	#form > div{
+		display: flex;
+		flex-direction: column;
+	}
+	.submit-btn{
+		background-color:skyblue;
+		color:white;
+	}
+
+	.submit-btn:hover {
+		background-color:cornflowerblue;
+		color: white;
+	}
+</style>
+
+<script>
+	$(document).ready(function() {
+		$("#Tags").select2({
+			tags: true,
+			placeholder: "Enter or search for tags",
+			language: {
+				noResults: function() {
+					return "No tags found type to add your own";
+				}
+			}
+
+		});
+	});
+</script>
+
