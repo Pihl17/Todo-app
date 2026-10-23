@@ -18,9 +18,12 @@ namespace ToDo_App.UI
         public DateTime clickedDay;
         private IInputHandling inputHandler;
         public DayAllTaskDisplay() { }
-        public DayAllTaskDisplay(
-            IInputHandling inputHandler,
-            DateTime clickedDay)
+        /// <summary>
+        /// Constructor that initializes the display panel
+        /// </summary>
+        /// <param name="inputHandler"></param>
+        /// <param name="clickedDay"></param>
+        public DayAllTaskDisplay(IInputHandling inputHandler, DateTime clickedDay)
         {
             InitializeComponent();
 
@@ -29,7 +32,9 @@ namespace ToDo_App.UI
 
             DisplayToDosOfDay();
         }
-
+        /// <summary>
+        /// Displays all the to dos of a given day, showing the selected day first.
+        /// </summary>
         public void DisplayToDosOfDay()
         {
             var relevantToDos = inputHandler.GetToDosOnDate(
@@ -46,12 +51,16 @@ namespace ToDo_App.UI
 
             foreach (var toDo in relevantToDos)
             {
-                toDoDisplay.AppendText("Hello" + Environment.NewLine);
+                toDoDisplay.AppendText((toDo.Title == null ? "Untitled ToDo" : toDo.Title) + Environment.NewLine);
             }
 
             taskDisplayPanel.Controls.Add(toDoDisplay);
         }
-
+        /// <summary>
+        /// Close button that closes the panel.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void closeBtn_Click(object sender, EventArgs e)
         {
             this.Dispose();

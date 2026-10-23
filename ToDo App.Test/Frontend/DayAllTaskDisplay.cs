@@ -89,14 +89,41 @@ public class DayAllTaskDisplayTest
             .Setup(x => x.GetToDosOnDate(
                 It.IsAny<List<ToDo>>(),
                 It.IsAny<DateTime>()))
-            .Returns(new List<ToDo> { new ToDo(), new ToDo() });
+            .Returns(new List<ToDo>
+            {
+            new ToDo { Title = "First ToDo" },
+            new ToDo { Title = "Second ToDo" },
+            new ToDo { Title = "Third ToDo" }
+            });
+
+        datDisplay.DisplayToDosOfDay();
+
+        string text = datDisplay.ToDoDisplay.Text;
+
+        Assert.That(text.Contains("First ToDo"));
+        Assert.That(text.Contains("Second ToDo"));
+        Assert.That(text.Contains("Third ToDo"));
+
+    }
+    [Test]
+    public void DisplayToDosOfDay_DisplaysTextForEachToDo_NullTitles()
+    {
+        inputMock
+            .Setup(x => x.GetToDosOnDate(
+                It.IsAny<List<ToDo>>(),
+                It.IsAny<DateTime>()))
+            .Returns(new List<ToDo>
+            {
+            new ToDo { Title = null },
+            new ToDo { Title = null }
+            });
 
         datDisplay.DisplayToDosOfDay();
 
         string text = datDisplay.ToDoDisplay.Text;
 
         Assert.That(
-            text.Split("Hello").Length - 1,
+            text.Split("Untitled ToDo").Length - 1,
             Is.EqualTo(2));
     }
     [Test]
