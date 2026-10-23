@@ -27,6 +27,7 @@ public class ToDoDetailFormTest
                 It.IsAny<RepeatInterval?>(),
                 It.IsAny<List<ChecklistItem>?>(),
                 It.IsAny<int?>(),
+                It.IsAny<List<string>?>(),
                 It.IsAny<bool>()))
             .Returns(new ToDo());
 
@@ -132,6 +133,7 @@ public class ToDoDetailFormTest
             It.IsAny<RepeatInterval?>(),
             It.IsAny<List<ChecklistItem>?>(),
             It.IsAny<int?>(),
+            It.IsAny<List<string>?>(),
             It.IsAny<bool>()),
             Times.Never);
 
@@ -158,6 +160,7 @@ public class ToDoDetailFormTest
             It.IsAny<RepeatInterval?>(),
             It.IsAny<List<ChecklistItem>?>(),
             It.IsAny<int?>(),
+            It.IsAny<List<string>?>(),
             It.IsAny<bool>()),
             Times.Once);
 
@@ -179,6 +182,7 @@ public class ToDoDetailFormTest
                 It.IsAny<RepeatInterval?>(),
                 It.IsAny<List<ChecklistItem>?>(),
                 It.IsAny<int?>(),
+                It.IsAny<List<string>?>(),
                 It.IsAny<bool>()))
             .Returns((ToDo?)null);
 
@@ -209,10 +213,11 @@ public class ToDoDetailFormTest
                 It.IsAny<RepeatInterval?>(),
                 It.IsAny<List<ChecklistItem>?>(),
                 It.IsAny<int?>(),
+                It.IsAny<List<string>?>(),
                 It.IsAny<bool>()))
             .Callback<Guid, string?, string?, DateTime?, ToDoStatus?,
-                RepeatInterval?, List<ChecklistItem>?, int?, bool>(
-                (id, title, desc, deadline, status, repeat, checklist, priority, removeDeadline) =>
+                RepeatInterval?, List<ChecklistItem>?, int?, List<string>?, bool>(
+                (id, title, desc, deadline, status, repeat, checklist, priority, tags, removeDeadline) =>
                 {
                     receivedStatus = status;
                 })
@@ -248,11 +253,12 @@ public class ToDoDetailFormTest
                 It.IsAny<RepeatInterval?>(),
                 It.IsAny<List<ChecklistItem>?>(),
                 It.IsAny<int?>(),
+                It.IsAny<List<string>?>(),
                 It.IsAny<bool>()))
             .Callback<Guid, string?, string?, DateTime?, ToDoStatus?,
-                RepeatInterval?, List<ChecklistItem>?, int?, bool>(
+                RepeatInterval?, List<ChecklistItem>?, int?, List<string>?, bool>(
                 (id, title, description, deadline, status,
-                 repeat, checklist, priority, removeDeadline) =>
+                 repeat, checklist, priority, tags, removeDeadline) =>
                 {
                     receivedStatus = status;
                 })
@@ -285,12 +291,13 @@ public class ToDoDetailFormTest
                 It.IsAny<RepeatInterval?>(),
                 It.IsAny<List<ChecklistItem>?>(),
                 It.IsAny<int?>(),
+                It.IsAny<List<string>?>(),
                 It.IsAny<bool>()))
             .Callback<Guid, string?, string?, DateTime?,
                 ToDoStatus?, RepeatInterval?,
-                List<ChecklistItem>?, int?, bool>(
+                List<ChecklistItem>?, int?, List<string>?, bool>(
                 (id, title, description, deadline, status,
-                 repeat, checklist, priority, removeDeadline) =>
+                 repeat, checklist, priority, tags, removeDeadline) =>
                 {
                     removeDeadlineValue = removeDeadline;
                 })
@@ -327,10 +334,11 @@ public class ToDoDetailFormTest
                 It.IsAny<RepeatInterval?>(),
                 It.IsAny<List<ChecklistItem>?>(),
                 It.IsAny<int?>(),
+                It.IsAny<List<string>?>(),
                 It.IsAny<bool>()))
             .Callback<Guid, string?, string?, DateTime?, ToDoStatus?,
-                RepeatInterval?, List<ChecklistItem>?, int?, bool>(
-                (id, title, desc, deadline, status, repeat, checklist, priority, removeDeadline) =>
+                RepeatInterval?, List<ChecklistItem>?, int?, List<string>?, bool>(
+                (id, title, desc, deadline, status, repeat, checklist, priority, tags, removeDeadline) =>
                 {
                     removeDeadlineValue = removeDeadline;
                 })
