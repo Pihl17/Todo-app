@@ -97,6 +97,7 @@ namespace ToDo_App.Test.Frontend
                 calendarUI.Dispose();
             }
         }
+        
         [Test]
         public void CalendarUI_ClickTwelveMonthButtons()
         {

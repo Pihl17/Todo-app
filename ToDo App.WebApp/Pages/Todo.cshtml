@@ -1,0 +1,23 @@
+﻿@page "/Todoes/Todo/{id:Guid}"
+@model TodoModel
+
+@{
+	if (@Model.ToDo != null) {
+		ViewData["Title"] = Model.ToDo.Title;
+	} else {
+		ViewData["Title"] = "Could not find Todo";
+	}
+}
+
+@{
+	if (@Model.ToDo != null) {
+		<div>
+			<h1>@Model.ToDo.Title</h1>
+		</div>
+	} else {
+		<div>
+			<h1>@Model.ErrorMessage</h1>
+		</div>
+	}
+}
+

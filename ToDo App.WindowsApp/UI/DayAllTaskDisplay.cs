@@ -44,8 +44,10 @@ namespace ToDo_App.UI
 
             var toDoDisplay = new RichTextBox
             {
-                Dock = DockStyle.Fill,
+                Dock = DockStyle.Top,
                 ReadOnly = true,
+                BorderStyle = BorderStyle.None,
+                Font = new Font("Segoe UI", 14, FontStyle.Regular),
                 Text = $"To dos for  {clickedDay.ToString("dd / MM / yyyy")}\n"
             };
 
