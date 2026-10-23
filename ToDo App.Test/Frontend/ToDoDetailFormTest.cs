@@ -7,7 +7,7 @@ using ToDo_App.UI;
 
 namespace ToDo_App.Test.Frontend;
 
- public class ToDoDetailFormTest
+public class ToDoDetailFormTest
 {
     // A stand-in for InputManager that records what the form sends to it.
     private class FakeInputHandling : IInputHandling
@@ -20,7 +20,10 @@ namespace ToDo_App.Test.Frontend;
         public bool? RemoveDeadlineValue;
 
         public List<ToDo> GetToDoList() { return new List<ToDo>(); }
-        public ToDo CreateNewToDo() { return new ToDo(); }
+        public ToDo CreateNewToDo(string title = "Insert title", List<ChecklistItem>? checklist = null,
+            int? priority = null, string description = "", DateTime? deadline = null,
+            RepeatInterval repeat = RepeatInterval.None)
+        { return new ToDo(); }
         public void DeleteToDo(ToDo todo) { }
         public void SetNewSavePath(string path) { }
         public ToDo? GetToDo(Guid toDoId) { return null; }

@@ -14,10 +14,19 @@ public interface IInputHandling
     List<ToDo> GetToDoList();
     
     /// <summary>
-    /// Creates a new todo and adds it to the list.
+    /// Creates a new todo with the given values and adds it to the list.
+    /// All values are optional, so calling it without arguments creates an empty todo.
     /// </summary>
+    /// <param name="title">The title of the new todo</param>
+    /// <param name="checklist">The checklist, or null for an empty checklist</param>
+    /// <param name="priority">Teh priority, or null to use the default priority</param>
+    /// <param name="description">The description</param>
+    /// <param name="deadline">The deadline, or null for none</param>
+    /// <param name="repeat">How the todo repeats</param>
     /// <returns>The newly created todo</returns>
-    ToDo CreateNewToDo();
+    ToDo CreateNewToDo(string title = "Insert title", List<ChecklistItem>? checklist = null,
+        int? priority = null, string description = "", DateTime? deadline = null,
+        RepeatInterval repeat = RepeatInterval.None);
 
     /// <summary>
     /// Deletes a todo from the list.
