@@ -42,9 +42,10 @@ public interface IInputHandling
     /// <param name="checklist">Sets new checklist</param>
     /// <param name="priority">Sets new priority</param>
     /// <returns>The updated ToDo</returns>
+    /// <param name="removeDeadline">If true, removes the deadline. The deadline parameter is then ignored</param>
     ToDo? UpdateToDo(Guid toDoId, string? title = null, string? description = null,
         DateTime? deadline = null, ToDoStatus? status = null, RepeatInterval? repeat = null,
-        List<ChecklistItem>? checklist = null, int? priority = null);
+        List<ChecklistItem>? checklist = null, int? priority = null, bool removeDeadline = false);
 
     /// <summary>
     /// Returns the first todo note with the given ID or null if no such todo exists.
