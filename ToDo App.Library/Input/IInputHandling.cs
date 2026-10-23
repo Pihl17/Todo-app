@@ -14,10 +14,17 @@ public interface IInputHandling
     List<ToDo> GetToDoList();
     
     /// <summary>
-    /// Creates a new todo and adds it to the list.
+    /// Creates a new todo with the given values and adds it to the list.
+    /// All values are optional, so calling it without arguments creates an empty todo.
     /// </summary>
+    /// <param name="title">The title of the new todo</param>
+    /// <param name="checklist">The checklist, or null for an empty checklist</param>
+    /// <param name="priority">Teh priority, or null to use the default priority</param>
+    /// <param name="description">The description</param>
+    /// <param name="deadline">The deadline, or null for none</param>
+    /// <param name="repeat">How the todo repeats</param>
     /// <returns>The newly created todo</returns>
-    ToDo CreateNewToDo();
+    ToDo CreateNewToDo(string? titel = "Insert title", DateTime? choosenDeadLine = null, RepeatInterval repeat = RepeatInterval.None, int? priority = null, string? description = "", List<string>? tags = null, List<ChecklistItem>? checklist = null);
 
     /// <summary>
     /// Deletes a todo from the list.
@@ -41,11 +48,11 @@ public interface IInputHandling
     /// <param name="repeat">Sets new RepeatInterval</param>
     /// <param name="checklist">Sets new checklist</param>
     /// <param name="priority">Sets new priority</param>
-    /// <returns>The updated ToDo</returns>
     /// <param name="removeDeadline">If true, removes the deadline. The deadline parameter is then ignored</param>
+    /// <returns>The updated ToDo</returns>
     ToDo? UpdateToDo(Guid toDoId, string? title = null, string? description = null,
         DateTime? deadline = null, ToDoStatus? status = null, RepeatInterval? repeat = null,
-        List<ChecklistItem>? checklist = null, int? priority = null, bool removeDeadline = false);
+        List<ChecklistItem>? checklist = null, int? priority = null, List<string>? tags = null, bool removeDeadline = false);
 
     /// <summary>
     /// Returns the first todo note with the given ID or null if no such todo exists.
@@ -77,5 +84,4 @@ public interface IInputHandling
     /// <param name="toDos"></param>
     /// <returns></returns>
     public List<CalendarDay> GetToDosInGivenMonth(List<ToDo> toDos);
-
 }

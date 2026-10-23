@@ -33,8 +33,9 @@ namespace ToDo_App.Test.Handler
         public void SortListTest()
         {
 
-            toDos =toDoListSort.SortList(toDos);
+            toDos = toDoListSort.SortList(toDos);
             Assert.AreEqual("Test6", toDos[0].Title); // Highest priority
+            Assert.AreEqual(10, toDos[0].Priority); // Highest priority
             Assert.AreEqual("Test3", toDos[1].Title); // Next highest priority
             Assert.AreEqual("Test9", toDos[2].Title); // Next highest priority
             Assert.AreEqual("Test1", toDos[3].Title); // Next highest priority

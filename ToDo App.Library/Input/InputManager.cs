@@ -27,8 +27,9 @@ public class InputManager : IInputHandling
     /// <param name="toDoHandler">Object for handling creating and changing todos</param>
     /// <param name="dataHandler">Object for handling the saving and loading of todo list</param>
     /// <param name="toDoListSort">Object for handling the sorting of the todo list</param>
+    /// <param name="tagFilter">Object for handling creating a sorted list of tags</param>
     /// <param name="calendar">Object for handling calendar-related operations</param>
-    /// <param name="toDoListSort">Object for handling creating a sorted list of tags</param>
+    
 
     public InputManager(ToDoHandler toDoHandler, IDataHandler dataHandler, ToDoListSort toDoListSort, TagFilter tagFilter, CalendarManager calendar)
     {
@@ -52,9 +53,19 @@ public class InputManager : IInputHandling
         return toDos;
     }
 
-    public ToDo CreateNewToDo()
+    public ToDo CreateNewToDo(string? title = "Insert title", DateTime? choosenDeadLine = null, RepeatInterval repeat = RepeatInterval.None, int? priority = null, string? description ="", List<string>? tags=null, List<ChecklistItem>? checklist = null)
     {
-        ToDo createdToDo = toDoHandler.Create("Insert title");
+        if (title.IsWhiteSpace())
+            title = "Insert title";
+
+        List<ChecklistItem> items = checklist ?? new List<ChecklistItem>();
+        tags = tags ?? new List<string>();
+        
+        if(priority == null) priority = 0;
+        
+        ToDo createdToDo = toDoHandler.Create(title, items, priority: priority.Value,
+            desc: description, choosenDeadLine: choosenDeadLine, repeat: repeat, tags: tags);
+
         dataHandler.AddTodo(createdToDo);
         return createdToDo;
     }
@@ -70,9 +81,9 @@ public class InputManager : IInputHandling
             jsonHandler.SelectSavePath($"{path}\\todoes.json");
     }
 
-    public ToDo? UpdateToDo(Guid toDoId, string? title = null, string? description = null, 
+    public ToDo? UpdateToDo(Guid toDoId, string? title = null, string? description = null,
         DateTime? deadline = null, ToDoStatus? status = null, RepeatInterval? repeat = null, 
-        List<ChecklistItem>? checklist = null, int? priority = null, bool removeDeadline = false)
+        List<ChecklistItem>? checklist = null, int? priority = null, List<string>? tags = null, bool removeDeadline = false)
     {
         ToDo? toDo = GetToDo(toDoId);
         if (toDo == null)
@@ -80,7 +91,7 @@ public class InputManager : IInputHandling
 
         if (title != null && !title.IsWhiteSpace())
             toDoHandler.EditName(toDo, title);
-        if (description != null && !description.IsWhiteSpace())
+        if (description != null)
             toDoHandler.EditDescription(toDo, description);
         if (removeDeadline)
             toDoHandler.EditDeadline(toDo, null);
@@ -105,6 +116,8 @@ public class InputManager : IInputHandling
             toDoHandler.EditRepeat(toDo, (RepeatInterval)repeat);
         if (checklist != null)
             toDoHandler.EditChecklist(toDo, checklist);
+        if (tags != null)
+            toDoHandler.EditTagList(toDo, tags);
         if (priority != null)
             toDoHandler.EditPriority(toDo, (int)priority);
 
@@ -141,5 +154,4 @@ public class InputManager : IInputHandling
     {
         return calendar.GetToDosInGivenMonth(toDos);
     }
-
 }
