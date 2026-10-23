@@ -134,7 +134,11 @@ namespace ToDo_App.UI
                 generatedMonthButtons.Add(button);
             }
         }
-
+        /// <summary>
+        /// Handles the click event on a month button in the panel that displays the months.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void MonthButton_Click(object sender, EventArgs e)
         {
             Button button = (Button)sender;
@@ -150,6 +154,11 @@ namespace ToDo_App.UI
 
             MonthSelected?.Invoke(button.Text);
         }
+        /// <summary>
+        /// Handles the click event that happens when a day is clicked in the calendar.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void CalendarDayButton_Click(object sender, EventArgs e)
         {
             Button button = (Button)sender;
@@ -176,6 +185,9 @@ namespace ToDo_App.UI
 
             MonthSelected?.Invoke(button.Text);
         }
+        /// <summary>
+        /// Fills the calendar with days of the month and puts day names on top of the panel.
+        /// </summary>
         public void PopulateCalendarDisplayPanel()
         {
 
@@ -241,6 +253,11 @@ namespace ToDo_App.UI
                 calendarDisplayPanel.Controls.Add(button);
             }
         }
+        /// <summary>
+        /// Changes the selected date to be the previous year.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void previousYearBtn_Click(object sender, EventArgs e)
         {
             inputHandler.PreviousYear();
@@ -249,6 +266,11 @@ namespace ToDo_App.UI
     string.Create(inputHandler.GetSelectedMonthString().Length, inputHandler.GetSelectedMonthString(), static (chars, str) => { chars[0] = char.ToUpperInvariant(str[0]); str.AsSpan(1).CopyTo(chars[1..]); });
             PopulateCalendarDisplayPanel();
         }
+        /// <summary>
+        /// Changes the selected date to be the next year.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void nextYearBtn_Click(object sender, EventArgs e)
         {
             inputHandler.NextYear();
@@ -257,6 +279,11 @@ namespace ToDo_App.UI
     string.Create(inputHandler.GetSelectedMonthString().Length, inputHandler.GetSelectedMonthString(), static (chars, str) => { chars[0] = char.ToUpperInvariant(str[0]); str.AsSpan(1).CopyTo(chars[1..]); });
             PopulateCalendarDisplayPanel();
         }
+        /// <summary>
+        /// Handles clicking the calendar UI causing the month select panel to become invisible.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void CalendarUI_Click(object sender, EventArgs e)
         {
             monthSelectPanel.Visible = false;
