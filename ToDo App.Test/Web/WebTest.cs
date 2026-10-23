@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Moq;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,17 +17,11 @@ namespace ToDo_App.Test.Web
 {
     internal class WebTest
     {
-        private InputManager TestInputManager;
+        private Mock<IInputHandling> mock;
 
-        [OneTimeSetUp]
+        [SetUp]
         public void Setup(){
-            ToDoHandler toDoHandler = new ToDoHandler();
-            DataHandler dataHandler = new DataHandler();
-            ToDoListSort toDoListSort = new ToDoListSort();
-            TagFilter tagFilter = new TagFilter();
-            CalendarManager calendarManager = new CalendarManager();
-
-            TestInputManager = new InputManager(toDoHandler, dataHandler, toDoListSort, tagFilter, calendarManager);
+            mock = new Mock<IInputHandling>();
         }
 
         [Test]
@@ -55,21 +50,20 @@ namespace ToDo_App.Test.Web
         }
 
         [Test]
-        public void TodoesGetTest()
-        {
-            TodoesModel todoesmodel = new TodoesModel(TestInputManager);
-        }
-        [Test]
         public void TodoesPostTest()
         {
             ToDo toDo = new ToDo();
-            TestInputManager.ToDos = new List<ToDo>() { toDo };
-            Assert.IsNotEmpty(TestInputManager.ToDos);
+            List<ToDo> listofTodoes = new List<ToDo>() { toDo };
+            Assert.IsNotEmpty(listofTodoes);
 
-            TodoesModel Model = new TodoesModel(TestInputManager);
+            mock.Setup(x => x.GetToDoList()).Returns(listofTodoes);
+            mock.Setup(x => x.GetToDo(toDo.Id)).Returns(toDo);
+
+            TodoesModel Model = new TodoesModel(mock.Object);
 
             Model.OnPost(toDo.Id);
-            Assert.IsEmpty(TestInputManager.ToDos);
+
+            mock.Verify(x => x.DeleteToDo(toDo));
         }
 
         [Test]
@@ -77,18 +71,29 @@ namespace ToDo_App.Test.Web
             ToDo toDo = new ToDo();
             Assert.AreEqual("", toDo.Title);
 
-            TestInputManager.ToDos = new List<ToDo>() { toDo };
+            mock.Setup(x => x.GetToDoList()).Returns(new List<ToDo>() { toDo });
 
-            TodoModel Model = new TodoModel(TestInputManager);
+            TodoModel Model = new TodoModel(mock.Object);
             Model.OnGet(toDo.Id);
 
-            Assert.AreEqual(Model.ToDo.Id, toDo.Id);
+            mock.Verify(x => x.GetToDo(toDo.Id));
         }
 
+        [Test]
+        public void GetATodoTestError()
+        {
+            Guid test = new Guid("e7e64692-6ac4-4d8d-baa1-ab8be334fd6d");
+            TodoModel Model = new TodoModel(mock.Object);
+
+            Model.OnGet(test);
+
+            Assert.IsNull(Model.ToDo);
+            Assert.NotNull(Model.ErrorMessage);
+        }
 
         [Test]
         public void PostTodoTest() {
-            SubmitTodoModel Model = new SubmitTodoModel(TestInputManager);
+            SubmitTodoModel Model = new SubmitTodoModel(mock.Object);
             DateTime Tommorow = DateTime.Today.AddDays(+1);
             RepeatInterval Weekdays = RepeatInterval.Weekdays;
             ActionResult result = Model.OnPost("Test", "this is a todo", Tommorow, Weekdays, 1, []);
@@ -103,29 +108,49 @@ namespace ToDo_App.Test.Web
             {
                 Deadline = new DateTime(2026, 3, 1),
             };
-            TestInputManager.ToDos = new List<ToDo>() { toDo };
 
-            UpdateModel Model = new UpdateModel(TestInputManager);
+            mock.Setup(x => x.GetToDoList()).Returns(new List<ToDo>() { toDo  });
+            mock.Setup(x => x.GetToDo(toDo.Id)).Returns(toDo);
+
+            UpdateModel Model = new UpdateModel(mock.Object);
+
             Model.OnGet(toDo.Id);
+            mock.Verify(x => x.GetToDo(toDo.Id));
 
-            Assert.AreEqual("2026-03-01T00:00", Model.htmlDateTime);
+            Assert.AreEqual("2026-03-01T00:00", Model.HtmlDateTime);
         }
+
+        [Test]
+        public void OnGetUpdateTodoErrorTest()
+        {
+            Guid test = new Guid("e7e64692-6ac4-4d8d-baa1-ab8be334fd6d");
+            UpdateModel Model = new UpdateModel(mock.Object);
+
+            Model.OnGet(test);
+
+            Assert.IsNull(Model.ToDo);
+            Assert.NotNull(Model.ErrorMessage);
+
+        }
+
+
         [Test]
         public void UpdateTodoTest()
         {
             ToDo toDo = new ToDo();
-            Assert.AreEqual("", toDo.Title);
+            mock.Setup(x => x.GetToDoList()).Returns(new List<ToDo>() { toDo });
+            mock.Setup(x => x.GetToDo(toDo.Id)).Returns(toDo);
 
-            TestInputManager.ToDos = new List<ToDo>() { toDo };
+            UpdateModel Model = new UpdateModel(mock.Object);
 
-            UpdateModel Model = new UpdateModel(TestInputManager);
             Model.OnGet(toDo.Id);
+            mock.Verify(x => x.GetToDo(toDo.Id));
+
             DateTime Tommorow = DateTime.Today.AddDays(+1);
             RepeatInterval Weekdays = RepeatInterval.Weekdays;
-            ActionResult result = Model.OnPost(toDo.Id, "Test", "this is a todo", Tommorow, Weekdays, 1, []);
+            ActionResult result = Model.OnPost(toDo.Id, "Test", "this is a todo", Tommorow, Weekdays, 1, null);
             
-            Assert.AreEqual("Test", toDo.Title);
-
+            mock.Verify(x => x.UpdateToDo(toDo.Id, "Test", "this is a todo", Tommorow, null, Weekdays, null, 1, null));
         }
     }
 }

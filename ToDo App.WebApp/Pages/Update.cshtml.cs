@@ -21,10 +21,11 @@ namespace ToDo_App.WebApp.Pages
         public void OnGet(Guid id)
         {
             ToDo = inputHandler.GetToDo(id);
-            if(ToDo == null) {
-                ErrorMessage = "No todo found";
-            } else {
+
+            if(ToDo != null) {
                 HtmlDateTime = Convert.ToDateTime(ToDo.Deadline).ToString("yyyy-MM-ddTHH:mm");
+            } else {
+                ErrorMessage = "No todo found";
             }
         }
 
