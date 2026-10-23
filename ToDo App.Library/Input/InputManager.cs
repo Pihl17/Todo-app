@@ -56,7 +56,6 @@ public class InputManager : IInputHandling
 
     public ToDo CreateNewToDo(string? title = "Insert title", DateTime? choosenDeadLine = null, RepeatInterval repeat = RepeatInterval.None, int? priority = null, string? description ="", List<string>? tags=null, List<ChecklistItem>? checklist = null)
     {
-        if(priority == null) priority = 0;
         if (title.IsWhiteSpace())
             title = "Insert title";
 
