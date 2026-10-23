@@ -1,4 +1,6 @@
-﻿using ToDo_App.Library.Models;
+﻿using Moq;
+using ToDo_App.Library.Input;
+using ToDo_App.Library.Models;
 using ToDo_App.UI;
 
 namespace ToDo_App.Test.Frontend;
@@ -29,5 +31,20 @@ public class ToDoDisplayTest
         bool result = display1.Equals(display2);
 
         Assert.AreEqual(expected, result);
+    }
+
+    [Test]
+    public void TestRun()
+    {
+        ToDo todo = new ToDo();
+        Mock<IInputHandling> mock = new Mock<IInputHandling>();
+        mock.Setup(x => x.GetToDo(todo.Id)).Returns(todo);
+        ToDoDisplay display = new ToDoDisplay(todo, mock.Object);
+        CancellationToken cancellationToken = new CancellationToken(true);
+        
+        Task task = display.OpenDetailForm(cancellationToken);
+
+        task.Wait(cancellationToken);
+
     }
 }

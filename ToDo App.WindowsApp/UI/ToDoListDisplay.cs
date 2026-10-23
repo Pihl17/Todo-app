@@ -67,7 +67,7 @@ public partial class ToDoListDisplay : UserControl
         ToDoDisplay currentDisplay;
         for (int i = 0; i < toDos.Count; i++)
         {
-            currentDisplay = new ToDoDisplay(toDos[i]);
+            currentDisplay = new ToDoDisplay(toDos[i], inputHandler);
             if (!listContainer.Controls.Contains(currentDisplay))
                 AddToList(currentDisplay);
         }
