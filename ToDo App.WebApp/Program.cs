@@ -1,11 +1,12 @@
 using ToDo_App.Library.Calendar;
 using ToDo_App.Library.Handler;
 using ToDo_App.Library.Input;
+using ToDo_App.Library.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 ToDoHandler toDoHandler = new ToDoHandler();
-DataHandler dataHandler = new DataHandler();
+JSONDataHandler dataHandler = new JSONDataHandler();
 ToDoListSort toDoListSort = new ToDoListSort();
 TagFilter tagFilter = new TagFilter();
 CalendarManager calendarManager = new CalendarManager();
