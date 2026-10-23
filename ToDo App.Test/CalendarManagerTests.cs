@@ -369,5 +369,18 @@ namespace ToDo_App.Test
             calendar.ChangeToMonth(12);
             Assert.That(calendar.selectedMonth.Month, Is.EqualTo(12));
         }
+
+        [Test]
+        public void PreviousMonth_CrossesYearBoundary()
+        {
+            CalendarManager calendar = new CalendarManager();
+
+            calendar.selectedMonth = new DateTime(2026, 1, 1);
+
+            calendar.ChangeByMonths(-1);
+
+            Assert.That(calendar.selectedMonth.Year, Is.EqualTo(2025));
+            Assert.That(calendar.selectedMonth.Month, Is.EqualTo(12));
+        }
     }
 }

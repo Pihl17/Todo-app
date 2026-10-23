@@ -343,10 +343,10 @@ public class InputManagerTest
                 CreateToDo(new DateTime(2026, 2, 10), RepeatInterval.None),
                 CreateToDo(new DateTime(2026, 11, 1), RepeatInterval.None)
             };
-
+        dataMock.Setup(x => x.LoadTodoList(out toDos)).Returns(new DataQueryResult(true));
         inputManager.SetSelectedMonth(new DateTime (2026,2,1));
         int count = 0;
-        foreach (var day in inputManager.GetToDosInGivenMonth(toDos))
+        foreach (var day in inputManager.GetToDosInGivenMonth())
         {
             count += day.ToDosOfTheDay.Count;
         }
@@ -369,7 +369,8 @@ public class InputManagerTest
                 onDay,
                 otherDay
             };
-        List<ToDo> result = inputManager.GetToDosOnDate(toDos, new DateTime(2026, 10, 12));
+        dataMock.Setup(x => x.LoadTodoList(out toDos)).Returns(new DataQueryResult(true));
+        List<ToDo> result = inputManager.GetToDosOnDate(new DateTime(2026, 10, 12));
 
         Assert.That(result, Is.EqualTo(new List<ToDo> { onDay }));
     }
@@ -424,24 +425,11 @@ public class InputManagerTest
     [Test]
     public void GetToDosInGivenMonth_ReturnsCalendarDays()
     {
-        List<ToDo> todos = new();
-
-        var result = inputManager.GetToDosInGivenMonth(todos);
+        List<ToDo> toDos = new List<ToDo>();
+        dataMock.Setup(x => x.LoadTodoList(out toDos)).Returns(new DataQueryResult(true));
+        var result = inputManager.GetToDosInGivenMonth();
 
         Assert.That(result, Is.Not.Null);
-    }
-
-    [Test]
-    public void PreviousMonth_CrossesYearBoundary()
-    {
-        CalendarManager calendar = new CalendarManager();
-
-        calendar.selectedMonth = new DateTime(2026, 1, 1);
-
-        calendar.PreviousMonth();
-
-        Assert.That(calendar.selectedMonth.Year, Is.EqualTo(2025));
-        Assert.That(calendar.selectedMonth.Month, Is.EqualTo(12));
     }
 
     [Test]

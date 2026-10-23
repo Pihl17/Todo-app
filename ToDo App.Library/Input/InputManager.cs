@@ -168,7 +168,8 @@ public class InputManager : IInputHandling
     }
     public List<CalendarDay> GetToDosInGivenMonth()
     {
-        return calendar.GetToDosInGivenMonth(ToDos);
+        dataHandler.LoadTodoList(out List<ToDo> todos);
+        return calendar.GetToDosInGivenMonth(todos);
     }
     public void ChangeToMonth(int m)
     {
@@ -176,6 +177,7 @@ public class InputManager : IInputHandling
     }
     public List<ToDo> GetToDosOnDate(DateTime date)
     {
-        return calendar.GetToDosOnDate(ToDos, date);
+        dataHandler.LoadTodoList(out List<ToDo> todos);
+        return calendar.GetToDosOnDate(todos, date);
     }
 }
