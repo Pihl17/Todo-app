@@ -93,10 +93,6 @@ namespace ToDo_App.Test.Web
             Model.OnGet(toDo.Id);
 
             mock.Verify(x => x.GetToDo(toDo.Id));
-
-            
-
-
         }
 
         [Test]
