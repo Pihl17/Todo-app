@@ -9,6 +9,7 @@ public class InputManagerTest
 {
 
     private InputManager inputManager;
+    private DataHandler dataHandler;
 
     const string TEST_FOLDER_PATH = "../../../Test Folder InputManager/";
     const string LIST_PATH = TEST_FOLDER_PATH + "todoes_inputManagerTest.json";
@@ -24,7 +25,7 @@ public class InputManagerTest
     public void Setup()
     {
         ToDoHandler toDoHandler = new ToDoHandler();
-        DataHandler dataHandler = new DataHandler()
+        dataHandler = new DataHandler()
         {
             UserPreferences = PREFERENCE_PATH,
             Path = LIST_PATH
@@ -131,6 +132,20 @@ public class InputManagerTest
         inputManager.DeleteToDo(toDo3);
 
         Assert.AreEqual(expected, inputManager.ToDos);
+    }
+
+    [Test]
+    public void SetNewSavePath_SetsNewSavePath()
+    {
+        string newPath = TEST_FOLDER_PATH + "Nested Test Folder/";
+        Directory.CreateDirectory(newPath);
+        string expectedPath = newPath + "\\todoes.json";
+        inputManager.SetNewSavePath(newPath);
+
+        Assert.AreEqual(expectedPath, dataHandler.Path);
+
+        inputManager.SetNewSavePath(TEST_FOLDER_PATH);
+        Directory.Delete(newPath);
     }
 
     [Test]

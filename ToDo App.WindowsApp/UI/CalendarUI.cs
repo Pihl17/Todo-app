@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using ToDo_App.Library.Input;
 using ToDo_App.Library.Calendar;
+using ToDo_App.Library.Models;
 
 namespace ToDo_App.UI
 {
@@ -25,9 +26,6 @@ namespace ToDo_App.UI
         /// </summary>
         public CalendarUI()
         {
-            InitializeComponent();
-            PopulateMonthPanel();
-            this.components = new System.ComponentModel.Container();
         }
         /// <summary>
         /// Initializes the CalendarUI with an input handler, sets the selected month, and populates the month selection panel.
@@ -35,10 +33,16 @@ namespace ToDo_App.UI
         /// <param name="inputHandler"></param>
         public CalendarUI(IInputHandling inputHandler) : this()
         {
+            InitializeComponent();
+            this.components = new System.ComponentModel.Container();
             this.inputHandler = inputHandler;
+
             inputHandler.InitializeSelectedMonth();
+
             selectedMonth.Text = inputHandler.GetSelectedMonthString();
 
+            PopulateMonthPanel();
+            PopulateCalendarDisplayPanel();
         }
         /// <summary>
         /// Event handler for the selectedMonth button click event. Toggles the visibility of the monthSelectPanel when the button is clicked.
@@ -58,6 +62,7 @@ namespace ToDo_App.UI
         {
             inputHandler.PreviousMonth();
             selectedMonth.Text = inputHandler.GetSelectedMonthString();
+            PopulateCalendarDisplayPanel();
         }
         /// <summary>
         /// Event handler for the nextMonth button click event. Moves to the next month in the calendar and updates the selectedMonth button text accordingly.
@@ -68,12 +73,14 @@ namespace ToDo_App.UI
         {
             inputHandler.NextMonth();
             selectedMonth.Text = inputHandler.GetSelectedMonthString();
+            PopulateCalendarDisplayPanel();
         }
         /// <summary>
         /// Populates the monthSelectPanel with buttons representing each month of the year. Each button is labeled with the corresponding month number and has a click event that displays a message box indicating which month was clicked.
         /// </summary>
         private void PopulateMonthPanel()
         {
+
             monthSelectPanel.Controls.Clear();
 
             int columns = 3;
@@ -107,6 +114,74 @@ namespace ToDo_App.UI
         {
             Button button = (Button)sender;
             MonthSelected?.Invoke(button.Text);
+        }
+
+        public void PopulateCalendarDisplayPanel()
+        {
+
+            DateTime selectedMonth =
+                DateTime.Parse(inputHandler.GetSelectedMonthString());
+
+            int columns = 7;
+            int spacing = 3;
+            int days = DateTime.DaysInMonth(
+                selectedMonth.Year, selectedMonth.Month);
+
+            int buttonWidth =
+                (calendarDisplayPanel.ClientSize.Width
+                - (columns - 1) * spacing) / columns;
+
+            var relevantToDos = inputHandler.GetToDosInGivenMonth(inputHandler.GetToDoList());
+
+            calendarDisplayPanel.Controls.Clear();
+
+            for (int i = 0; i < 7; i++)
+            {
+                int column = i % columns;
+
+                Button button = new Button();
+                button.Text = $"{selectedMonth.AddDays(i).DayOfWeek}";
+                button.Width = buttonWidth;
+                button.Height = 40;
+                button.Enabled = false;
+
+                button.Left = column * (buttonWidth + spacing);
+
+                button.Anchor = AnchorStyles.Top | AnchorStyles.Left
+                              | AnchorStyles.Right;
+
+                button.Click += MonthButton_Click;
+
+                calendarDisplayPanel.Controls.Add(button);
+            }
+
+            for (int i = 0; i < days; i++)
+            {
+                int column = i % columns;
+                int row = i / columns;
+
+                Button button = new Button();
+                button.Text = $"{i + 1}";
+                button.Width = buttonWidth;
+                button.Height = 80;
+                button.TextAlign = ContentAlignment.TopLeft;
+                button.Enabled = false;
+
+                button.Left = column * (buttonWidth + spacing);
+                button.Top = row * (button.Height + spacing) + 43;
+
+                if (relevantToDos[i].ToDosOfTheDay.Count > 0)
+                {
+                    button.Text += "\nTo Dos today: " + relevantToDos[i].ToDosOfTheDay.Count.ToString();
+                }
+
+                button.Anchor = AnchorStyles.Top | AnchorStyles.Left
+                              | AnchorStyles.Right;
+
+                button.Click += MonthButton_Click;
+
+                calendarDisplayPanel.Controls.Add(button);
+            }
         }
     }
 }
