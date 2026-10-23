@@ -75,6 +75,7 @@ namespace ToDo_App.Test.Web
             Assert.AreEqual("", toDo.Title);
 
             mock.Setup(x => x.GetToDoList()).Returns(new List<ToDo>() { toDo });
+            mock.Setup(x => x.GetToDo(toDo.Id)).Returns(toDo);
 
             var modelMetadataProvider = new EmptyModelMetadataProvider();
 
