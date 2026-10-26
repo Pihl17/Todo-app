@@ -43,11 +43,12 @@
             statusCaption = new Label();
             repeatCaption = new Label();
             repeatComboBox = new ComboBox();
+            statusComboBox = new ComboBox();
             saveButton = new Button();
             cancelButton = new Button();
-            statusComboBox = new ComboBox();
             tableLayoutPanel1 = new TableLayoutPanel();
             tableLayoutPanel2 = new TableLayoutPanel();
+            deleteButton = new Button();
             table.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)priorityNumberBox).BeginInit();
             tableLayoutPanel1.SuspendLayout();
@@ -256,6 +257,15 @@
             repeatComboBox.Size = new Size(324, 23);
             repeatComboBox.TabIndex = 17;
             // 
+            // statusComboBox
+            // 
+            statusComboBox.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            statusComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            statusComboBox.Location = new Point(135, 233);
+            statusComboBox.Name = "statusComboBox";
+            statusComboBox.Size = new Size(324, 23);
+            statusComboBox.TabIndex = 15;
+            // 
             // saveButton
             // 
             saveButton.AutoSize = true;
@@ -277,15 +287,6 @@
             cancelButton.TabIndex = 0;
             cancelButton.Text = "Cancel";
             cancelButton.Click += cancelButton_Click;
-            // 
-            // statusComboBox
-            // 
-            statusComboBox.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            statusComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            statusComboBox.Location = new Point(135, 233);
-            statusComboBox.Name = "statusComboBox";
-            statusComboBox.Size = new Size(324, 23);
-            statusComboBox.TabIndex = 15;
             // 
             // tableLayoutPanel1
             // 
@@ -311,6 +312,7 @@
             tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
             tableLayoutPanel2.Controls.Add(cancelButton, 1, 0);
             tableLayoutPanel2.Controls.Add(saveButton, 0, 0);
+            tableLayoutPanel2.Controls.Add(deleteButton, 2, 0);
             tableLayoutPanel2.Dock = DockStyle.Fill;
             tableLayoutPanel2.Location = new Point(3, 406);
             tableLayoutPanel2.Name = "tableLayoutPanel2";
@@ -318,6 +320,18 @@
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             tableLayoutPanel2.Size = new Size(474, 31);
             tableLayoutPanel2.TabIndex = 1;
+            // 
+            // deleteButton
+            // 
+            deleteButton.AutoSize = true;
+            deleteButton.Dock = DockStyle.Fill;
+            deleteButton.Location = new Point(317, 3);
+            deleteButton.Name = "deleteButton";
+            deleteButton.Size = new Size(154, 25);
+            deleteButton.TabIndex = 1;
+            deleteButton.Text = "Delete";
+            deleteButton.UseVisualStyleBackColor = true;
+            deleteButton.Click += deleteButton_Click;
             // 
             // ToDoDetailForm
             // 
@@ -361,5 +375,6 @@
         private System.Windows.Forms.Button saveButton;
         private TableLayoutPanel tableLayoutPanel1;
         private TableLayoutPanel tableLayoutPanel2;
+        private Button deleteButton;
     }
 }

@@ -92,6 +92,13 @@ namespace ToDo_App.UI
             Dispose();
         }
 
+        private void deleteButton_Click(object sender, EventArgs e)
+        {
+            inputManager.DeleteToDo(toDo);
+            DialogResult = DialogResult.OK;
+            Dispose();
+        }
+
         /// <summary>
         /// Shows a message to the user. Can be overridden so tests don't open a dialog.
         /// </summary>
@@ -101,5 +108,6 @@ namespace ToDo_App.UI
         {
             MessageBox.Show(message);
         }
+
     }
 }
