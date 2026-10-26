@@ -21,7 +21,6 @@ namespace ToDo_App.WebApp.Pages
         /// <returns></returns>
         public ActionResult OnPost(string Title, string? Description, DateTime? Deadline, RepeatInterval? Repeat, int Priority, List<string> Tags)
         {
-            Debug.WriteLine(Deadline);
             inputHandler.CreateNewToDo(Title, Deadline, Repeat.Value, Priority, Description, Tags);
             return RedirectToPage("./Todoes");
         }
