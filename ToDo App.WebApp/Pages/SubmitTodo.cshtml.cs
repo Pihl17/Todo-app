@@ -8,7 +8,9 @@ namespace ToDo_App.WebApp.Pages
 {
     public class SubmitTodoModel(IInputHandling inputHandler) : PageModel
     {
-        public List<string> TagLibrary = new List<string>();
+        public List<string> TagLibrary = ["test"];
+
+
 
         /// <summary>
         /// on post call CreateNewToDo and then redirect back to the Todoes page
