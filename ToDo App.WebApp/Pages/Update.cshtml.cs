@@ -27,6 +27,7 @@ namespace ToDo_App.WebApp.Pages
                 if(ToDo.Deadline != null) {
                     HtmlDateTime = Convert.ToDateTime(ToDo.Deadline).ToString("yyyy-MM-ddTHH:mm");
                 }
+                TagLibrary = ToDo.Taglist;
             } else {
                 ViewData["Title"] = "No Todo found";
                 ErrorMessage = "Could not find any Todo";
