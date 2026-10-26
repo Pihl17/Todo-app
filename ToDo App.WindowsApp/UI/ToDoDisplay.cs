@@ -15,6 +15,7 @@ public partial class ToDoDisplay : UserControl
 
     public Guid ToDoId { private set; get; }
     private MainForm parentForm;
+    public Label Title { get { return toDoTitle; } }
 
     /// <summary>
     /// Constructs a ToDoDisplay without any ToDo attatched.

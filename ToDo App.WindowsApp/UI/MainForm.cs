@@ -7,6 +7,7 @@ public partial class MainForm : Form
 {
     private IInputHandling inputHandler;
     public ToDoListDisplay ToDoList { get { return toDoList; } }
+    public TabControl Tabs { get { return tabControl; } }
 
     public MainForm(IInputHandling inputHandler)
     {
