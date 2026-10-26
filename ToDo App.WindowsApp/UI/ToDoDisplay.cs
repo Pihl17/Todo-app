@@ -64,6 +64,11 @@ public partial class ToDoDisplay : UserControl
         return display.ToDoId == ToDoId;
     }
 
+    /// <summary>
+    /// Tells the parent form to show the detail view for the display's todo
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     public void OnClick(object sender, EventArgs e)
     {
         parentForm?.ShowToDoDetailView(ToDoId);

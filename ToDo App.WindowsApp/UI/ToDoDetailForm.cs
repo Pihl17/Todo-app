@@ -87,11 +87,21 @@ namespace ToDo_App.UI
             Dispose();
         }
 
+        /// <summary>
+        /// Closes down the view
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void cancelButton_Click(object sender, EventArgs e)
         {
             Dispose();
         }
 
+        /// <summary>
+        /// Tells the input handler to delete the todo and closes down the view.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void deleteButton_Click(object sender, EventArgs e)
         {
             inputManager.DeleteToDo(toDo);
