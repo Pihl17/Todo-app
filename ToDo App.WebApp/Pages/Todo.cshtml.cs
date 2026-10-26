@@ -22,8 +22,8 @@ namespace ToDo_App.WebApp.Pages
                 ViewData["Title"] = ToDo.Title;
             }
             else {
-                ErrorMessage = "No todo found";
-                ViewData["Title"] = "Could not find Todo";
+                ViewData["Title"] = "No Todo found";
+                ErrorMessage = "Could not find any Todo";
             }
         }
     }

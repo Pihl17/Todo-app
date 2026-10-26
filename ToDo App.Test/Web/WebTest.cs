@@ -21,10 +21,17 @@ namespace ToDo_App.Test.Web
     internal class WebTest
     {
         private Mock<IInputHandling> mock;
+        private ModelMetadataProvider modelMetadataProvider;
+        private ViewDataDictionary viewData;
 
         [SetUp]
         public void Setup(){
             mock = new Mock<IInputHandling>();
+
+            modelMetadataProvider = new EmptyModelMetadataProvider();
+
+            //Creating View data instance
+            viewData = new ViewDataDictionary(modelMetadataProvider, new ModelStateDictionary());
         }
 
         [Test]
@@ -77,11 +84,6 @@ namespace ToDo_App.Test.Web
             mock.Setup(x => x.GetToDoList()).Returns(new List<ToDo>() { toDo });
             mock.Setup(x => x.GetToDo(toDo.Id)).Returns(toDo);
 
-            var modelMetadataProvider = new EmptyModelMetadataProvider();
-
-            //Creating View data instance
-            var viewData = new ViewDataDictionary(modelMetadataProvider, new ModelStateDictionary());
-
             TodoModel Model = new TodoModel(mock.Object)
             {
                 PageContext = new PageContext
@@ -100,11 +102,6 @@ namespace ToDo_App.Test.Web
         public void GetATodoTestError()
         {
             Guid test = new Guid("e7e64692-6ac4-4d8d-baa1-ab8be334fd6d");
-
-            var modelMetadataProvider = new EmptyModelMetadataProvider();
-
-            //Creating View data instance
-            var viewData = new ViewDataDictionary(modelMetadataProvider, new ModelStateDictionary());
 
             TodoModel Model = new TodoModel(mock.Object)
             {
@@ -142,7 +139,14 @@ namespace ToDo_App.Test.Web
             mock.Setup(x => x.GetToDoList()).Returns(new List<ToDo>() { toDo  });
             mock.Setup(x => x.GetToDo(toDo.Id)).Returns(toDo);
 
-            UpdateModel Model = new UpdateModel(mock.Object);
+            UpdateModel Model = new UpdateModel(mock.Object)
+            {
+                PageContext = new PageContext
+                {
+                    ViewData = viewData
+                },
+                MetadataProvider = modelMetadataProvider,
+            };
 
             Model.OnGet(toDo.Id);
             mock.Verify(x => x.GetToDo(toDo.Id));
@@ -154,7 +158,15 @@ namespace ToDo_App.Test.Web
         public void OnGetUpdateTodoErrorTest()
         {
             Guid test = new Guid("e7e64692-6ac4-4d8d-baa1-ab8be334fd6d");
-            UpdateModel Model = new UpdateModel(mock.Object);
+
+            UpdateModel Model = new UpdateModel(mock.Object)
+            {
+                PageContext = new PageContext
+                {
+                    ViewData = viewData
+                },
+                MetadataProvider = modelMetadataProvider,
+            };
 
             Model.OnGet(test);
 
@@ -171,7 +183,14 @@ namespace ToDo_App.Test.Web
             mock.Setup(x => x.GetToDoList()).Returns(new List<ToDo>() { toDo });
             mock.Setup(x => x.GetToDo(toDo.Id)).Returns(toDo);
 
-            UpdateModel Model = new UpdateModel(mock.Object);
+            UpdateModel Model = new UpdateModel(mock.Object)
+            {
+                PageContext = new PageContext
+                {
+                    ViewData = viewData
+                },
+                MetadataProvider = modelMetadataProvider,
+            };
 
             Model.OnGet(toDo.Id);
             mock.Verify(x => x.GetToDo(toDo.Id));

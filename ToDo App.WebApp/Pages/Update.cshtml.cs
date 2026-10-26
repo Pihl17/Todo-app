@@ -23,11 +23,14 @@ namespace ToDo_App.WebApp.Pages
             ToDo = inputHandler.GetToDo(id);
 
             if(ToDo != null) {
+                ViewData["Title"] = ToDo.Title;
                 HtmlDateTime = Convert.ToDateTime(ToDo.Deadline).ToString("yyyy-MM-ddTHH:mm");
             } else {
-                ErrorMessage = "No todo found";
+                ViewData["Title"] = "No Todo found";
+                ErrorMessage = "Could not find any Todo";
             }
         }
+
 
         /// <summary>
         /// on post call UpdateToDo and then redirect back to the Todoes page
