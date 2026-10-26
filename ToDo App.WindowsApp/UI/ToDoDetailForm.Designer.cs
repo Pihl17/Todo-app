@@ -43,13 +43,15 @@
             statusCaption = new Label();
             repeatCaption = new Label();
             repeatComboBox = new ComboBox();
-            buttonPanel = new FlowLayoutPanel();
             saveButton = new Button();
             cancelButton = new Button();
             statusComboBox = new ComboBox();
+            tableLayoutPanel1 = new TableLayoutPanel();
+            tableLayoutPanel2 = new TableLayoutPanel();
             table.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)priorityNumberBox).BeginInit();
-            buttonPanel.SuspendLayout();
+            tableLayoutPanel1.SuspendLayout();
+            tableLayoutPanel2.SuspendLayout();
             SuspendLayout();
             // 
             // table
@@ -74,10 +76,9 @@
             table.Controls.Add(statusCaption, 0, 7);
             table.Controls.Add(repeatCaption, 0, 8);
             table.Controls.Add(repeatComboBox, 1, 8);
-            table.Controls.Add(buttonPanel, 0, 9);
             table.Controls.Add(statusComboBox, 1, 7);
             table.Dock = DockStyle.Fill;
-            table.Location = new Point(0, 0);
+            table.Location = new Point(3, 3);
             table.Name = "table";
             table.Padding = new Padding(12);
             table.RowCount = 10;
@@ -91,7 +92,7 @@
             table.RowStyles.Add(new RowStyle());
             table.RowStyles.Add(new RowStyle());
             table.RowStyles.Add(new RowStyle());
-            table.Size = new Size(480, 440);
+            table.Size = new Size(474, 397);
             table.TabIndex = 0;
             // 
             // idCaption
@@ -128,7 +129,7 @@
             titleTextBox.Anchor = AnchorStyles.Left | AnchorStyles.Right;
             titleTextBox.Location = new Point(135, 30);
             titleTextBox.Name = "titleTextBox";
-            titleTextBox.Size = new Size(330, 23);
+            titleTextBox.Size = new Size(324, 23);
             titleTextBox.TabIndex = 3;
             // 
             // descriptionCaption
@@ -147,7 +148,7 @@
             descriptionTextBox.Location = new Point(135, 59);
             descriptionTextBox.Multiline = true;
             descriptionTextBox.Name = "descriptionTextBox";
-            descriptionTextBox.Size = new Size(330, 80);
+            descriptionTextBox.Size = new Size(324, 80);
             descriptionTextBox.TabIndex = 5;
             // 
             // createdCaption
@@ -204,7 +205,7 @@
             deadlinePicker.Location = new Point(135, 175);
             deadlinePicker.Name = "deadlinePicker";
             deadlinePicker.ShowCheckBox = true;
-            deadlinePicker.Size = new Size(330, 23);
+            deadlinePicker.Size = new Size(324, 23);
             deadlinePicker.TabIndex = 11;
             // 
             // priorityCaption
@@ -223,7 +224,7 @@
             priorityNumberBox.Location = new Point(135, 204);
             priorityNumberBox.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
             priorityNumberBox.Name = "priorityNumberBox";
-            priorityNumberBox.Size = new Size(330, 23);
+            priorityNumberBox.Size = new Size(324, 23);
             priorityNumberBox.TabIndex = 13;
             // 
             // statusCaption
@@ -252,18 +253,8 @@
             repeatComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             repeatComboBox.Location = new Point(135, 262);
             repeatComboBox.Name = "repeatComboBox";
-            repeatComboBox.Size = new Size(330, 23);
+            repeatComboBox.Size = new Size(324, 23);
             repeatComboBox.TabIndex = 17;
-            // 
-            // buttonPanel
-            // 
-            buttonPanel.Controls.Add(saveButton);
-            buttonPanel.Controls.Add(cancelButton);
-            buttonPanel.Location = new Point(15, 291);
-            buttonPanel.Name = "buttonPanel";
-            buttonPanel.RightToLeft = RightToLeft.No;
-            buttonPanel.Size = new Size(114, 100);
-            buttonPanel.TabIndex = 18;
             // 
             // saveButton
             // 
@@ -271,7 +262,7 @@
             saveButton.Dock = DockStyle.Top;
             saveButton.Location = new Point(3, 3);
             saveButton.Name = "saveButton";
-            saveButton.Size = new Size(100, 25);
+            saveButton.Size = new Size(151, 25);
             saveButton.TabIndex = 0;
             saveButton.Text = "Save";
             saveButton.Click += saveButton_Click;
@@ -279,9 +270,10 @@
             // cancelButton
             // 
             cancelButton.AutoSize = true;
-            cancelButton.Location = new Point(3, 34);
+            cancelButton.Dock = DockStyle.Top;
+            cancelButton.Location = new Point(160, 3);
             cancelButton.Name = "cancelButton";
-            cancelButton.Size = new Size(75, 25);
+            cancelButton.Size = new Size(151, 25);
             cancelButton.TabIndex = 0;
             cancelButton.Text = "Cancel";
             cancelButton.Click += cancelButton_Click;
@@ -292,21 +284,55 @@
             statusComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             statusComboBox.Location = new Point(135, 233);
             statusComboBox.Name = "statusComboBox";
-            statusComboBox.Size = new Size(330, 23);
+            statusComboBox.Size = new Size(324, 23);
             statusComboBox.TabIndex = 15;
+            // 
+            // tableLayoutPanel1
+            // 
+            tableLayoutPanel1.ColumnCount = 1;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.Controls.Add(table, 0, 0);
+            tableLayoutPanel1.Controls.Add(tableLayoutPanel2, 0, 1);
+            tableLayoutPanel1.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Location = new Point(0, 0);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 2;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle());
+            tableLayoutPanel1.Size = new Size(480, 440);
+            tableLayoutPanel1.TabIndex = 19;
+            // 
+            // tableLayoutPanel2
+            // 
+            tableLayoutPanel2.AutoSize = true;
+            tableLayoutPanel2.ColumnCount = 3;
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            tableLayoutPanel2.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            tableLayoutPanel2.Controls.Add(cancelButton, 1, 0);
+            tableLayoutPanel2.Controls.Add(saveButton, 0, 0);
+            tableLayoutPanel2.Dock = DockStyle.Fill;
+            tableLayoutPanel2.Location = new Point(3, 406);
+            tableLayoutPanel2.Name = "tableLayoutPanel2";
+            tableLayoutPanel2.RowCount = 1;
+            tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanel2.Size = new Size(474, 31);
+            tableLayoutPanel2.TabIndex = 1;
             // 
             // ToDoDetailForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            Controls.Add(table);
+            Controls.Add(tableLayoutPanel1);
             Name = "ToDoDetailForm";
             Size = new Size(480, 440);
             table.ResumeLayout(false);
             table.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)priorityNumberBox).EndInit();
-            buttonPanel.ResumeLayout(false);
-            buttonPanel.PerformLayout();
+            tableLayoutPanel1.ResumeLayout(false);
+            tableLayoutPanel1.PerformLayout();
+            tableLayoutPanel2.ResumeLayout(false);
+            tableLayoutPanel2.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -331,9 +357,9 @@
         private System.Windows.Forms.ComboBox statusComboBox;
         private System.Windows.Forms.Label repeatCaption;
         private System.Windows.Forms.ComboBox repeatComboBox;
-        private System.Windows.Forms.FlowLayoutPanel buttonPanel;
         private System.Windows.Forms.Button cancelButton;
         private System.Windows.Forms.Button saveButton;
-
+        private TableLayoutPanel tableLayoutPanel1;
+        private TableLayoutPanel tableLayoutPanel2;
     }
 }
