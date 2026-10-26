@@ -45,7 +45,7 @@ namespace ToDo_App.WebApp.Pages
         /// <param name="Priority"></param>
         /// <param name="Tags"></param>
         /// <returns></returns>
-        public ActionResult OnPost(Guid id, string Title, string Description, DateTime Deadline, RepeatInterval Repeat, int Priority, List<string> Tags)
+        public ActionResult OnPost(Guid id, string Title, string? Description, DateTime? Deadline, RepeatInterval? Repeat, int? Priority, List<string>? Tags)
         {
             inputHandler.UpdateToDo(id, Title, Description, Deadline, null, Repeat, null, Priority, Tags);
             return RedirectToPage("./Todoes");
