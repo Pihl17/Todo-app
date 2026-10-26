@@ -14,7 +14,6 @@ public partial class ToDoDisplay : UserControl
 {
 
     public Guid ToDoId { private set; get; }
-    private IInputHandling inputHandler;
     private MainForm parentForm;
 
     /// <summary>
@@ -42,16 +41,7 @@ public partial class ToDoDisplay : UserControl
     /// Construsts a ToDoDisplay with a given ToDo, setting the Title, Description and ID to the ToDo's.
     /// </summary>
     /// <param name="todo">The ToDo that the display will describe.</param>
-    /// <param name="inputHandler">InputHandler object for handing input on click</param>
-    public ToDoDisplay(ToDo todo, IInputHandling inputHandler)
-    {
-        InitializeComponent();
-        ToDoId = todo.Id;
-        toDoTitle.Text = todo.Title;
-        toDoDescription.Text = todo.Description;
-        this.inputHandler = inputHandler;
-    }
-
+    /// <param name="parentForm">The MainForm parent for handling displaying todo details on click</param>
     public ToDoDisplay(ToDo todo, MainForm parentForm)
     {
         InitializeComponent();

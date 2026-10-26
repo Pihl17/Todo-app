@@ -24,7 +24,7 @@ public partial class MainForm : Form
     public void createNewToDotoolStripButton_Click(object sender, EventArgs e)
     {
         ToDo createdToDo = inputHandler.CreateNewToDo();
-        toDoList.AddToList(new ToDoDisplay(createdToDo, inputHandler));
+        toDoList.AddToList(new ToDoDisplay(createdToDo, this));
     }
 
     /// <summary>
@@ -59,6 +59,7 @@ public partial class MainForm : Form
         {
             tabControl.SelectedTab.Controls.Add(toDoDetailForm);
             toDoDetailForm.BringToFront();
+            toDoDetailForm.Disposed += toDoList.RefreshList;
         }
     }
 }

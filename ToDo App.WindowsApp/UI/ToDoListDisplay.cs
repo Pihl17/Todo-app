@@ -74,6 +74,16 @@ public partial class ToDoListDisplay : UserControl
                 AddToList(currentDisplay);
         }
     }
+    /// <summary>
+    /// Grabs the list of todos from the system and updates the list, removing deleted todos and adding new todos.
+    /// This overload is used for calling through a delegate.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    public void RefreshList(object? sender, EventArgs e)
+    {
+        RefreshList();
+    }
 
     /// <summary>
     /// Returns the list of todos currently on display.
