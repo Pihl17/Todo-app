@@ -1,17 +1,27 @@
 using ToDo_App.Library.Calendar;
 using ToDo_App.Library.Handler;
 using ToDo_App.Library.Input;
+using ToDo_App.Library.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
 ToDoHandler toDoHandler = new ToDoHandler();
-DataHandler dataHandler = new DataHandler();
+JSONDataHandler dataHandler = new JSONDataHandler();
 ToDoListSort toDoListSort = new ToDoListSort();
 TagFilter tagFilter = new TagFilter();
 CalendarManager calendarManager = new CalendarManager();
 InputManager inputManager = new InputManager(toDoHandler, dataHandler, toDoListSort, tagFilter, calendarManager);
 
 builder.Services.AddSingleton<IInputHandling>(inputManager);
+
+builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromSeconds(10);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 
 // Add services to the container.
 builder.Services.AddRazorPages();
@@ -31,6 +41,8 @@ app.UseHttpsRedirection();
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.UseSession();
 
 app.MapStaticAssets();
 app.MapRazorPages()

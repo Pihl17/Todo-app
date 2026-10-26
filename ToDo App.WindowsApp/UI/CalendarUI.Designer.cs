@@ -33,6 +33,10 @@
             nextMonth = new Button();
             selectedMonth = new Button();
             monthSelectPanel = new Panel();
+            yearBtn = new Button();
+            nextYearBtn = new Button();
+            previousYearBtn = new Button();
+            monthSelectPanel.SuspendLayout();
             SuspendLayout();
             // 
             // calendarDisplayPanel
@@ -77,12 +81,47 @@
             // monthSelectPanel
             // 
             monthSelectPanel.BorderStyle = BorderStyle.FixedSingle;
+            monthSelectPanel.Controls.Add(yearBtn);
+            monthSelectPanel.Controls.Add(nextYearBtn);
+            monthSelectPanel.Controls.Add(previousYearBtn);
             monthSelectPanel.Location = new Point(34, 31);
             monthSelectPanel.Margin = new Padding(3, 2, 3, 2);
             monthSelectPanel.Name = "monthSelectPanel";
-            monthSelectPanel.Size = new Size(351, 225);
+            monthSelectPanel.Size = new Size(261, 228);
             monthSelectPanel.TabIndex = 0;
             monthSelectPanel.Visible = false;
+            // 
+            // yearBtn
+            // 
+            yearBtn.Enabled = false;
+            yearBtn.Location = new Point(33, 3);
+            yearBtn.Margin = new Padding(3, 2, 3, 2);
+            yearBtn.Name = "yearBtn";
+            yearBtn.Size = new Size(192, 22);
+            yearBtn.TabIndex = 6;
+            yearBtn.UseVisualStyleBackColor = true;
+            // 
+            // nextYearBtn
+            // 
+            nextYearBtn.Location = new Point(230, 3);
+            nextYearBtn.Margin = new Padding(3, 2, 3, 2);
+            nextYearBtn.Name = "nextYearBtn";
+            nextYearBtn.Size = new Size(25, 22);
+            nextYearBtn.TabIndex = 6;
+            nextYearBtn.Text = "►";
+            nextYearBtn.UseVisualStyleBackColor = true;
+            nextYearBtn.Click += nextYearBtn_Click;
+            // 
+            // previousYearBtn
+            // 
+            previousYearBtn.Location = new Point(3, 3);
+            previousYearBtn.Margin = new Padding(3, 2, 3, 2);
+            previousYearBtn.Name = "previousYearBtn";
+            previousYearBtn.Size = new Size(25, 22);
+            previousYearBtn.TabIndex = 6;
+            previousYearBtn.Text = "◄";
+            previousYearBtn.UseVisualStyleBackColor = true;
+            previousYearBtn.Click += previousYearBtn_Click;
             // 
             // CalendarUI
             // 
@@ -95,6 +134,8 @@
             Controls.Add(calendarDisplayPanel);
             Name = "CalendarUI";
             Size = new Size(1233, 639);
+            Click += CalendarUI_Click;
+            monthSelectPanel.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -104,5 +145,8 @@
         private Button nextMonth;
         private Button selectedMonth;
         private Panel monthSelectPanel;
+        private Button yearBtn;
+        private Button nextYearBtn;
+        private Button previousYearBtn;
     }
 }
