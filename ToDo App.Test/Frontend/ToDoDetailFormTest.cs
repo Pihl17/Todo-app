@@ -46,12 +46,12 @@ public class ToDoDetailFormTest
         }
     }
 
-    private T FindControl<T>(Form form, string name) where T : Control
+    private T FindControl<T>(UserControl control, string name) where T : Control
     {
-        return (T)form.Controls.Find(name, true)[0];
+        return (T)control.Controls.Find(name, true)[0];
     }
 
-    private void ClickSave(Form form)
+    private void ClickSave(UserControl form)
     {
         MethodInfo? method = typeof(ToDoDetailForm).GetMethod(
             "saveButton_Click", BindingFlags.Instance | BindingFlags.NonPublic);

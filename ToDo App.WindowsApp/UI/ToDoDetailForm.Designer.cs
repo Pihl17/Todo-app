@@ -41,14 +41,15 @@
             priorityCaption = new Label();
             priorityNumberBox = new NumericUpDown();
             statusCaption = new Label();
-            statusComboBox = new ComboBox();
             repeatCaption = new Label();
             repeatComboBox = new ComboBox();
             buttonPanel = new FlowLayoutPanel();
-            cancelButton = new Button();
             saveButton = new Button();
+            cancelButton = new Button();
+            statusComboBox = new ComboBox();
             table.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)priorityNumberBox).BeginInit();
+            buttonPanel.SuspendLayout();
             SuspendLayout();
             // 
             // table
@@ -235,15 +236,6 @@
             statusCaption.TabIndex = 14;
             statusCaption.Text = "Status:";
             // 
-            // statusComboBox
-            // 
-            statusComboBox.Anchor = AnchorStyles.Left | AnchorStyles.Right;
-            statusComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            statusComboBox.Location = new Point(135, 233);
-            statusComboBox.Name = "statusComboBox";
-            statusComboBox.Size = new Size(330, 23);
-            statusComboBox.TabIndex = 15;
-            // 
             // repeatCaption
             // 
             repeatCaption.Anchor = AnchorStyles.Left;
@@ -265,45 +257,56 @@
             // 
             // buttonPanel
             // 
+            buttonPanel.Controls.Add(saveButton);
+            buttonPanel.Controls.Add(cancelButton);
             buttonPanel.Location = new Point(15, 291);
             buttonPanel.Name = "buttonPanel";
+            buttonPanel.RightToLeft = RightToLeft.No;
             buttonPanel.Size = new Size(114, 100);
             buttonPanel.TabIndex = 18;
             // 
-            // cancelButton
-            // 
-            cancelButton.Location = new Point(0, 0);
-            cancelButton.Name = "cancelButton";
-            cancelButton.Size = new Size(75, 23);
-            cancelButton.TabIndex = 0;
-            cancelButton.Text = "Cancel";
-            // 
             // saveButton
             // 
-            saveButton.Location = new Point(0, 0);
+            saveButton.AutoSize = true;
+            saveButton.Dock = DockStyle.Top;
+            saveButton.Location = new Point(3, 3);
             saveButton.Name = "saveButton";
-            saveButton.Size = new Size(75, 23);
+            saveButton.Size = new Size(100, 25);
             saveButton.TabIndex = 0;
             saveButton.Text = "Save";
             saveButton.Click += saveButton_Click;
             // 
+            // cancelButton
+            // 
+            cancelButton.AutoSize = true;
+            cancelButton.Location = new Point(3, 34);
+            cancelButton.Name = "cancelButton";
+            cancelButton.Size = new Size(75, 25);
+            cancelButton.TabIndex = 0;
+            cancelButton.Text = "Cancel";
+            cancelButton.Click += cancelButton_Click;
+            // 
+            // statusComboBox
+            // 
+            statusComboBox.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            statusComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            statusComboBox.Location = new Point(135, 233);
+            statusComboBox.Name = "statusComboBox";
+            statusComboBox.Size = new Size(330, 23);
+            statusComboBox.TabIndex = 15;
+            // 
             // ToDoDetailForm
             // 
-            AcceptButton = saveButton;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            CancelButton = cancelButton;
-            ClientSize = new Size(480, 440);
             Controls.Add(table);
-            FormBorderStyle = FormBorderStyle.FixedDialog;
-            MaximizeBox = false;
-            MinimizeBox = false;
             Name = "ToDoDetailForm";
-            StartPosition = FormStartPosition.CenterParent;
-            Text = "ToDo details";
+            Size = new Size(480, 440);
             table.ResumeLayout(false);
             table.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)priorityNumberBox).EndInit();
+            buttonPanel.ResumeLayout(false);
+            buttonPanel.PerformLayout();
             ResumeLayout(false);
         }
 

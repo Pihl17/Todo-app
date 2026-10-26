@@ -10,10 +10,11 @@ namespace ToDo_App.UI
     /// <summary>
     /// A form that shows all values of one ToDo and lets the user change them.
     /// </summary>
-    public partial class ToDoDetailForm : Form
+    public partial class ToDoDetailForm : UserControl
     {
         private readonly ToDo toDo;
         private readonly IInputHandling inputManager;
+        public DialogResult DialogResult;
 
         /// <summary>
         /// Creates the form for the given ToDo.
@@ -25,7 +26,7 @@ namespace ToDo_App.UI
             InitializeComponent();
             this.toDo = toDo;
             this.inputManager = inputManager;
-            
+
             FormInputReader.FillEnum<ToDoStatus>(statusComboBox);
             FormInputReader.FillEnum<RepeatInterval>(repeatComboBox);
             ShowToDo();
@@ -45,7 +46,7 @@ namespace ToDo_App.UI
             priorityNumberBox.Value = toDo.Priority;
             statusComboBox.SelectedItem = toDo.Status;
             repeatComboBox.SelectedItem = toDo.Repeat;
-            
+
         }
 
         /// <summary>
@@ -76,13 +77,19 @@ namespace ToDo_App.UI
                 status: selectedStatus != toDo.Status ? selectedStatus : null,
                 repeat: FormInputReader.ReadEnum<RepeatInterval>(repeatComboBox),
                 priority: FormInputReader.ReadNumber(priorityNumberBox));
-            
+
             if (updated == null)
             {
                 ShowMessage("The ToDo no longer exists");
                 return;
             }
             DialogResult = DialogResult.OK;
+            Dispose();
+        }
+
+        private void cancelButton_Click(object sender, EventArgs e)
+        {
+            Dispose();
         }
 
         /// <summary>

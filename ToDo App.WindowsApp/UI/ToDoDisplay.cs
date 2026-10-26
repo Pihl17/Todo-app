@@ -15,6 +15,7 @@ public partial class ToDoDisplay : UserControl
 
     public Guid ToDoId { private set; get; }
     private IInputHandling inputHandler;
+    private MainForm parentForm;
 
     /// <summary>
     /// Constructs a ToDoDisplay without any ToDo attatched.
@@ -51,6 +52,15 @@ public partial class ToDoDisplay : UserControl
         this.inputHandler = inputHandler;
     }
 
+    public ToDoDisplay(ToDo todo, MainForm parentForm)
+    {
+        InitializeComponent();
+        ToDoId = todo.Id;
+        toDoTitle.Text = todo.Title;
+        toDoDescription.Text = todo.Description;
+        this.parentForm = parentForm;
+    }
+
     /// <summary>
     /// Checks equality of the todo ID of two ToDoDisplays.
     /// </summary>
@@ -66,31 +76,7 @@ public partial class ToDoDisplay : UserControl
 
     public void OnClick(object sender, EventArgs e)
     {
-        _ = OpenDetailForm(CancellationToken.None);
-    }
-
-    public async Task OpenDetailForm(CancellationToken cancellationToken)
-    {
-        if (inputHandler == null || ToDoId == Guid.Empty)
-            return;
-
-        ToDo? todo = inputHandler.GetToDo(ToDoId);
-        if (todo == null)
-            return;
-
-        ToDoDetailForm detailForm = new ToDoDetailForm(todo, inputHandler);
-        Task<DialogResult> result = detailForm.ShowDialogAsync();
-        
-        try
-        {
-            await result.WaitAsync(cancellationToken);
-        } catch (OperationCanceledException)
-        {
-
-        }
-
-        toDoTitle.Text = todo.Title;
-        toDoDescription.Text = todo.Description;
+        parentForm?.ShowToDoDetailView(ToDoId);
     }
 
 }

@@ -32,19 +32,4 @@ public class ToDoDisplayTest
 
         Assert.AreEqual(expected, result);
     }
-
-    [Test]
-    public void TestRun()
-    {
-        ToDo todo = new ToDo();
-        Mock<IInputHandling> mock = new Mock<IInputHandling>();
-        mock.Setup(x => x.GetToDo(todo.Id)).Returns(todo);
-        ToDoDisplay display = new ToDoDisplay(todo, mock.Object);
-        CancellationToken cancellationToken = new CancellationToken(true);
-        
-        Task task = display.OpenDetailForm(cancellationToken);
-
-        task.Wait(cancellationToken);
-
-    }
 }

@@ -16,6 +16,8 @@ public partial class ToDoListDisplay : UserControl
     /// The input handler that this object calls to connect with the backend.
     /// </summary>
     public IInputHandling inputHandler;
+
+    public MainForm parentForm;
     
     /// <summary>
     /// Constructs an empty ToDoListDisplay. 
@@ -67,7 +69,7 @@ public partial class ToDoListDisplay : UserControl
         ToDoDisplay currentDisplay;
         for (int i = 0; i < toDos.Count; i++)
         {
-            currentDisplay = new ToDoDisplay(toDos[i], inputHandler);
+            currentDisplay = new ToDoDisplay(toDos[i], parentForm);
             if (!listContainer.Controls.Contains(currentDisplay))
                 AddToList(currentDisplay);
         }
