@@ -3,16 +3,37 @@
 
 @{
 	if (@Model.ToDo != null) {
-		ViewData["Title"] = Model.ToDo.Title;
-	} else {
-		ViewData["Title"] = "Could not find Todo";
-	}
-}
-
-@{
-	if (@Model.ToDo != null) {
 		<div>
 			<h1>@Model.ToDo.Title</h1>
+			<p>@Model.ToDo.Description</p>
+			<h3>Created At:</h3>
+			<p>@Model.ToDo.CreationDate</p>
+			<h3>Completed The:</h3>
+			@if (Model.ToDo.CompletionDate != null) {
+				<p>@Model.ToDo.CompletionDate</p>
+			} else {
+				<p>still ongoing</p>
+			}
+			<h3>Deadline:</h3>
+			@if (Model.ToDo.Deadline != null)
+			{
+				<p>@Model.ToDo.Deadline</p>
+			}
+			else
+			{
+				<p>No deadline set</p>
+			}
+			<h3>Status:</h3>
+			<p>@Model.ToDo.Status</p>
+			@foreach (var checklistitem in Model.ToDo.Checklist) {
+				<p>@checklistitem</p>
+			}
+			@foreach (var tags in Model.ToDo.Taglist)
+			{
+				<p>@tags</p>
+			}
+
+
 		</div>
 	} else {
 		<div>
