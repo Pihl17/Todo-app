@@ -119,7 +119,7 @@ namespace ToDo_App.Test.Web
         {
 
             mock.Setup(x => x.GetToDoList()).Returns(new List<ToDo>() { EmptyToDo });
-            mock.Setup(x => x.GetToDo(EmptyToDo.Id)).Returns(FullToDo);
+            mock.Setup(x => x.GetToDo(EmptyToDo.Id)).Returns(EmptyToDo);
 
 
             var response = await client.GetAsync($"/Todoes/Todo/{EmptyToDo.Id}");
