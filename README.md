@@ -48,3 +48,8 @@ This project requires:
 - ASP.NET and Web Development workload 
 
 - Windows for running the Windows Forms Application and UI tests
+
+## Project achitecture
+
+For details on the projects achitecture and structure, check the [wiki page here](https://github.com/Pihl17/Todo-app/wiki).
+
