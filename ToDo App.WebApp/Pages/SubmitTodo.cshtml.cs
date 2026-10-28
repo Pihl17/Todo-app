@@ -8,7 +8,7 @@ namespace ToDo_App.WebApp.Pages
 {
     public class SubmitTodoModel(IInputHandling inputHandler) : PageModel
     {
-        public List<string> TagLibrary = ["test"];
+        public List<string> TagLibrary;
 
 
 

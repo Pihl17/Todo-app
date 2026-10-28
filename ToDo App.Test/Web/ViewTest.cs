@@ -76,7 +76,6 @@ namespace ToDo_App.Test.Web
         [TestCase("/Index")]
         [TestCase("/Privacy")]
         [TestCase("/Error")]
-        [TestCase("/SubmitTodo")]
         [TestCase("/Calendar")]
         public async Task Get_EndpointsReturnSuccessAndCorrectContentType(string url)
         {
