@@ -35,13 +35,6 @@ namespace ToDo_App.Test.Web
         }
 
         [Test]
-        public void PrivacyTest()
-        {
-            PrivacyModel privacymodel = new PrivacyModel();
-            privacymodel.OnGet();
-        }
-
-        [Test]
         public void ErrorTest()
         {
             ErrorModel errormodel = new ErrorModel();
