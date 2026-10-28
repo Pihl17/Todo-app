@@ -1,5 +1,6 @@
 using ToDo_App.Library.Input;
 using ToDo_App.Library.Models;
+using ToDo_App.WindowsApp.UI;
 
 namespace ToDo_App.UI;
 
@@ -19,13 +20,30 @@ public partial class MainForm : Form
         calendarUI.Dock = DockStyle.Fill;
         calendarTabPage.Controls.Add(calendarUI);
     }
-
+    /// <summary>
+    /// Displays the CreateToDo formula.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
     public void createNewToDotoolStripButton_Click(object sender, EventArgs e)
     {
         ToDo createdToDo = inputHandler.CreateNewToDo();
-        toDoList.AddToList(new ToDoDisplay(createdToDo));
-    }
+        UserControl createToDoDisplay = new CreateToDo(inputHandler);
 
+        this.Controls.Add(createToDoDisplay);
+        createToDoDisplay.Dock = DockStyle.Fill;
+        createToDoDisplay.BringToFront();
+        createToDoDisplay.Disposed += HandleCreateNewToDo_Disposal;
+    }
+    /// <summary>
+    /// Refreshes the to do list when the creation of a todo completes (or when creation is cancelled).
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    public void HandleCreateNewToDo_Disposal(object sender, EventArgs e)
+    {
+        toDoList.RefreshList();
+    }
     /// <summary>
     /// on button click let the user to chose a new folder for saving their todo lists.
     /// </summary>

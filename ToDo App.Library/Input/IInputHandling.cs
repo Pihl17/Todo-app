@@ -19,12 +19,12 @@ public interface IInputHandling
     /// </summary>
     /// <param name="title">The title of the new todo</param>
     /// <param name="checklist">The checklist, or null for an empty checklist</param>
-    /// <param name="priority">Teh priority, or null to use the default priority</param>
+    /// <param name="priority">The priority, or null to use the default priority</param>
     /// <param name="description">The description</param>
     /// <param name="deadline">The deadline, or null for none</param>
     /// <param name="repeat">How the todo repeats</param>
     /// <returns>The newly created todo</returns>
-    ToDo CreateNewToDo(string? titel = "Insert title", DateTime? choosenDeadLine = null, RepeatInterval repeat = RepeatInterval.None, int? priority = null, string? description = "", List<string>? tags = null, List<ChecklistItem>? checklist = null);
+    ToDo CreateNewToDo(string? title = "Insert title", DateTime? choosenDeadLine = null, RepeatInterval repeat = RepeatInterval.None, int? priority = null, string? description = "", List<string>? tags = null, List<ChecklistItem>? checklist = null);
 
     /// <summary>
     /// Deletes a todo from the list.
