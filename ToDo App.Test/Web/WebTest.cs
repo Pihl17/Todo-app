@@ -116,7 +116,7 @@ namespace ToDo_App.Test.Web
             SubmitTodoModel Model = new SubmitTodoModel(mock.Object);
             DateTime Tommorow = DateTime.Today.AddDays(+1);
             RepeatInterval Weekdays = RepeatInterval.Weekdays;
-            ActionResult result = Model.OnPost("Test", "this is a todo", Tommorow, Weekdays, 1, []);
+            ActionResult result = Model.OnPost("Test", "this is a todo", Tommorow, Weekdays, 1, [], []);
 
             Assert.NotNull(result);
         }

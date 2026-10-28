@@ -40,6 +40,11 @@
 		</select>
 	</div>
 	<div>
+		<label for="ChecklistItems">ChecklistItems:</label>
+		<select name="ChecklistItems" id="ChecklistItems" multiple="multiple">
+		</select>
+	</div>
+	<div>
 	<label for="Tags">Tags:</label>
 	<select name="Tags" id="Tags" multiple="multiple">
 		@foreach(var Tag  in Model.TagLibrary) {
@@ -75,6 +80,17 @@
 
 <script>
 	$(document).ready(function() {
+		$("#ChecklistItems").select2({
+			tags: true,
+			placeholder: "Enter items to add to the checklist",
+			language: {
+				noResults: function() {
+					return "No list items currently";
+				}
+			}
+
+		});
+
 		$("#Tags").select2({
 			tags: true,
 			placeholder: "Enter or search for tags",
