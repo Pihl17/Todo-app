@@ -40,16 +40,19 @@ The application supports the following functionality:
 This project requires: 
 
 - Visual Studio 
-
 - .NET 10 SDK 
-
 - .NET Desktop Development workload 
-
 - ASP.NET and Web Development workload 
-
 - Windows for running the Windows Forms Application and UI tests
 
 ## Project achitecture
 
 For details on the projects achitecture and structure, check the [wiki page here](https://github.com/Pihl17/Todo-app/wiki).
+
+## Authors 
+
+- Magnus Pihl 
+- Casper...... 
+- Jon..... 
+- Lasse Blücher Rindal 
 
