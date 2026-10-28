@@ -33,6 +33,10 @@
             body: new FormData(form),
         });
 
+        if (!response.ok) {
+            throw new Error("Failed to delete todo.");
+            return
+        }
         document.getElementById(id)?.remove();
 
         form.reset(); // Clear the form after success

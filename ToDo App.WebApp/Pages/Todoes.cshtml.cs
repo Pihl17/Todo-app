@@ -14,9 +14,10 @@ namespace ToDo_App.WebApp.Pages
         /// onPost get the selcted todoe and then send it to the inputhandler to be deleted
         /// </summary>
         /// <param name="id"></param>
-        public async void OnPost(Guid id) {
+        public ActionResult OnPost(Guid id) {
             ToDo toDo = inputHandler.GetToDo(id);
             inputHandler.DeleteToDo(toDo);
+            return new OkResult();
 
         }
     }
