@@ -86,6 +86,31 @@ namespace ToDo_App.Test.Web
         }
 
         [Test]
+        public async Task Get_EndpointsReturnSuccessAndCorrectContentTypeForSubmitTodo() {
+            
+            ToDo toDo = new ToDo();
+            List<ToDo> List = new List<ToDo>() { toDo };
+            mock.Setup(x => x.GetToDoList()).Returns(List);
+            mock.Setup(x => x.GetAllTags()).Returns([]);
+
+            var response = await client.GetAsync("/SubmitTodo");
+            response.EnsureSuccessStatusCode(); // Status Code 200-299
+            Assert.That(response.Content.Headers.ContentType.ToString(), Is.EqualTo("text/html; charset=utf-8"));
+        }
+
+        [Test]
+        public async Task Get_EndpointsReturnSuccessAndCorrectContentTypeForSubmitTodoContent()
+        {
+
+            mock.Setup(x => x.GetToDoList()).Returns(new List<ToDo>() { FullToDo });
+            mock.Setup(x => x.GetAllTags()).Returns(["test1", "test2"]);
+
+            var response = await client.GetAsync("/SubmitTodo");
+            response.EnsureSuccessStatusCode(); // Status Code 200-299
+            Assert.That(response.Content.Headers.ContentType.ToString(), Is.EqualTo("text/html; charset=utf-8"));
+        }
+
+        [Test]
         public async Task Get_EndpointsReturnSuccessAndCorrectContentTypeforTodoes()
         {
             ToDo toDo = new ToDo();
