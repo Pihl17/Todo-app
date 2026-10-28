@@ -27,20 +27,11 @@
 
         const form = e.target;
         const id = form.querySelector('[name="id"]').value;
-        const button = form.querySelector('button[type="submit"]');
 
-        button.disabled = true;
-
-        const response = await fetch("?handler=Delete", {
+        const response = await fetch(form.action, {
             method: "POST",
             body: new FormData(form),
         });
-
-        const result = await response.json();
-
-        if (!response.ok || !result.success) {
-            throw new Error(result.message || "Something went wrong.");
-        }
 
         document.getElementById(id)?.remove();
 
