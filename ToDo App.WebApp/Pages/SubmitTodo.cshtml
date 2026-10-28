@@ -42,8 +42,8 @@
 	<div>
 	<label for="Tags">Tags:</label>
 	<select name="Tags" id="Tags" multiple="multiple">
-		@foreach(var tag in Model.TagLibrary) {
-				<option value="@tag">@tag</option>
+		@foreach(var Tag  in Model.TagLibrary) {
+				<option value="@Tag">@Tag</option>
 			}
 	</select>
 	</div>
