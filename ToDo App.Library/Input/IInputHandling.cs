@@ -27,6 +27,12 @@ public interface IInputHandling
     ToDo CreateNewToDo(string? title = "Insert title", DateTime? choosenDeadLine = null, RepeatInterval repeat = RepeatInterval.None, int? priority = null, string? description = "", List<string>? tags = null, List<ChecklistItem>? checklist = null);
 
     /// <summary>
+    /// 
+    /// </summary>
+    /// <returns></returns>
+    List<string> GetAllTags();
+
+    /// <summary>
     /// Deletes a todo from the list.
     /// </summary>
     /// <param name="todo">The todo to delete</param>

@@ -14,7 +14,7 @@ namespace ToDo_App.Library.Handler
         /// creating a list of tags 
         /// </summary>
         /// <param name="todoes">a list of todoes used for creating TagLibrary</param>
-        public void GenerateLibrary (List<ToDo> todoes) {
+        public List<string> GenerateLibrary (List<ToDo> todoes) {
             foreach (ToDo todo in todoes) {
                 foreach (string Tag in todo.Taglist) {
                     if (!TagLibrary.Contains(Tag)) {
@@ -23,6 +23,7 @@ namespace ToDo_App.Library.Handler
                 }
             }
             TagLibrary.Sort();
+            return TagLibrary;
         }
 
         /// <summary>

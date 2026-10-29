@@ -8,7 +8,7 @@ namespace ToDo_App.WebApp.Pages
 {
     public class SubmitTodoModel(IInputHandling inputHandler) : PageModel
     {
-        public List<string> TagLibrary = new List<string>();
+        public List<string> TagLibrary = inputHandler.GetAllTags();
 
         /// <summary>
         /// on post call CreateNewToDo and then redirect back to the Todoes page
@@ -19,10 +19,18 @@ namespace ToDo_App.WebApp.Pages
         /// <param name="Repeat"></param>
         /// <param name="Tags"></param>
         /// <returns></returns>
-        public ActionResult OnPost(string Title, string Description, DateTime Deadline, RepeatInterval Repeat, int Priority, List<string> Tags)
+        public ActionResult OnPost(string Title, string? Description, DateTime? Deadline, RepeatInterval? Repeat, int Priority, List<string> ChecklistItems, List<string> Tags)
         {
-
-            inputHandler.CreateNewToDo(Title, Deadline, Repeat, Priority, Description, Tags);
+            List<ChecklistItem> checklistItemList = new List<ChecklistItem>();
+            foreach(string item in ChecklistItems)
+            {
+                ChecklistItem checklistitemobject = new ChecklistItem() {
+                    Description = item,
+                    IsDone = false,
+                };
+                checklistItemList.Add(checklistitemobject);
+            }
+            inputHandler.CreateNewToDo(Title, Deadline, Repeat.Value, Priority, Description, Tags, checklistItemList);
             return RedirectToPage("./Todoes");
         }
     }

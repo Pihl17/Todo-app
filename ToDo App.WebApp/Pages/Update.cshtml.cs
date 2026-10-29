@@ -23,11 +23,17 @@ namespace ToDo_App.WebApp.Pages
             ToDo = inputHandler.GetToDo(id);
 
             if(ToDo != null) {
-                HtmlDateTime = Convert.ToDateTime(ToDo.Deadline).ToString("yyyy-MM-ddTHH:mm");
+                ViewData["Title"] = ToDo.Title;
+                if(ToDo.Deadline != null) {
+                    HtmlDateTime = Convert.ToDateTime(ToDo.Deadline).ToString("yyyy-MM-ddTHH\\:mm");
+                }
+                TagLibrary = ToDo.Taglist;
             } else {
-                ErrorMessage = "No todo found";
+                ViewData["Title"] = "No Todo found";
+                ErrorMessage = "Could not find any Todo";
             }
         }
+
 
         /// <summary>
         /// on post call UpdateToDo and then redirect back to the Todoes page
@@ -40,7 +46,7 @@ namespace ToDo_App.WebApp.Pages
         /// <param name="Priority"></param>
         /// <param name="Tags"></param>
         /// <returns></returns>
-        public ActionResult OnPost(Guid id, string Title, string Description, DateTime Deadline, RepeatInterval Repeat, int Priority, List<string> Tags)
+        public ActionResult OnPost(Guid id, string Title, string? Description, DateTime? Deadline, RepeatInterval? Repeat, int? Priority, List<string>? Tags)
         {
             inputHandler.UpdateToDo(id, Title, Description, Deadline, null, Repeat, null, Priority, Tags);
             return RedirectToPage("./Todoes");

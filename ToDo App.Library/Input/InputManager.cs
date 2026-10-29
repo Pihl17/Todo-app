@@ -6,6 +6,7 @@ using ToDo_App.Library.Handler;
 using ToDo_App.Library.Models;
 using ToDo_App.Library.Calendar;
 using ToDo_App.Library.Data;
+using System.Diagnostics;
 
 namespace ToDo_App.Library.Input;
 
@@ -40,12 +41,6 @@ public class InputManager : IInputHandling
         this.tagFilter = tagFilter;
     }
 
-    public List<string> GetAllTags(){
-        dataHandler.LoadTodoList(out List<ToDo> toDos);
-        tagFilter.GenerateLibrary(toDos);
-        return tagFilter.TagLibrary;
-    }
-
     public List<ToDo> GetToDoList()
     {
         dataHandler.LoadTodoList(out List<ToDo> toDos);
@@ -73,6 +68,12 @@ public class InputManager : IInputHandling
     public void DeleteToDo(ToDo todo)
     {
         dataHandler.RemoveTodo(todo.Id);
+    }
+
+    public List<string> GetAllTags()
+    {
+        dataHandler.LoadTodoList(out List<ToDo> toDos);
+        return tagFilter.GenerateLibrary(toDos);
     }
 
     public void SetNewSavePath(string path)

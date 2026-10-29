@@ -17,8 +17,13 @@ namespace ToDo_App.WebApp.Pages
         public void OnGet(Guid id)
         {
             ToDo = inputHandler.GetToDo(id);
-            if (ToDo == null) {
-                ErrorMessage = "No todo found";
+            if (ToDo != null)
+            {
+                ViewData["Title"] = ToDo.Title;
+            }
+            else {
+                ViewData["Title"] = "No Todo found";
+                ErrorMessage = "Could not find any Todo";
             }
         }
     }

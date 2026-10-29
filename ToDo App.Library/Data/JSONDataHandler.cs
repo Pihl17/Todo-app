@@ -17,7 +17,6 @@ public class JSONDataHandler : IDataHandler {
     /// </summary>
     public void GetPath()
     {
-        Debug.WriteLine($"Current directory: {Directory.GetCurrentDirectory()}");
         Directory.CreateDirectory("../../../Files/");
         if (File.Exists(UserPreferences))
         {

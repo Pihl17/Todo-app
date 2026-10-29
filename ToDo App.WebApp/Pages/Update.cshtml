@@ -1,13 +1,5 @@
 ﻿@page "/Todoes/Todo/{id:Guid}/Update";
 @model UpdateModel
-@{
-	if (@Model.ToDo != null) {
-		ViewData["Title"] = Model.ToDo.Title;
-	}
-	else {
-		ViewData["Title"] = "Could not find Todo";
-	}
-}
 
 @{
 	if (Model.ToDo != null) {
@@ -22,7 +14,7 @@
 			</div>
 			<div>
 				<label for="Deadline">Deadline:</label>
-				<input type="datetime-local" id="Deadline" name="Deadline" value="@Model.HtmlDateTime" required />
+				<input type="datetime-local" id="Deadline" name="Deadline" value="@(Model.HtmlDateTime != null ? Model.HtmlDateTime : "")" />
 			</div>
 			<div>
 				<label for="Repeat">Repeat:</label>
@@ -37,10 +29,9 @@
 			</div>
 			<div>
 				<label for="Priority">Priority:</label>
-				<select id="Priority" name="Priority" required>
-				@{
-						for (int i = 0; i < 10; i++)
-						{
+				<select id="Priority" name="Priority">
+					@{
+						for (int i = 0; i < 10; i++) {
 							<option value="@i" selected="@(Model.ToDo.Priority == @i)">
 								@i
 							</option>
