@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.VisualStudio.TestPlatform.TestHost;
 using Moq;
 using ToDo_App.Library.Input;
 using ToDo_App.Library.Models;
@@ -10,7 +11,7 @@ using ToDo_App.WebApp.Pages;
 namespace ToDo_App.Test.Web
 {
     internal class ViewTest {
-        private WebApplicationFactory<Program> factory;
+        private WebApplicationFactory<global::Program> factory;
         private Mock<IInputHandling> mock;
 
         private HttpClient client;
@@ -23,7 +24,7 @@ namespace ToDo_App.Test.Web
         [SetUp]
         public void SetUp()
         {
-            factory = new WebApplicationFactory<Program>();
+            factory = new WebApplicationFactory<global::Program>();
 
             mock = new Mock<IInputHandling>();
 

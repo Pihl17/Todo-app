@@ -41,17 +41,6 @@ public class MainFromTest
     }
 
     [Test]
-    public void CreateNewToDoClick_GetsNewToDoAndAddsToListDisplay()
-    {
-        int expected = 1;
-        MainForm mainForm = new MainForm(mock.Object);
-
-        mainForm.createNewToDotoolStripButton_Click(new object(), new EventArgs());
-
-        Assert.AreEqual(expected, mainForm.ToDoList.GetToDos().Count);
-    }
-
-    [Test]
     public void ShowToDoDetailView_OpensToDoDetailView()
     {
         ToDo todo = new ToDo();

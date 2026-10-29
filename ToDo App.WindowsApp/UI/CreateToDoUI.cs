@@ -8,11 +8,29 @@ using System.Text;
 using System.Windows.Forms;
 using ToDo_App.Library.Input;
 using ToDo_App.Library.Models;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("ToDo_App.Tests")]
 namespace ToDo_App.WindowsApp.UI
 {
-    public partial class CreateToDo : UserControl
+    public partial class CreateToDoUI : UserControl
     {
+        public Button SaveButton => saveBtn;
+        public TextBox TitleTextBox => titleTB;
+        public TextBox TagTextBox => tagInputTB;
+        public TextBox DescriptionTextBox => descriptionTB;
+        public ComboBox RepeatComboBox => repeatCB;
+        public DomainUpDown PriorityControl => priorityUpDown;
+        public string DeadlineText => deadlineTB.Text;
+        public DateTime? SelectedDate => selectedDT;
+        public bool CalendarVisible => monthCalendar.Visible;
+        public MonthCalendar DeadlineCalendar => monthCalendar;
+        public Button CloseButton => closeBtn;
+        public Button ClearDateButton => clearDateBtn;
+        public Button DeadlineSelectButton => deadlineSelectBtn;
+        public int ChecklistItemCount => checklistItems.Count;
+        public ChecklistItemUI GetChecklistItem(int index) {return checklistItems[index];}
+
         private PlaceholderHandler titlePlaceholder;
         private PlaceholderHandler descriptionPlaceholder;
         private PlaceholderHandler tagPlaceholder;
@@ -20,13 +38,13 @@ namespace ToDo_App.WindowsApp.UI
         private IInputHandling inputHandler;
         List<ChecklistItemUI> checklistItems = new List<ChecklistItemUI>();
 
-        public CreateToDo()
+        public CreateToDoUI()
         {
         }
         /// <summary>
         /// Initialize the panel.
         /// </summary>
-        public CreateToDo(IInputHandling inputHandler) : this()
+        public CreateToDoUI(IInputHandling inputHandler) : this()
         {
             InitializeComponent();
             this.inputHandler = inputHandler;
@@ -49,13 +67,13 @@ namespace ToDo_App.WindowsApp.UI
         {
             AlternateCalendarVisibility();
         }
-        private void clearDateBtn_Click(object sender, EventArgs e)
+        internal void clearDateBtn_Click(object sender, EventArgs e)
         {
             selectedDT = null;
             deadlineTB.Text = "Deadline: None";
             AlternateCalendarVisibility();
         }
-        private void monthCalendar_DateChanged(object sender, DateRangeEventArgs e)
+        internal void monthCalendar_DateChanged(object sender, DateRangeEventArgs e)
         {
             selectedDT = monthCalendar.SelectionStart;
             deadlineTB.Text = $"Deadline: {selectedDT.ToString()}";
@@ -123,7 +141,7 @@ namespace ToDo_App.WindowsApp.UI
             {
                 repeat = RepeatInterval.None;
             }
-            List<string> tags = tagPlaceholder.ToString()
+            List<string> tags = (tagPlaceholder?.ToString() ?? "")
                 .Split(' ', StringSplitOptions.RemoveEmptyEntries)
                 .ToList();
             List<ChecklistItem> checklist = new List<ChecklistItem>();
@@ -138,10 +156,10 @@ namespace ToDo_App.WindowsApp.UI
                 title: titlePlaceholder.ToString(),
                 choosenDeadLine: selectedDT,
                 repeat: repeat,
-                priority: int.Parse(priorityUpDown.Text),
+                priority: int.TryParse(priorityUpDown.Text, out int priority)? priority : 1,
                 description: descriptionPlaceholder.ToString(),
                 tags: tags,
-                checklist: null);
+                checklist: checklist);
 
             this.Dispose();
         }

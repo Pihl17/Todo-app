@@ -30,7 +30,7 @@ public partial class MainForm : Form
     public void createNewToDotoolStripButton_Click(object sender, EventArgs e)
     {
         ToDo createdToDo = inputHandler.CreateNewToDo();
-        UserControl createToDoDisplay = new CreateToDo(inputHandler);
+        UserControl createToDoDisplay = new CreateToDoUI(inputHandler);
 
         this.Controls.Add(createToDoDisplay);
         createToDoDisplay.Dock = DockStyle.Fill;
