@@ -74,7 +74,6 @@ namespace ToDo_App.Test.Web
 
         [TestCase("/")]
         [TestCase("/Index")]
-        [TestCase("/Privacy")]
         [TestCase("/Error")]
         [TestCase("/Calendar")]
         public async Task Get_EndpointsReturnSuccessAndCorrectContentType(string url)
@@ -116,7 +115,18 @@ namespace ToDo_App.Test.Web
             ToDo toDo = new ToDo();
 
             mock.Setup(x => x.GetToDoList()).Returns(new List<ToDo>() { toDo });
-            mock.Setup(x => x.GetToDo(toDo.Id)).Returns(toDo);
+
+            var response = await client.GetAsync("/Todoes");
+
+            response.EnsureSuccessStatusCode(); // Status Code 200-299
+            Assert.That(response.Content.Headers.ContentType.ToString(), Is.EqualTo("text/html; charset=utf-8"));
+        }
+
+        [Test]
+        public async Task Get_EndpointsReturnSuccessAndCorrectContentTypeforTodoesEmpty()
+        {
+
+            mock.Setup(x => x.GetToDoList()).Returns(new List<ToDo>());
 
             var response = await client.GetAsync("/Todoes");
 

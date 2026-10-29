@@ -25,7 +25,7 @@ namespace ToDo_App.WebApp.Pages
             if(ToDo != null) {
                 ViewData["Title"] = ToDo.Title;
                 if(ToDo.Deadline != null) {
-                    HtmlDateTime = Convert.ToDateTime(ToDo.Deadline).ToString("yyyy-MM-ddTHH:mm");
+                    HtmlDateTime = Convert.ToDateTime(ToDo.Deadline).ToString("yyyy-MM-ddTHH\\:mm");
                 }
                 TagLibrary = ToDo.Taglist;
             } else {
