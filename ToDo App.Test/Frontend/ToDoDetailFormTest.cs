@@ -46,16 +46,30 @@ public class ToDoDetailFormTest
         }
     }
 
-    private T FindControl<T>(Form form, string name) where T : Control
+    private T FindControl<T>(UserControl control, string name) where T : Control
     {
-        return (T)form.Controls.Find(name, true)[0];
+        return (T)control.Controls.Find(name, true)[0];
     }
 
-    private void ClickSave(Form form)
+    private void ClickSave(UserControl form)
     {
         MethodInfo? method = typeof(ToDoDetailForm).GetMethod(
             "saveButton_Click", BindingFlags.Instance | BindingFlags.NonPublic);
         method!.Invoke(form, new object?[] { null, EventArgs.Empty });
+    }
+
+    private void ClickCancel(UserControl control)
+    {
+        MethodInfo? method = typeof(ToDoDetailForm).GetMethod(
+            "cancelButton_Click", BindingFlags.Instance | BindingFlags.NonPublic);
+        method!.Invoke(control, new object?[] { null, EventArgs.Empty });
+    }
+
+    private void ClickDelete(UserControl control)
+    {
+        MethodInfo? method = typeof(ToDoDetailForm).GetMethod(
+            "deleteButton_Click", BindingFlags.Instance | BindingFlags.NonPublic);
+        method!.Invoke(control, new object?[] { null, EventArgs.Empty });
     }
 
     // ---------- Showing the ToDo ----------
@@ -367,4 +381,40 @@ public class ToDoDetailFormTest
 
         Assert.That(form.IsDisposed, Is.True);
     }
+
+    // ---------- Cancel and Delete Buttons ----------
+
+    [Test]
+    public void CancelButtonClick_DisposesForm()
+    {
+        ToDo todo = new ToDo();
+        ToDoDetailForm control = new ToDoDetailForm(todo, inputMock.Object);
+
+        ClickCancel(control);
+
+        Assert.That(control.Disposing || control.IsDisposed, Is.EqualTo(true));
+    }
+
+    [Test]
+    public void DeleteButtonClick_CallsDeleteToDo()
+    {
+        ToDo todo = new ToDo();
+        ToDoDetailForm control = new ToDoDetailForm(todo, inputMock.Object);
+
+        ClickDelete(control);
+
+        inputMock.Verify(x => x.DeleteToDo(todo), Times.Once);
+    }
+
+    [Test]
+    public void DeleteButtonClick_DisposesForm()
+    {
+        ToDo todo = new ToDo();
+        ToDoDetailForm control = new ToDoDetailForm(todo, inputMock.Object);
+
+        ClickDelete(control);
+
+        Assert.That(control.Disposing || control.IsDisposed, Is.EqualTo(true));
+    }
+
 }
