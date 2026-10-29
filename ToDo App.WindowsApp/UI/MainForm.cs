@@ -7,12 +7,14 @@ public partial class MainForm : Form
 {
     private IInputHandling inputHandler;
     public ToDoListDisplay ToDoList { get { return toDoList; } }
+    public TabControl Tabs { get { return tabControl; } }
 
     public MainForm(IInputHandling inputHandler)
     {
         this.inputHandler = inputHandler;
         InitializeComponent();
         toDoList.inputHandler = inputHandler;
+        toDoList.parentForm = this;
         toDoList.RefreshList();
 
         calendarUI = new CalendarUI(inputHandler);
@@ -23,7 +25,7 @@ public partial class MainForm : Form
     public void createNewToDotoolStripButton_Click(object sender, EventArgs e)
     {
         ToDo createdToDo = inputHandler.CreateNewToDo();
-        toDoList.AddToList(new ToDoDisplay(createdToDo));
+        toDoList.AddToList(new ToDoDisplay(createdToDo, this));
     }
 
     /// <summary>
@@ -37,6 +39,28 @@ public partial class MainForm : Form
         if (folder.ShowDialog() == DialogResult.OK)
         {
             inputHandler.SetNewSavePath(folder.SelectedPath);
+        }
+    }
+
+    /// <summary>
+    /// Creates a ToDoDetailForm control and puts it into the currently selected tab page.
+    /// </summary>
+    /// <param name="todoId">Id of the Todo to open the detail form for</param>
+    public void ShowToDoDetailView(Guid todoId)
+    {
+        ToDo? toDo = inputHandler.GetToDo(todoId);
+        if (toDo == null)
+            return;
+
+        ToDoDetailForm toDoDetailForm = new ToDoDetailForm(toDo, inputHandler)
+        {
+            Dock = DockStyle.Fill
+        };
+        if (tabControl.SelectedTab != null)
+        {
+            tabControl.SelectedTab.Controls.Add(toDoDetailForm);
+            toDoDetailForm.BringToFront();
+            toDoDetailForm.Disposed += toDoList.RefreshList;
         }
     }
 }

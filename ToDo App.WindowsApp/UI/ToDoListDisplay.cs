@@ -16,6 +16,8 @@ public partial class ToDoListDisplay : UserControl
     /// The input handler that this object calls to connect with the backend.
     /// </summary>
     public IInputHandling inputHandler;
+
+    public MainForm parentForm;
     
     /// <summary>
     /// Constructs an empty ToDoListDisplay. 
@@ -67,10 +69,20 @@ public partial class ToDoListDisplay : UserControl
         ToDoDisplay currentDisplay;
         for (int i = 0; i < toDos.Count; i++)
         {
-            currentDisplay = new ToDoDisplay(toDos[i]);
+            currentDisplay = new ToDoDisplay(toDos[i], parentForm);
             if (!listContainer.Controls.Contains(currentDisplay))
                 AddToList(currentDisplay);
         }
+    }
+    /// <summary>
+    /// Grabs the list of todos from the system and updates the list, removing deleted todos and adding new todos.
+    /// This overload is used for calling through a delegate.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    public void RefreshList(object? sender, EventArgs e)
+    {
+        RefreshList();
     }
 
     /// <summary>
