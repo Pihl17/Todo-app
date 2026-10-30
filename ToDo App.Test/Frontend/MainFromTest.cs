@@ -5,6 +5,8 @@ using ToDo_App.Library.Calendar;
 using ToDo_App.Library.Input;
 using ToDo_App.Library.Models;
 using ToDo_App.UI;
+using ToDo_App.WindowsApp.UI;
+using static System.Windows.Forms.Control;
 
 namespace ToDo_App.Test.Frontend;
 
@@ -37,7 +39,9 @@ public class MainFromTest
 
         mainForm.createNewToDotoolStripButton_Click(new object(), new EventArgs());
 
-        mock.Verify(x => x.CreateNewToDo(), Times.Once);
+        CreateToDoUI? createForm = mainForm.Controls.OfType<CreateToDoUI>().FirstOrDefault();
+
+        Assert.That(createForm, Is.Not.Null);
     }
 
     [Test]
