@@ -265,6 +265,7 @@ public class CreateToDoUITest
             ui.monthCalendar_DateChanged(
                 ui.DeadlineCalendar,
                 new DateRangeEventArgs(date, date));
+            ui.DeadlineSelectButton.PerformClick();
 
             ui.ClearDateButton.PerformClick();
 
