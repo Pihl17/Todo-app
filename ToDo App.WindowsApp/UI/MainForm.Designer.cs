@@ -37,8 +37,6 @@ partial class MainForm
         topToolStrip = new ToolStrip();
         createNewToDotoolStripButton = new ToolStripButton();
         toolStripSeparator1 = new ToolStripSeparator();
-        todosToolStripDropDown = new ToolStripDropDownButton();
-        createNewTodoToolStripMenuItem = new ToolStripMenuItem();
         SelectSavePath = new ToolStripButton();
         toolStripContainer.ContentPanel.SuspendLayout();
         toolStripContainer.TopToolStripPanel.SuspendLayout();
@@ -47,7 +45,6 @@ partial class MainForm
         listTabPage.SuspendLayout();
         topToolStrip.SuspendLayout();
         SuspendLayout();
-        
         // 
         // toolStripContainer
         // 
@@ -55,11 +52,13 @@ partial class MainForm
         // toolStripContainer.ContentPanel
         // 
         toolStripContainer.ContentPanel.Controls.Add(tabControl);
-        toolStripContainer.ContentPanel.Size = new Size(800, 419);
+        toolStripContainer.ContentPanel.Margin = new Padding(3, 4, 3, 4);
+        toolStripContainer.ContentPanel.Size = new Size(914, 569);
         toolStripContainer.Dock = DockStyle.Fill;
         toolStripContainer.Location = new Point(0, 0);
+        toolStripContainer.Margin = new Padding(3, 4, 3, 4);
         toolStripContainer.Name = "toolStripContainer";
-        toolStripContainer.Size = new Size(800, 450);
+        toolStripContainer.Size = new Size(914, 600);
         toolStripContainer.TabIndex = 0;
         toolStripContainer.Text = "toolStripContainer1";
         // 
@@ -73,18 +72,20 @@ partial class MainForm
         tabControl.Controls.Add(calendarTabPage);
         tabControl.Dock = DockStyle.Fill;
         tabControl.Location = new Point(0, 0);
+        tabControl.Margin = new Padding(3, 4, 3, 4);
         tabControl.Name = "tabControl";
         tabControl.SelectedIndex = 0;
-        tabControl.Size = new Size(800, 419);
+        tabControl.Size = new Size(914, 569);
         tabControl.TabIndex = 0;
         // 
         // listTabPage
         // 
         listTabPage.Controls.Add(toDoList);
-        listTabPage.Location = new Point(4, 24);
+        listTabPage.Location = new Point(4, 29);
+        listTabPage.Margin = new Padding(3, 4, 3, 4);
         listTabPage.Name = "listTabPage";
-        listTabPage.Padding = new Padding(3);
-        listTabPage.Size = new Size(792, 391);
+        listTabPage.Padding = new Padding(3, 4, 3, 4);
+        listTabPage.Size = new Size(906, 536);
         listTabPage.TabIndex = 0;
         listTabPage.Text = "List";
         listTabPage.UseVisualStyleBackColor = true;
@@ -93,19 +94,20 @@ partial class MainForm
         // 
         toDoList.AutoSize = true;
         toDoList.Dock = DockStyle.Fill;
-        toDoList.Location = new Point(3, 3);
+        toDoList.Location = new Point(3, 4);
         toDoList.Margin = new Padding(1);
-        toDoList.MinimumSize = new Size(280, 180);
+        toDoList.MinimumSize = new Size(320, 240);
         toDoList.Name = "toDoList";
-        toDoList.Size = new Size(786, 385);
+        toDoList.Size = new Size(900, 528);
         toDoList.TabIndex = 0;
         // 
         // calendarTabPage
         // 
-        calendarTabPage.Location = new Point(4, 24);
+        calendarTabPage.Location = new Point(4, 29);
+        calendarTabPage.Margin = new Padding(3, 4, 3, 4);
         calendarTabPage.Name = "calendarTabPage";
-        calendarTabPage.Padding = new Padding(3);
-        calendarTabPage.Size = new Size(792, 391);
+        calendarTabPage.Padding = new Padding(3, 4, 3, 4);
+        calendarTabPage.Size = new Size(906, 526);
         calendarTabPage.TabIndex = 1;
         calendarTabPage.Text = "calendar";
         calendarTabPage.UseVisualStyleBackColor = true;
@@ -115,19 +117,18 @@ partial class MainForm
         topToolStrip.Dock = DockStyle.None;
         topToolStrip.GripStyle = ToolStripGripStyle.Hidden;
         topToolStrip.ImageScalingSize = new Size(24, 24);
-        topToolStrip.Items.AddRange(new ToolStripItem[] { createNewToDotoolStripButton, toolStripSeparator1, todosToolStripDropDown, SelectSavePath });
-        topToolStrip.Location = new Point(3, 0);
+        topToolStrip.Items.AddRange(new ToolStripItem[] { createNewToDotoolStripButton, toolStripSeparator1, SelectSavePath });
+        topToolStrip.Location = new Point(4, 0);
         topToolStrip.Name = "topToolStrip";
-        topToolStrip.Size = new Size(183, 31);
+        topToolStrip.Size = new Size(317, 31);
         topToolStrip.TabIndex = 0;
         // 
         // createNewToDotoolStripButton
         // 
-        createNewToDotoolStripButton.DisplayStyle = ToolStripItemDisplayStyle.Image;
         createNewToDotoolStripButton.Image = (Image)resources.GetObject("createNewToDotoolStripButton.Image");
         createNewToDotoolStripButton.ImageTransparentColor = Color.Magenta;
         createNewToDotoolStripButton.Name = "createNewToDotoolStripButton";
-        createNewToDotoolStripButton.Size = new Size(28, 28);
+        createNewToDotoolStripButton.Size = new Size(149, 28);
         createNewToDotoolStripButton.Text = "Create new Todo";
         createNewToDotoolStripButton.Click += createNewToDotoolStripButton_Click;
         // 
@@ -136,38 +137,23 @@ partial class MainForm
         toolStripSeparator1.Name = "toolStripSeparator1";
         toolStripSeparator1.Size = new Size(6, 31);
         // 
-        // todosToolStripDropDown
-        // 
-        todosToolStripDropDown.DisplayStyle = ToolStripItemDisplayStyle.Text;
-        todosToolStripDropDown.DropDownItems.AddRange(new ToolStripItem[] { createNewTodoToolStripMenuItem });
-        todosToolStripDropDown.Image = (Image)resources.GetObject("todosToolStripDropDown.Image");
-        todosToolStripDropDown.ImageTransparentColor = Color.Magenta;
-        todosToolStripDropDown.Name = "todosToolStripDropDown";
-        todosToolStripDropDown.Size = new Size(51, 28);
-        todosToolStripDropDown.Text = "Todos";
-        // 
-        // createNewTodoToolStripMenuItem
-        // 
-        createNewTodoToolStripMenuItem.Name = "createNewTodoToolStripMenuItem";
-        createNewTodoToolStripMenuItem.Size = new Size(162, 22);
-        createNewTodoToolStripMenuItem.Text = "Create new Todo";
-        // 
         // SelectSavePath
         // 
         SelectSavePath.DisplayStyle = ToolStripItemDisplayStyle.Text;
         SelectSavePath.Image = (Image)resources.GetObject("SelectSavePath.Image");
         SelectSavePath.ImageTransparentColor = Color.Magenta;
         SelectSavePath.Name = "SelectSavePath";
-        SelectSavePath.Size = new Size(95, 28);
+        SelectSavePath.Size = new Size(120, 28);
         SelectSavePath.Text = "Select save path";
         SelectSavePath.Click += SelectSavePath_Click;
         // 
         // MainForm
         // 
-        AutoScaleDimensions = new SizeF(7F, 15F);
+        AutoScaleDimensions = new SizeF(8F, 20F);
         AutoScaleMode = AutoScaleMode.Font;
-        ClientSize = new Size(800, 450);
+        ClientSize = new Size(914, 600);
         Controls.Add(toolStripContainer);
+        Margin = new Padding(3, 4, 3, 4);
         Name = "MainForm";
         Text = "ToDo App";
         toolStripContainer.ContentPanel.ResumeLayout(false);
@@ -188,8 +174,6 @@ partial class MainForm
     private ToDoListDisplay toDoList;
     private ToolStripContainer toolStripContainer;
     private ToolStrip topToolStrip;
-    private ToolStripDropDownButton todosToolStripDropDown;
-    private ToolStripMenuItem createNewTodoToolStripMenuItem;
     private TabControl tabControl;
     private TabPage listTabPage;
     private TabPage calendarTabPage;

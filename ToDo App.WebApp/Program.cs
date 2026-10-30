@@ -49,3 +49,6 @@ app.MapRazorPages()
    .WithStaticAssets();
 
 app.Run();
+
+// Makes the entry-point type accessible to WebApplicationFactory in tests.
+public partial class Program { }
